@@ -18,9 +18,10 @@ function useReveal() {
   });
 }
 
-/* Temple imagery — local photos from assets/. */
-function TempleImg({ src: srcProp, keywords, style, className, alt, sig }) {
-  const src = srcProp || 'assets/temple-real-photo-clean.jpeg';
+/* Temple imagery — generic Hindu temple stock photos via Unsplash.
+   Swap any of these for authentic temple photos by attaching files in chat. */
+function TempleImg({ keywords, style, className, alt, sig }) {
+  const src = `https://source.unsplash.com/featured/?${encodeURIComponent(keywords)}&sig=${sig || 1}`;
   const onError = (e) => {
     // Hide broken image, show gradient fallback underneath
     e.currentTarget.style.opacity = '0';
@@ -88,9 +89,9 @@ function Introduction() {
             <span className="serif-display" style={{ color: 'var(--gold)' }}>silence, fire, and starlight.</span>
           </h2>
           <div style={{ marginTop: 32, fontSize: 20, color: 'var(--ivory-dim)', lineHeight: 1.7 }}>
-            <p>This temple dates to the 12th century AD, built during the Kakatiya period when they ruled Orugallu. It is associated with Sri Chenna Basaveshwara Swamy, one of the Panchacharya peethadhipathis. Some Shivalingas consecrated by the Kakatiyas still show arrow marks.</p>
+            <p>This temple dates to the 12th century AD, built during the Kakatiya period when they ruled Orugallu. It is associated with Sri Chenna Basaveshwara Swamy, one of the Panchacharya peethadhipathas. Some Shivalingas consecrated by the Kakatiyas still show arrow marks.</p>
             <br/>
-            <p>The temple stands on Navaratna Shikhara, a hill known for its multicolored rock strata. A natural spring emerges at a corner of the hill, feeding the temple pond and flowing beneath the mandapa. Over time the pond became silted and the flow was choked, after removal of the silt, the water returned to its original course.<br/><br/></p>
+            <p>The temple stands on Navaratna Shikhara, a hill known for its multicolored rock strata. A natural spring emerges at a corner of the hill, feeding the temple pond and flowing beneath the mandapa. Over time the pond became silted and the flow was choked; after removal of the silt, the water returned to its original course.<br/><br/></p>
             <p>Within the complex are five sacred lingas: Sadyojata Linga in the inner shrine, Vamadeva Linga beside the pond, Aghora Linga in the southeast, another Linga in the northwest, and the principal shrine which houses the Ishan Linga called "Santhi Malleswara." These five lingas correspond to the five-faced aspects of the Supreme Lord, enhancing the sanctity of the temple.</p>
           </div>
           <p style={{ marginTop: 22, fontSize: 18, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.7 }}>
@@ -127,7 +128,7 @@ const POOJA_TIMES = [
   { name: 'Auspicious Maghamasa Pujas & Abhishekas (30 days)', desc: 'Maha Shivaratri Special', icon: '✶' },
 ];
 
-function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, onRudrabhishekam, onSacredHomas }) {
+function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, onRudrabhishekam }) {
   return (
     <section style={{ background: 'var(--bg-0)' }} data-screen-label="03 Pooja Timings">
       <div className="container">
@@ -148,7 +149,7 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
               <div style={{ fontSize: 32, color: 'var(--gold)', fontFamily: 'var(--f-script)', marginBottom: 22 }}>{p.icon}</div>
               <h3 style={{ fontSize: 17, marginBottom: 14, letterSpacing: '0.06em' }}>{p.name.includes('|') ? p.name.split('|').map((line, li) => <React.Fragment key={li}>{line}{li === 0 && <br/>}</React.Fragment>) : p.name}</h3>
               <p style={{ fontSize: 14, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.5, flex: 1 }}>{p.desc === 'Prasadam offering (Daily 1kg)' ? <span style={{ fontSize: 16 }}>Prasadam offering<br/>(Daily <b>1</b>kg)</span> : p.desc}</p>
-              <button className="btn" style={{ marginTop: 24, padding: '12px 20px', fontSize: 10, width: '100%', display: 'flex', justifyContent: 'center' }} onClick={() => p.name === 'Visesha|Pujas' ? onVisheshaPuja && onVisheshaPuja() : p.name === 'Nitya Naivedyam' ? onNaivedyam && onNaivedyam() : p.name === 'Nitya Pratah|Puja' ? onNityaPratah && onNityaPratah() : p.name === 'RudrAbhishekam' ? onRudrabhishekam && onRudrabhishekam() : p.name === 'Sacred Homas' ? onSacredHomas && onSacredHomas() : onBookSeva()}>Book Now</button>
+              <button className="btn" style={{ marginTop: 24, padding: '12px 20px', fontSize: 10, width: '100%', display: 'flex', justifyContent: 'center' }} onClick={() => p.name === 'Visesha|Pujas' ? onVisheshaPuja && onVisheshaPuja() : p.name === 'Nitya Naivedyam' ? onNaivedyam && onNaivedyam() : p.name === 'Nitya Pratah|Puja' ? onNityaPratah && onNityaPratah() : p.name === 'RudrAbhishekam' ? onRudrabhishekam && onRudrabhishekam() : onBookSeva()}>Book Now</button>
             </div>
           ))}
         </div>
@@ -187,41 +188,16 @@ const FESTIVALS = [
     desc: 'Twilight worship on the 13th lunar day — the most auspicious window to invoke Lord Shiva.',
     tag: 'Bi-Monthly',
   },
-];
-
-const MEGA_FESTIVALS = [
   {
-    date: 'Maha Shivaratri',
-    gregorian: 'February 15 · 2026',
-    name: 'Maha Shivaratri',
-    desc: 'The Great Night of Shiva — an all-night vigil of chants, abhishekams, and meditation.',
-    tag: 'Festival',
-  },
-  {
-    date: 'Rudra Homam',
-    gregorian: 'January · 2026',
-    name: 'Rudra Homam',
-    desc: 'The most sacred Mondays — special rudrabhishekam offerings for prosperity and well-being.',
-    tag: 'Havan',
-  },
-  {
-    date: 'Kumbha Abhishekam',
-    gregorian: 'February · 2025',
-    name: 'Kumbha Abhishekam',
-    desc: 'A sacred ritual invoking divine blessings, peace, and prosperity.',
-    tag: 'Festival of Kalash',
-  },
-  {
-    date: 'Kalasha Puja',
-    gregorian: 'Every 13th tithi',
-    name: 'Pradosha Pooja',
-    desc: 'Twilight worship on the 13th lunar day — the most auspicious window to invoke Lord Shiva.',
-    tag: 'Bi-Monthly',
+    date: 'Margazhi 27',
+    gregorian: 'January 4 · 2027',
+    name: 'Aarudhra Darshan',
+    desc: 'Witness Lord Shiva as Nataraja — the cosmic dancer — with abhishekam and procession at dawn.',
+    tag: 'Darshan',
   },
 ];
 
-function Festivals({ bg, items, heading, hideSponsor, dateSize }) {
-  const list = items || FESTIVALS;
+function Festivals() {
   const scrollerRef = React.useRef(null);
   const [atStart, setAtStart] = React.useState(true);
   const [atEnd, setAtEnd] = React.useState(false);
@@ -267,13 +243,13 @@ function Festivals({ bg, items, heading, hideSponsor, dateSize }) {
   });
 
   return (
-    <section style={{ background: bg || 'linear-gradient(180deg, var(--bg-0), #07091a)', ...(bg ? { paddingTop: 40 } : { paddingBottom: 40 }) }} data-screen-label="04 Festivals">
+    <section style={{ background: 'linear-gradient(180deg, var(--bg-0), #07091a)' }} data-screen-label="04 Festivals">
       <div className="container">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'end', gap: 60, marginBottom: 70 }} className="reveal">
           <div>
             <span className="eyebrow">The Sacred Calendar</span>
             <h2 style={{ marginTop: 24 }}>
-              {heading || 'Upcoming'}<br/>
+              Upcoming<br/>
               <span className="serif-display" style={{ color: 'var(--gold)' }}>Celebrations</span>
             </h2>
             <p style={{ color: 'var(--ivory-dim)', fontSize: 19, lineHeight: 1.7, marginTop: 20, maxWidth: 520 }}>
@@ -311,7 +287,7 @@ function Festivals({ bg, items, heading, hideSponsor, dateSize }) {
             paddingRight: 48,
           }}
         >
-          {list.map((f, i) => (
+          {FESTIVALS.map((f, i) => (
             <div key={i} className={`reveal delay-${i % 4}`} style={{
               flex: '0 0 320px',
               scrollSnapAlign: 'start',
@@ -327,12 +303,17 @@ function Festivals({ bg, items, heading, hideSponsor, dateSize }) {
               ) : i === 2 ? (
                 <img src="assets/festival-kumbha-abhishekam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
               ) : (
-                <img src="assets/temple-real-photo-garland.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
+                <TempleImg
+                  keywords={['shiva lingam temple', 'fire ritual yajna homam', 'abhishekam milk ritual', 'oil lamp diya temple', 'nataraja bronze statue'][i] || 'hindu temple ritual'}
+                  alt={f.name}
+                  sig={i + 10}
+                  style={{ aspectRatio: '4/3' }}
+                />
               )}
               <div style={{ padding: 24 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}>
                   <div>
-                    <div style={{ fontFamily: 'var(--f-display)', fontSize: dateSize || 11, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>
+                    <div style={{ fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>
                       {f.date}
                     </div>
                     <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>
@@ -349,11 +330,9 @@ function Festivals({ bg, items, heading, hideSponsor, dateSize }) {
                 <p style={{ fontSize: 14, color: 'var(--ivory-dim)', lineHeight: 1.55, marginBottom: 22 }}>
                   {f.desc}
                 </p>
-                {!hideSponsor && (
-                  <a style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>
-                    Sponsor This Festival
-                  </a>
-                )}
+                <a style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>
+                  Sponsor This Festival
+                </a>
               </div>
             </div>
           ))}
@@ -521,12 +500,12 @@ function Gallery({ onManageGallery }) {
             gridTemplateRows: 'repeat(2, 280px)',
             gap: 16,
           }}>
-            <TempleImg src="assets/temple-real-photo-clean.jpeg" alt="Gopuram at dawn" className="reveal" style={{ gridRow: 'span 2' }} />
-            <TempleImg src="assets/jyotirlinga-abhishekam.png" alt="Abhishekam ritual" className="reveal delay-1" style={{ gridColumn: 'span 2' }} />
-            <TempleImg src="assets/jyotirlinga-shrine-full.png" alt="Garbha griha" className="reveal delay-2" />
-            <TempleImg src="assets/temple-real-photo-garland.jpeg" alt="Deepotsavam lamps" className="reveal delay-1" />
-            <TempleImg src="assets/festival-kumbha-abhishekam.jpeg" alt="Karthika night" className="reveal delay-2" />
-            <TempleImg src="assets/temple-trishul-hilltop.jpeg" alt="Temple corridor" className="reveal delay-3" />
+            <TempleImg keywords="gopuram sunrise temple south india" sig={21} alt="Gopuram at dawn" className="reveal" style={{ gridRow: 'span 2' }} />
+            <TempleImg keywords="abhishekam ritual shiva worship" sig={22} alt="Abhishekam ritual" className="reveal delay-1" style={{ gridColumn: 'span 2' }} />
+            <TempleImg keywords="garbha griha temple sanctum" sig={23} alt="Garbha griha" className="reveal delay-2" />
+            <TempleImg keywords="deepam oil lamps row india" sig={24} alt="Deepotsavam lamps" className="reveal delay-1" />
+            <TempleImg keywords="karthika festival lamps night" sig={25} alt="Karthika night" className="reveal delay-2" />
+            <TempleImg keywords="hindu temple corridor pillars" sig={26} alt="Temple corridor" className="reveal delay-3" />
           </div>
         )}
       </div>
@@ -665,7 +644,7 @@ function Footer({ onContact }) {
               Explore
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {[['About', '#about'], ['Services', '#services'], ['Events', '#events'], ['Donation', '#donation'], ['Sacred Audios', '#audio'], ['Gallery', '#gallery'], ['Contact', '#']].map(([l, href]) => (
+              {[['About', '#about'], ['Services', '#services'], ['Donation', '#donation'], ['Sacred Audios', '#audio'], ['Gallery', '#gallery'], ['Contact', '#']].map(([l, href]) => (
                 <li key={l}><a href={href} style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>{l}</a></li>
               ))}
             </ul>
@@ -724,6 +703,6 @@ function Footer({ onContact }) {
 }
 
 Object.assign(window, {
-  useReveal, Divider, TempleImg, Introduction, PoojaTimings, Festivals, MEGA_FESTIVALS,
+  useReveal, Divider, TempleImg, Introduction, PoojaTimings, Festivals,
   SevaBooking, DonationCTA, Gallery, QuoteBand, Testimonials, Footer
 });

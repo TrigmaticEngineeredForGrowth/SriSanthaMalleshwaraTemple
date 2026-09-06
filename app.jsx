@@ -22,7 +22,6 @@ function App() {
   const [naivedyamOpen, setNaivedyamOpen] = useState(false);
   const [nityaPratahOpen, setNityaPratahOpen] = useState(false);
   const [rudrabhishekamOpen, setRudrabhishekamOpen] = useState(false);
-  const [sacredHomasOpen, setSacredHomasOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && /[?&]log=1/.test(window.location.search)) {
@@ -66,13 +65,8 @@ function App() {
 
       <div id="services">
         <window.OmDivider />
-        <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} onSacredHomas={() => setSacredHomasOpen(true)} />
-      </div>
-
-      <div id="events">
-        <window.OmDivider />
-        <Festivals items={window.MEGA_FESTIVALS} heading="Mega" hideSponsor dateSize={10} />
-        <Festivals bg="#07091a" />
+        <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} />
+        <Festivals />
       </div>
 
       <div id="donation">
@@ -104,7 +98,6 @@ function App() {
       <NaivedyamModal open={naivedyamOpen} onClose={() => setNaivedyamOpen(false)} />
       <NityaPratahModal open={nityaPratahOpen} onClose={() => setNityaPratahOpen(false)} />
       <RudrabhishekamModal open={rudrabhishekamOpen} onClose={() => setRudrabhishekamOpen(false)} />
-      <SacredHomasModal open={sacredHomasOpen} onClose={() => setSacredHomasOpen(false)} />
       <window.GalleryManager open={galleryOpen} onClose={() => setGalleryOpen(false)} />
       <window.ContactLogViewer open={logOpen} onClose={() => setLogOpen(false)} />
 

@@ -27,7 +27,6 @@ function Nav({ active, onBookSeva, onDonate, onContact }) {
         {link('Home', '#home', 'home')}
         {link('About', '#about', 'about')}
         {link('Services', '#services', 'services')}
-        {link('Events', '#events', 'events')}
         {link('Donation', '#donation', 'donation')}
         {link('Gallery', '#gallery', 'gallery')}
         {link('Audio', '#audio', 'audio')}
