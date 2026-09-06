@@ -43,11 +43,16 @@ async function saveDevotee({ name, phone, email, gotra, nakshetra, address }) {
   return data;
 }
 
+async function saveDevoteeSafe(props) {
+  try { return await saveDevotee(props); }
+  catch (e) { console.warn('[db] saveDevoteeSafe:', e && e.message || e); return null; }
+}
+
 /* ---------- Seva booking ---------- */
 async function saveSevaBooking({ name, phone, email, gotra, sevaName, date, amount }) {
   const sb = getSupabase();
   if (!sb) return null;
-  await saveDevotee({ name, phone, email, gotra });
+  await saveDevoteeSafe({ name, phone, email, gotra });
   const { data, error } = await sb.from('seva_bookings').insert({
     phone: phone.trim(),
     seva_name: sevaName,
@@ -63,7 +68,7 @@ async function saveSevaBooking({ name, phone, email, gotra, sevaName, date, amou
 async function saveDonation({ name, phone, email, purpose, frequency, amount }) {
   const sb = getSupabase();
   if (!sb) return null;
-  if (phone) await saveDevotee({ name, phone, email });
+  if (phone) await saveDevoteeSafe({ name, phone, email });
   const { data, error } = await sb.from('donations').insert({
     phone: (phone || '').trim() || null,
     donor_name: (name || '').trim(),
@@ -79,7 +84,7 @@ async function saveDonation({ name, phone, email, purpose, frequency, amount }) 
 async function saveContactMessage({ name, phone, email, message, reference }) {
   const sb = getSupabase();
   if (!sb) return null;
-  if (phone) await saveDevotee({ name, phone, email });
+  if (phone) await saveDevoteeSafe({ name, phone, email });
   const { data, error } = await sb.from('contact_messages').insert({
     phone: (phone || '').trim() || null,
     name: (name || '').trim(),
@@ -95,7 +100,7 @@ async function saveContactMessage({ name, phone, email, message, reference }) {
 async function savePujaBooking({ name, phone, email, gotra, nakshetra, address, pujaName, pujaType, date, amount }) {
   const sb = getSupabase();
   if (!sb) return null;
-  await saveDevotee({ name, phone, email, gotra, nakshetra, address });
+  await saveDevoteeSafe({ name, phone, email, gotra, nakshetra, address });
   const { data, error } = await sb.from('puja_bookings').insert({
     phone: phone.trim(),
     puja_name: pujaName,
