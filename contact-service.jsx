@@ -174,7 +174,7 @@ function ContactLogViewer({ open, onClose }) {
             <h2 style={{ marginTop: 14, fontSize: 28 }}>Contact Submissions</h2>
             <p style={{ marginTop: 8, color: 'var(--ivory-faint)', fontSize: 13, fontFamily: 'var(--f-mono)', letterSpacing: '0.08em' }}>
               {entries.length} entr{entries.length === 1 ? 'y' : 'ies'} stored in this browser ·
-              Email → {TEMPLE_EMAIL} · Sheet → {SHEETS_ENDPOINT ? 'configured' : 'not configured'}
+              Email → {TEMPLE_EMAIL} · Database → Supabase
             </p>
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -249,7 +249,7 @@ function ContactLogViewer({ open, onClose }) {
           fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)',
           letterSpacing: '0.08em', lineHeight: 1.7,
         }}>
-          DEPLOYMENT — 1) Email delivery is live via Formspree (form id mbdbzvdk → {TEMPLE_EMAIL}) · 2) Deploy the Apps Script in /docs/SHEET_SETUP.md and paste its /exec URL into SHEETS_ENDPOINT in contact-service.jsx · 3) Press Ctrl+Shift+L any time to reopen this admin log
+          DEPLOYMENT — 1) Email delivery is live via Formspree (form id mbdbzvdk → {TEMPLE_EMAIL}) · 2) Database writes go to Supabase · 3) Press Ctrl+Shift+L any time to reopen this admin log
         </div>
       </div>
     </div>

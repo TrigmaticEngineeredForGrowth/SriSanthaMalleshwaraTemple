@@ -526,7 +526,7 @@ function ContactModal({ open, onClose }) {
             )}
           </button>
           <div style={{ marginTop: 14, textAlign: 'center', fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)', letterSpacing: '0.2em' }}>
-            DELIVERED VIA FORMSPREE · LOGGED TO CENTRAL SHEET · {window.TEMPLE_EMAIL || 'TRIGMATIC07@GMAIL.COM'}
+            DELIVERED VIA EMAIL · {window.TEMPLE_EMAIL || 'TRIGMATIC07@GMAIL.COM'}
           </div>
         </div>
       ) : (
@@ -559,15 +559,9 @@ function ContactModal({ open, onClose }) {
                 <span style={{
                   fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.18em',
                   padding: '5px 10px',
-                  border: '1px solid ' + (result.sheetOk === true ? 'var(--gold)' : 'var(--line-soft)'),
-                  color: result.sheetOk === true ? 'var(--gold)' : 'var(--ivory-faint)',
-                }}>SHEET LOGGED {result.sheetOk === true ? '✓' : result.sheetOk === 'skipped' ? '— (not configured)' : '⨯'}</span>
-                <span style={{
-                  fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.18em',
-                  padding: '5px 10px',
                   border: '1px solid ' + (result.dbOk ? 'var(--gold)' : 'var(--line-soft)'),
                   color: result.dbOk ? 'var(--gold)' : 'var(--ivory-faint)',
-                }}>DB SAVED {result.dbOk ? '✓' : '⨯'}</span>
+                }}>SAVED {result.dbOk ? '✓' : '⨯'}</span>
               </div>
               <div style={{ marginTop: 36 }}>
                 <button className="btn" onClick={close}>Close</button>
