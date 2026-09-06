@@ -49,15 +49,15 @@ function Hero({ onBookSeva, onDonate, lingamStyle }) {
         }}></div>
       </div>
 
-      <div style={{ position: 'absolute', left: 60, bottom: 60, zIndex: 3, maxWidth: 520 }}>
+      <div className="hero-content-box" style={{ position: 'absolute', left: 60, bottom: 60, zIndex: 3, maxWidth: 520 }}>
         <span className="om" style={{ display: 'block', fontSize: 20, fontFamily: 'Times New Roman', letterSpacing: '0.3em', color: 'var(--gold)', marginBottom: 16 }}>
           <b><span style={{ fontWeight: 'normal' }}><b style={{ fontSize: 23, color: '#D4CCCC', background: 'linear-gradient(180deg, #4B4B4B00, #28211a)' }}><span style={{ fontSize: 20 }}>⥥नमः शिवाभ्यां नवयौवनाभ्यां⥥</span></b></span></b>
         </span>
-        <h1 style={{ fontFamily: 'var(--f-display)', fontSize: 52, letterSpacing: '0.05em', lineHeight: 1.1, margin: 0 }}>
+        <h1 className="hero-h1" style={{ fontFamily: 'var(--f-display)', fontSize: 'clamp(32px, 7vw, 52px)', letterSpacing: '0.05em', lineHeight: 1.1, margin: 0 }}>
           <span style={{ fontFamily: 'Times New Roman' }}>Sri Santha</span><br/>
           <span className="glow serif-display" style={{ fontStyle: 'italic', fontWeight: 400, fontFamily: 'Times New Roman', color: '#FF7A2E' }}>Malleswara Swami</span>
         </h1>
-        <div style={{
+        <div className="hero-badge" style={{
           marginTop: 18, display: 'inline-flex', alignItems: 'center', gap: 8,
           fontFamily: 'var(--f-mono)', fontSize: 11, letterSpacing: '0.15em',
           color: 'var(--ivory-faint)', border: '1px solid var(--line)',
@@ -65,7 +65,7 @@ function Hero({ onBookSeva, onDonate, lingamStyle }) {
         }}>
           <b style={{ color: '#FFFFF8' }}>12TH CENTURY TEMPLE . RENOVATED BY CHINMAYA MISSION . ADONI</b>
         </div>
-        <p style={{ marginTop: 22, fontFamily: 'var(--f-script)', fontStyle: 'italic', color: 'var(--ivory-dim)', fontSize: 16, maxWidth: 460, lineHeight: 1.5 }}>
+        <p className="hero-sanskrit" style={{ marginTop: 22, fontFamily: 'var(--f-script)', fontStyle: 'italic', color: 'var(--ivory-dim)', fontSize: 16, maxWidth: 460, lineHeight: 1.5 }}>
           ॐ सद्योजात-वामदेव-अघोरा-तत्पुरुष-ईशान पञ्चमुख |<br/><span style={{ paddingLeft: '3em' }}>पञ्चभूतात्म स्वरूप श्री शान्त मलेश्वर देवताभ्यो नमो नमः ||</span>
         </p>
         <div style={{ marginTop: 28, display: 'flex', gap: 14, flexWrap: 'wrap' }}>

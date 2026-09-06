@@ -71,7 +71,7 @@ function Divider() {
 function Introduction() {
   return (
     <section style={{ background: 'linear-gradient(180deg, var(--bg-0), var(--bg-1) 60%, var(--bg-0))' }} data-screen-label="02 Introduction">
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 100, alignItems: 'center' }}>
+      <div className="container grid-2col">
         <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <img
             src="assets/temple-trishul-hilltop.jpeg"
@@ -96,7 +96,7 @@ function Introduction() {
           </div>
           <p style={{ marginTop: 22, fontSize: 18, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.7 }}>
           </p>
-          <div style={{ marginTop: 38, display: 'flex', gap: 60 }}>
+          <div style={{ marginTop: 38, display: 'flex', gap: 40, flexWrap: 'wrap' }}>
             <div>
               <div style={{ fontFamily: 'var(--f-display)', fontSize: 36, color: 'var(--gold)' }}>25+</div>
               <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--ivory-faint)', textTransform: 'uppercase', marginTop: 6 }}>Years of Seva</div>
@@ -143,9 +143,9 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 18 }}>
+        <div className="grid-auto-4" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 18 }}>
           {POOJA_TIMES.map((p, i) => (
-            <div key={i} className={`card reveal delay-${i % 4}`} style={{ padding: '40px 24px', textAlign: 'center', flex: '1 1 calc(25% - 18px)', minWidth: 200, display: 'flex', flexDirection: 'column' }}>
+            <div key={i} className={`card reveal delay-${i % 4}`} style={{ padding: '40px 24px', textAlign: 'center', flex: '1 1 calc(25% - 18px)', minWidth: 220, display: 'flex', flexDirection: 'column' }}>
               <div style={{ fontSize: 32, color: 'var(--gold)', fontFamily: 'var(--f-script)', marginBottom: 22 }}>{p.icon}</div>
               <h3 style={{ fontSize: 17, marginBottom: 14, letterSpacing: '0.06em' }}>{p.name.includes('|') ? p.name.split('|').map((line, li) => <React.Fragment key={li}>{line}{li === 0 && <br/>}</React.Fragment>) : p.name}</h3>
               <p style={{ fontSize: 14, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.5, flex: 1 }}>{p.desc === 'Prasadam offering (Daily 1kg)' ? <span style={{ fontSize: 16 }}>Prasadam offering<br/>(Daily <b>1</b>kg)</span> : p.desc}</p>
@@ -245,7 +245,7 @@ function Festivals() {
   return (
     <section style={{ background: 'linear-gradient(180deg, var(--bg-0), #07091a)' }} data-screen-label="04 Festivals">
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'end', gap: 60, marginBottom: 70 }} className="reveal">
+        <div className="flex-header reveal" style={{ marginBottom: 70 }}>
           <div>
             <span className="eyebrow">The Sacred Calendar</span>
             <h2 style={{ marginTop: 24 }}>
@@ -365,7 +365,7 @@ function SevaBooking({ onBookSeva }) {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }}>
+        <div className="grid-auto-4">
           {SEVAS.map((s, i) => (
             <div key={i} className={`card reveal delay-${i}`} style={{ padding: 32 }}>
               <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 22, color: 'var(--gold)', marginBottom: 10 }}>{s.sanskrit}</div>
@@ -478,12 +478,7 @@ function Gallery({ onManageGallery }) {
         </div>
 
         {hasCustom ? (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridAutoRows: '280px',
-            gap: 16,
-          }}>
+          <div className="grid-auto-4" style={{ gridAutoRows: '280px', gap: 16 }}>
             {media.map((item, i) => (
               <window.MediaThumb
                 key={item.id}
@@ -494,12 +489,7 @@ function Gallery({ onManageGallery }) {
             ))}
           </div>
         ) : (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateRows: 'repeat(2, 280px)',
-            gap: 16,
-          }}>
+          <div className="grid-auto-4" style={{ gridTemplateRows: 'repeat(2, 280px)', gap: 16 }}>
             <TempleImg keywords="gopuram sunrise temple south india" sig={21} alt="Gopuram at dawn" className="reveal" style={{ gridRow: 'span 2' }} />
             <TempleImg keywords="abhishekam ritual shiva worship" sig={22} alt="Abhishekam ritual" className="reveal delay-1" style={{ gridColumn: 'span 2' }} />
             <TempleImg keywords="garbha griha temple sanctum" sig={23} alt="Garbha griha" className="reveal delay-2" />
@@ -610,7 +600,7 @@ function Footer({ onContact }) {
   return (
     <footer data-screen-label="10 Footer">
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 60, marginBottom: 80 }}>
+        <div className="grid-footer" style={{ marginBottom: 80 }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
               <div style={{
@@ -685,7 +675,7 @@ function Footer({ onContact }) {
           </div>
         </div>
 
-        <div style={{
+        <div className="footer-bottom" style={{
           paddingTop: 36,
           borderTop: '1px solid var(--line-soft)',
           display: 'flex', justifyContent: 'space-between',

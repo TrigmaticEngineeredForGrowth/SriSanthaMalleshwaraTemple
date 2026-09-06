@@ -542,6 +542,122 @@
     pointer-events: none; opacity: 0.5;
   }
 
+  /* Hamburger button — hidden on desktop, shown on mobile */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    width: 36px; height: 36px;
+    border: 1px solid var(--line-soft);
+    background: transparent; cursor: pointer;
+    align-items: center; justify-content: center;
+    padding: 0;
+  }
+  .nav-hamburger span {
+    display: block; width: 18px; height: 1.5px;
+    background: var(--ivory-dim); transition: all .3s ease;
+  }
+  .nav-hamburger:hover span { background: var(--gold); }
+
+  /* Mobile nav menu — slide-down panel */
+  .nav.mobile-open .nav-links {
+    position: fixed; top: 72px; left: 0; right: 0;
+    flex-direction: column; gap: 0;
+    background: rgba(5,5,5,0.96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 8px 0;
+    z-index: 49;
+  }
+  .nav.mobile-open .nav-links a {
+    display: block; padding: 16px 48px;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 13px;
+  }
+  .nav.mobile-open .nav-links a:last-child { border-bottom: none; }
+
+  /* Responsive grid utility classes */
+  .grid-auto-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+  .grid-footer { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 60px; }
+  .flex-header { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 60px; }
+
+  /* Tablet breakpoint */
+  @media (max-width: 1024px) {
+    .container { padding: 0 32px; }
+    .container-narrow { padding: 0 32px; }
+    .grid-auto-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-2col { grid-template-columns: 1fr; gap: 48px; }
+    .grid-footer { grid-template-columns: 1fr 1fr; gap: 40px; }
+    section { padding: 100px 0; }
+    .hero-meta { left: 32px; right: 32px; }
+  }
+
+  /* Mobile breakpoint */
+  /* Pooja cards: 2 columns on tablet, 1 on mobile */
+  @media (max-width: 1024px) {
+    .grid-auto-4 > .card { flex: '1 1 calc(50% - 18px)' !important; }
+  }
+  @media (max-width: 640px) {
+    .container { padding: 0 20px; }
+    .container-narrow { padding: 0 20px; }
+    section { padding: 64px 0; }
+    section.tight { padding: 48px 0; }
+
+    /* Nav: hide links, show hamburger */
+    .nav { padding: 16px 20px; grid-template-columns: 1fr auto; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav.mobile-open .nav-links { display: flex; }
+    .nav-cta .mini-btn { display: none; }
+    .nav-cta .ico { display: none; }
+    .nav-mark .sub { display: none; }
+    .nav-mark { font-size: 11px; }
+
+    /* Hero */
+    .hero { min-height: 600px; }
+    .hero-content-box { left: 20px !important; right: 20px !important; bottom: 40px !important; max-width: none !important; }
+    .hero-badge { fontSize: 9px !important; padding: '5px 12px' !important; }
+    .hero-sanskrit { font-size: 14px !important; }
+    .hero-meta { left: 20px; right: 20px; bottom: 24px; flex-direction: column; gap: 16px; align-items: center; }
+    .orbit.o1 { width: 380px; height: 380px; }
+    .orbit.o2 { width: 500px; height: 500px; }
+    .orbit.o3 { width: 620px; height: 620px; }
+    .orbit.o4 { width: 760px; height: 760px; }
+    .lingam-slot { width: 260px; height: 340px; }
+    .lingam-placeholder { width: 160px; height: 260px; }
+
+    /* Grids collapse to single column */
+    .grid-auto-4 { grid-template-columns: 1fr; }
+    .grid-footer { grid-template-columns: 1fr; gap: 36px; }
+    .flex-header { grid-template-columns: 1fr; gap: 24px; }
+
+    /* Modals */
+    .modal { padding: 28px 20px; max-width: 100%; }
+    .modal-backdrop { padding: 16px; }
+    .modal input, .modal select, .modal textarea { font-size: 15px; }
+    .modal h2 { font-size: 28px !important; }
+
+    /* Buttons */
+    .btn { padding: 14px 24px; font-size: 11px; letter-spacing: 0.24em; }
+
+    /* Festival cards */
+    .festival-scroll { margin-right: -20px; padding-right: 20px; }
+
+    /* Footer bottom bar */
+    footer > .container > div:last-child {
+      flex-direction: column; gap: 12px; text-align: center;
+    }
+  }
+
+  /* Small phones */
+  @media (max-width: 380px) {
+    .container { padding: 0 16px; }
+    .container-narrow { padding: 0 16px; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 28px; }
+  }
+
 </style>
 </head>
 <body>
@@ -563,12 +679,14 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="components/contact-service.jsx"></script>
-<script type="text/babel" src="components/gallery-manager.jsx"></script>
-<script type="text/babel" src="components/hero.jsx"></script>
-<script type="text/babel" src="components/sections.jsx"></script>
-<script type="text/babel" src="components/modals.jsx"></script>
-<script type="text/babel" src="components/app.jsx"></script>
+<script type="text/babel" src="contact-service.jsx"></script>
+<script type="text/babel" src="gallery-manager.jsx"></script>
+<script type="text/babel" src="audio-library.jsx"></script>
+<script type="text/babel" src="hero.jsx"></script>
+<script type="text/babel" src="nav.jsx"></script>
+<script type="text/babel" src="sections.jsx"></script>
+<script type="text/babel" src="modals.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
 
 <script>
   window.addEventListener('load', () => {

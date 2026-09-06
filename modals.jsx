@@ -1104,4 +1104,4 @@ function RudrabhishekamModal({ open, onClose }) {
   );
 }
 
-Object.assign(window, { Modal, SevaModal, DonationModal, ContactModal });
+Object.assign(window, { Modal, SevaModal, DonationModal, ContactModal, VisheshaPujaModal, NaivedyamModal, NityaPratahModal, RudrabhishekamModal });
