@@ -7,8 +7,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID") || "rzp_test_1DP5mmOlF5G5MN";
-const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET") || "dX4Rl3q3wM9bV2Y7sN1pZ6cT8";
+const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID") || "";
+const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET") || "";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
@@ -19,6 +19,13 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
+    if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
+      return new Response(
+        JSON.stringify({ error: "Razorpay test mode is not configured yet. Add the Razorpay test Key ID and Key Secret first." }),
+        { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const body = await req.json();
     const { amount, purpose, name, email, phone, notes } = body;
 
@@ -54,7 +61,7 @@ Deno.serve(async (req: Request) => {
 
     if (!razorpayRes.ok) {
       return new Response(
-        JSON.stringify({ error: orderData.error?.description || "Razorpay order creation failed" }),
+        JSON.stringify({ error: "Razorpay could not create the payment order. Check the test API credentials." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -94,8 +101,9 @@ Deno.serve(async (req: Request) => {
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
+    console.error("razorpay-create-order failed", err);
     return new Response(
-      JSON.stringify({ error: err.message || "Internal server error" }),
+      JSON.stringify({ error: "We could not start the payment. Please try again." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

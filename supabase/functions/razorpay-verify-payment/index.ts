@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET") || "dX4Rl3q3wM9bV2Y7sN1pZ6cT8";
+const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET") || "";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
@@ -30,6 +30,13 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
+    if (!RAZORPAY_KEY_SECRET) {
+      return new Response(
+        JSON.stringify({ error: "Razorpay test mode is not configured yet. Add the Razorpay test Key Secret first." }),
+        { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const body = await req.json();
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, reference_type, reference_id } = body;
 
@@ -92,8 +99,9 @@ Deno.serve(async (req: Request) => {
       }
     );
   } catch (err) {
+    console.error("razorpay-verify-payment failed", err);
     return new Response(
-      JSON.stringify({ error: err.message || "Internal server error" }),
+      JSON.stringify({ error: "We could not verify the payment. Please contact the temple before trying again." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
