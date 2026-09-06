@@ -83,7 +83,7 @@ async function saveDonation({ name, phone, email, purpose, frequency, amount }) 
 /* ---------- Contact message ---------- */
 async function saveContactMessage({ name, phone, email, message, reference }) {
   const sb = getSupabase();
-  if (!sb) return null;
+  if (!sb) throw new Error('Database not connected');
   if (phone) await saveDevoteeSafe({ name, phone, email });
   const { data, error } = await sb.from('contact_messages').insert({
     phone: (phone || '').trim() || null,
@@ -92,7 +92,7 @@ async function saveContactMessage({ name, phone, email, message, reference }) {
     message: (message || '').trim(),
     reference: reference || null,
   }).select().maybeSingle();
-  if (error) console.warn('[db] saveContactMessage:', error.message);
+  if (error) throw new Error(error.message);
   return data;
 }
 
