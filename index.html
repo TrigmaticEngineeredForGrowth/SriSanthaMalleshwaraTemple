@@ -720,6 +720,15 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/iife.min.js"></script>
+<script>
+  (function() {
+    var url = 'https://eybtrqwqaprfefwlgled.supabase.co';
+    var key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5YnRycXdxYXByZmVmd2xnbGVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3MjA2NTAsImV4cCI6MjEwNDI5NjY1MH0.MFMPHC6B7le4adURWeHujyM4-EY5p1lKtn-CEsVWseE';
+    if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
+      window.supabase = window.supabase.createClient(url, key);
+    }
+  })();
+</script>
 <script type="text/babel" src="db-service.jsx"></script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="contact-service.jsx"></script>
@@ -730,17 +739,6 @@
 <script type="text/babel" src="sections.jsx"></script>
 <script type="text/babel" src="modals.jsx"></script>
 <script type="text/babel" src="app.jsx"></script>
-
-<script>
-  // Initialize Supabase client from env vars
-  (function() {
-    var url = 'https://eybtrqwqaprfefwlgled.supabase.co';
-    var key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5YnRycXdxYXByZmVmd2xnbGVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3MjA2NTAsImV4cCI6MjEwNDI5NjY1MH0.MFMPHC6B7le4adURWeHujyM4-EY5p1lKtn-CEsVWseE';
-    if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
-      window.supabase = window.supabase.createClient(url, key);
-    }
-  })();
-</script>
 
 <script>
   window.addEventListener('load', () => {

@@ -481,10 +481,15 @@ function ContactModal({ open, onClose }) {
               type="email"
               value={form.email}
               onChange={e => setForm({ ...form, email: e.target.value })}
+              onBlur={validate}
               style={fieldStyle('email')}
+              placeholder="you@example.com"
+              required
+              aria-invalid={Boolean(errs.email)}
               disabled={sending}
             />
             {errs.email && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>{errs.email}</div>}
+            {form.email && !errs.email && isValidEmail(form.email) && <div style={{ marginTop: 6, fontSize: 12, color: 'var(--gold)' }}>Valid email</div>}
           </div>
           <div style={{ marginBottom: 28 }}>
             <label className="field-label">Your Message *</label>
@@ -502,6 +507,7 @@ function ContactModal({ open, onClose }) {
             style={{ width: '100%', opacity: sending ? 0.6 : 1, pointerEvents: sending ? 'none' : 'auto' }}
             onClick={submit}
             disabled={sending}
+            type="button"
           >
             {sending ? (
               <>
@@ -556,6 +562,12 @@ function ContactModal({ open, onClose }) {
                   border: '1px solid ' + (result.sheetOk === true ? 'var(--gold)' : 'var(--line-soft)'),
                   color: result.sheetOk === true ? 'var(--gold)' : 'var(--ivory-faint)',
                 }}>SHEET LOGGED {result.sheetOk === true ? '✓' : result.sheetOk === 'skipped' ? '— (not configured)' : '⨯'}</span>
+                <span style={{
+                  fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.18em',
+                  padding: '5px 10px',
+                  border: '1px solid ' + (result.dbOk ? 'var(--gold)' : 'var(--line-soft)'),
+                  color: result.dbOk ? 'var(--gold)' : 'var(--ivory-faint)',
+                }}>DB SAVED {result.dbOk ? '✓' : '⨯'}</span>
               </div>
               <div style={{ marginTop: 36 }}>
                 <button className="btn" onClick={close}>Close</button>

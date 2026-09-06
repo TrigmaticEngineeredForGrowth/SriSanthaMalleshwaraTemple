@@ -4,17 +4,14 @@
  * ----------------------------------------
  * Connects all temple forms to the Supabase database.
  * The Supabase client is loaded via CDN in index.html.
- * Env vars VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are in .env.
+ * The client is initialized in index.html before this file loads.
  */
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 let supabase = null;
 
 function getSupabase() {
   if (supabase) return supabase;
-  if (typeof window !== 'undefined' && window.supabase) {
+  if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.from === 'function') {
     supabase = window.supabase;
     return supabase;
   }
