@@ -285,6 +285,7 @@ function Festivals() {
             paddingBottom: 8,
             marginRight: -48,
             paddingRight: 48,
+            WebkitOverflowScrolling: 'touch',
           }}
         >
           {FESTIVALS.map((f, i) => (
@@ -425,7 +426,7 @@ function DonationCTA({ onDonate }) {
                 Monthly Sankalpa
               </button>
             </div>
-            <div style={{ marginTop: 36, display: 'flex', gap: 24, alignItems: 'center', color: 'var(--ivory-faint)' }}>
+            <div style={{ marginTop: 36, display: 'flex', gap: 24, alignItems: 'center', color: 'var(--ivory-faint)', flexWrap: 'wrap' }}>
               <span style={{ fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase' }}>Secure via</span>
               <span style={{ fontFamily: 'var(--f-display)', fontSize: 13, letterSpacing: '0.2em', color: 'var(--ivory-dim)' }}>RAZORPAY</span>
               <span style={{ fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.2em' }}>UPI · CARD · NET BANKING · WALLETS</span>
@@ -458,7 +459,7 @@ function Gallery({ onManageGallery }) {
   return (
     <section style={{ background: 'var(--bg-0)' }} data-screen-label="07 Gallery">
       <div className="container">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginBottom: 60 }} className="reveal">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginBottom: 60, flexWrap: 'wrap', gap: 20 }} className="reveal">
           <div>
             <span className="eyebrow">Through the Lens</span>
             <h2 style={{ marginTop: 24 }}>

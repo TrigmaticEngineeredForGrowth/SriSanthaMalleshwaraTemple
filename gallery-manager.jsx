@@ -116,7 +116,7 @@ function GalleryManager({ open, onClose }) {
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 900, padding: 44 }}>
+      <div className="modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 900 }}>
         <button className="modal-close" onClick={onClose}>×</button>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <span className="eyebrow">Temple Gallery</span>

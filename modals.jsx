@@ -88,7 +88,7 @@ function SevaModal({ open, onClose }) {
       {!done && step === 1 && (
         <div>
           <label className="field-label">Choose a Seva</label>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 28 }}>
+          <div className="modal-grid-2" style={{ gap: 10, marginBottom: 28 }}>
             {sevaOptions.map(s => (
               <button key={s.name} onClick={() => setSeva(s.name)} style={{
                 padding: '18px 20px', textAlign: 'left',
@@ -119,7 +119,7 @@ function SevaModal({ open, onClose }) {
 
       {!done && step === 2 && (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div>
               <label className="field-label">Full Name</label>
               <input value={name} onChange={e => setName(e.target.value)} placeholder="As to be chanted" />
@@ -129,7 +129,7 @@ function SevaModal({ open, onClose }) {
               <input value={gotra} onChange={e => setGotra(e.target.value)} placeholder="e.g. Bharadwaja" />
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+          <div className="modal-grid-2">
             <div>
               <label className="field-label">Phone</label>
               <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="+91" />
@@ -163,7 +163,7 @@ function SevaModal({ open, onClose }) {
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>
               Your Sankalpa
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 14, fontSize: 15 }}>
+            <div className="modal-grid-summary" style={{ fontSize: 15 }}>
               <div style={{ color: 'var(--ivory-faint)' }}>Seva</div><div>{seva}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Date</div><div>{date}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{name} {gotra && <span style={{ color: 'var(--gold)' }}>· {gotra} gotra</span>}</div>
@@ -173,7 +173,7 @@ function SevaModal({ open, onClose }) {
           </div>
 
           <label className="field-label">Payment Method</label>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 28 }}>
+          <div className="modal-grid-4" style={{ marginBottom: 28 }}>
             {['UPI', 'Card', 'Net Banking', 'Wallet'].map((m, i) => (
               <button key={m} style={{
                 padding: '20px 8px',
@@ -259,7 +259,7 @@ function DonationModal({ open, onClose }) {
 
           {/* Purpose */}
           <label className="field-label">Purpose</label>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 28 }}>
+          <div className="modal-grid-2" style={{ gap: 8, marginBottom: 28 }}>
             {purposes.map(p => (
               <button key={p} onClick={() => setPurpose(p)} style={{
                 padding: '14px 18px', textAlign: 'left',
@@ -273,7 +273,7 @@ function DonationModal({ open, onClose }) {
 
           {/* Amount */}
           <label className="field-label">Amount {type === 'monthly' && '(per month)'}</label>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 6, marginBottom: 14 }}>
+          <div className="modal-grid-6" style={{ marginBottom: 14 }}>
             {presets.map(p => (
               <button key={p} onClick={() => { setAmount(p); setCustom(false); }} style={{
                 padding: '16px 6px',
@@ -410,7 +410,7 @@ function ContactModal({ open, onClose }) {
             Whether for a private consultation, a special pooja request, or a question of the heart —
             we read every message.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div>
               <label className="field-label">Name *</label>
               <input
@@ -596,7 +596,7 @@ function VisheshaPujaModal({ open, onClose }) {
       {!done && step === 1 && (
         <div>
           <label className="field-label">Choose a Visesha Puja</label>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 8 }}>
+          <div className="modal-grid-2" style={{ gap: 10, marginBottom: 8 }}>
             {VISHESHA_PUJAS.map(v => (
               <button key={v.name} onClick={() => setPuja(v.name)} style={{
                 padding: '16px 18px', textAlign: 'left',
@@ -620,13 +620,13 @@ function VisheshaPujaModal({ open, onClose }) {
 
       {!done && step === 2 && (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Full Name *</label>
               <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="As to be chanted" /></div>
             <div><label className="field-label">Gotra</label>
               <input value={form.gotra} onChange={e => setForm({ ...form, gotra: e.target.value })} placeholder="e.g. Bharadwaja" /></div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
@@ -657,7 +657,7 @@ function VisheshaPujaModal({ open, onClose }) {
         <div>
           <div style={{ background: 'rgba(255,122,46,0.05)', border: '1px solid var(--line)', padding: 32, marginBottom: 28 }}>
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>Your Sankalpa</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 14, fontSize: 15 }}>
+            <div className="modal-grid-summary" style={{ fontSize: 15 }}>
               <div style={{ color: 'var(--ivory-faint)' }}>Puja</div><div>{puja}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{form.name} {form.gotra && <span style={{ color: 'var(--gold)' }}>· {form.gotra} gotra</span>}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Nakshetra</div><div>{form.nakshetra}</div>
@@ -748,13 +748,13 @@ function NaivedyamModal({ open, onClose }) {
 
       {!done && step === 2 && (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Full Name *</label>
               <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="As to be chanted" /></div>
             <div><label className="field-label">Gotra</label>
               <input value={form.gotra} onChange={e => setForm({ ...form, gotra: e.target.value })} placeholder="e.g. Bharadwaja" /></div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
@@ -785,7 +785,7 @@ function NaivedyamModal({ open, onClose }) {
         <div>
           <div style={{ background: 'rgba(255,122,46,0.05)', border: '1px solid var(--line)', padding: 32, marginBottom: 28 }}>
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>Your Sankalpa</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 14, fontSize: 15 }}>
+            <div className="modal-grid-summary" style={{ fontSize: 15 }}>
               <div style={{ color: 'var(--ivory-faint)' }}>Seva</div><div>Naivedyam (Daily 1kg, this month)</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{form.name} {form.gotra && <span style={{ color: 'var(--gold)' }}>· {form.gotra} gotra</span>}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Nakshetra</div><div>{form.nakshetra}</div>
@@ -868,7 +868,7 @@ function NityaPratahModal({ open, onClose }) {
       {!done && step === 1 && (
         <div>
           <label className="field-label">Choose a Puja</label>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 8 }}>
+          <div className="modal-grid-2" style={{ gap: 10, marginBottom: 8 }}>
             {NITYA_PRATAH_PUJAS.map(v => (
               <button key={v.name} onClick={() => setPuja(v.name)} style={{
                 padding: '16px 18px', textAlign: 'left',
@@ -892,13 +892,13 @@ function NityaPratahModal({ open, onClose }) {
 
       {!done && step === 2 && (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Full Name *</label>
               <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="As to be chanted" /></div>
             <div><label className="field-label">Gotra</label>
               <input value={form.gotra} onChange={e => setForm({ ...form, gotra: e.target.value })} placeholder="e.g. Bharadwaja" /></div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
@@ -929,7 +929,7 @@ function NityaPratahModal({ open, onClose }) {
         <div>
           <div style={{ background: 'rgba(255,122,46,0.05)', border: '1px solid var(--line)', padding: 32, marginBottom: 28 }}>
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>Your Sankalpa</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 14, fontSize: 15 }}>
+            <div className="modal-grid-summary" style={{ fontSize: 15 }}>
               <div style={{ color: 'var(--ivory-faint)' }}>Puja</div><div>{puja}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{form.name} {form.gotra && <span style={{ color: 'var(--gold)' }}>· {form.gotra} gotra</span>}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Nakshetra</div><div>{form.nakshetra}</div>
@@ -1021,13 +1021,13 @@ function RudrabhishekamModal({ open, onClose }) {
 
       {!done && step === 2 && (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Full Name *</label>
               <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="As to be chanted" /></div>
             <div><label className="field-label">Gotra</label>
               <input value={form.gotra} onChange={e => setForm({ ...form, gotra: e.target.value })} placeholder="e.g. Bharadwaja" /></div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 18 }}>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
@@ -1058,7 +1058,7 @@ function RudrabhishekamModal({ open, onClose }) {
         <div>
           <div style={{ background: 'rgba(255,122,46,0.05)', border: '1px solid var(--line)', padding: 32, marginBottom: 28 }}>
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>Your Sankalpa</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 14, fontSize: 15 }}>
+            <div className="modal-grid-summary" style={{ fontSize: 15 }}>
               <div style={{ color: 'var(--ivory-faint)' }}>Seva</div><div>Rudrabhishekam</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{form.name} {form.gotra && <span style={{ color: 'var(--gold)' }}>· {form.gotra} gotra</span>}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Nakshetra</div><div>{form.nakshetra}</div>

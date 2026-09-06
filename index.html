@@ -593,11 +593,18 @@
     .hero-meta { left: 32px; right: 32px; }
   }
 
-  /* Mobile breakpoint */
-  /* Pooja cards: 2 columns on tablet, 1 on mobile */
+  /* Modal responsive grid utilities */
+  .modal-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .modal-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .modal-grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .modal-grid-summary { display: grid; grid-template-columns: 120px 1fr; gap: 14px; }
+
+  /* Tablet breakpoint */
   @media (max-width: 1024px) {
-    .grid-auto-4 > .card { flex: '1 1 calc(50% - 18px)' !important; }
+    .modal-grid-6 { grid-template-columns: repeat(3, 1fr) !important; }
   }
+
+  /* Mobile breakpoint */
   @media (max-width: 640px) {
     .container { padding: 0 20px; }
     .container-narrow { padding: 0 20px; }
@@ -613,11 +620,13 @@
     .nav-cta .ico { display: none; }
     .nav-mark .sub { display: none; }
     .nav-mark { font-size: 11px; }
+    .nav-mark > div > div { width: auto !important; height: auto !important; }
+    .nav-mark > div > div > span { width: auto !important; height: auto !important; font-size: 10px !important; }
 
     /* Hero */
     .hero { min-height: 600px; }
     .hero-content-box { left: 20px !important; right: 20px !important; bottom: 40px !important; max-width: none !important; }
-    .hero-badge { fontSize: 9px !important; padding: '5px 12px' !important; }
+    .hero-badge { font-size: 9px !important; padding: 5px 12px !important; }
     .hero-sanskrit { font-size: 14px !important; }
     .hero-meta { left: 20px; right: 20px; bottom: 24px; flex-direction: column; gap: 16px; align-items: center; }
     .orbit.o1 { width: 380px; height: 380px; }
@@ -633,16 +642,45 @@
     .flex-header { grid-template-columns: 1fr; gap: 24px; }
 
     /* Modals */
-    .modal { padding: 28px 20px; max-width: 100%; }
+    .modal { padding: 28px 20px !important; max-width: 100% !important; }
     .modal-backdrop { padding: 16px; }
     .modal input, .modal select, .modal textarea { font-size: 15px; }
     .modal h2 { font-size: 28px !important; }
+    .modal-grid-2 { grid-template-columns: 1fr !important; }
+    .modal-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+    .modal-grid-6 { grid-template-columns: repeat(2, 1fr) !important; }
+    .modal-grid-summary { grid-template-columns: 1fr !important; }
 
     /* Buttons */
     .btn { padding: 14px 24px; font-size: 11px; letter-spacing: 0.24em; }
+    .btn.ghost { padding: 12px 20px; }
+
+    /* Sticky donate orb */
+    .sticky-orb { bottom: 20px; right: 20px; width: 56px; height: 56px; font-size: 8px; }
+
+    /* Nav mobile menu padding */
+    .nav.mobile-open .nav-links a { padding: 16px 20px; }
+
+    /* Quote band: reduce massive padding on mobile */
+    section.bg-grain { padding: 80px 0 !important; }
+    section.bg-grain .container-narrow > div > div:first-child { font-size: 26px !important; }
+    section.bg-grain p { font-size: 22px !important; line-height: 1.5 !important; }
+
+    /* Testimonials: smaller quote font on mobile */
+    .container-narrow > div > div > p { font-size: 22px !important; }
+
+    /* Festival card inner padding */
+    .festival-scroll > div > div:last-child { padding: 20px !important; }
+
+    /* Donation summary box: stack on mobile */
+    .modal > div > div[style*="display: flex"] { flex-direction: column !important; gap: 12px; }
 
     /* Festival cards */
-    .festival-scroll { margin-right: -20px; padding-right: 20px; }
+    .festival-scroll { margin-right: -20px !important; padding-right: 20px !important; }
+    .festival-scroll > div { flex: 0 0 280px !important; max-width: 280px !important; }
+
+    /* Pooja cards: single column on mobile */
+    .grid-auto-4 > .card { flex: 1 1 100% !important; }
 
     /* Footer bottom bar */
     footer > .container > div:last-child {
@@ -659,6 +697,9 @@
   }
 
 </style>
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
 </head>
 <body>
 
