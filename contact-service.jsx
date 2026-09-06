@@ -100,14 +100,26 @@ async function submitContact({ name, email, phone, message }) {
   log.unshift({ ...payload, _status: 'pending' });
   writeLog(log);
 
-  let emailOk = false, sheetOk = false, errors = [];
+  let emailOk = false, sheetOk = false, dbOk = false, errors = [];
 
-  // 2) Email + Sheet in parallel
-  const results = await Promise.allSettled([postFormspree(payload), postSheet(payload)]);
+  // 2) Email + Sheet + Database in parallel
+  const results = await Promise.allSettled([
+    postFormspree(payload),
+    postSheet(payload),
+    window.saveContactMessage({
+      name: payload.name,
+      phone: payload.phone,
+      email: payload.email,
+      message: payload.message,
+      reference: payload.ref,
+    }),
+  ]);
   if (results[0].status === 'fulfilled') emailOk = true;
   else errors.push('email: ' + (results[0].reason && results[0].reason.message || results[0].reason));
   if (results[1].status === 'fulfilled') sheetOk = results[1].value.skipped ? 'skipped' : true;
   else errors.push('sheet: ' + (results[1].reason && results[1].reason.message || results[1].reason));
+  if (results[2].status === 'fulfilled') dbOk = true;
+  else errors.push('db: ' + (results[2].reason && results[2].reason.message || results[2].reason));
 
   // 3) Update local entry status
   const log2 = readLog();
@@ -115,10 +127,11 @@ async function submitContact({ name, email, phone, message }) {
     log2[0]._status = emailOk ? 'delivered' : 'queued-local-only';
     log2[0]._emailOk = emailOk;
     log2[0]._sheetOk = sheetOk;
+    log2[0]._dbOk = dbOk;
     writeLog(log2);
   }
 
-  return { ok: emailOk, ref, emailOk, sheetOk, errors };
+  return { ok: emailOk, ref, emailOk, sheetOk, dbOk, errors };
 }
 
 /* ---------- Admin Log Viewer ---------- */

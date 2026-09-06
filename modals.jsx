@@ -199,7 +199,13 @@ function SevaModal({ open, onClose }) {
 
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
-            <button className="btn solid" onClick={() => setDone(true)}>
+            <button className="btn solid" onClick={async () => {
+              await window.saveSevaBooking({
+                name, phone, email, gotra,
+                sevaName: seva, date, amount: current.price,
+              });
+              setDone(true);
+            }}>
               Pay ₹{current.price} via Razorpay
               <span className="arrow"></span>
             </button>
@@ -242,11 +248,12 @@ function DonationModal({ open, onClose }) {
   const [amount, setAmount] = useStateM(1100);
   const [custom, setCustom] = useStateM(false);
   const [done, setDone] = useStateM(false);
+  const [donor, setDonor] = useStateM({ name: '', phone: '', email: '' });
 
   const purposes = ['Temple Renovation Fund', 'Annadanam', 'Festival Sponsorship', 'Gau Seva', 'General Daanam'];
   const presets = [251, 501, 1100, 2500, 5100, 11000];
 
-  const reset = () => { setType('onetime'); setPurpose('Temple Renovation Fund'); setAmount(1100); setCustom(false); setDone(false); };
+  const reset = () => { setType('onetime'); setPurpose('Temple Renovation Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
   return (
@@ -334,7 +341,27 @@ function DonationModal({ open, onClose }) {
             </div>
           </div>
 
-          <button className="btn solid" style={{ width: '100%' }} onClick={() => setDone(true)}>
+          {/* Donor Info */}
+          <label className="field-label">Your Details</label>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
+            <div>
+              <input value={donor.name} onChange={e => setDonor({ ...donor, name: e.target.value })} placeholder="Full Name *" />
+            </div>
+            <div>
+              <input type="tel" inputMode="numeric" pattern="[0-9]*" value={donor.phone} onChange={e => setDonor({ ...donor, phone: sanitizePhone(e.target.value) })} placeholder="Phone (10-digit)" />
+            </div>
+          </div>
+          <div style={{ marginBottom: 28 }}>
+            <input type="email" value={donor.email} onChange={e => setDonor({ ...donor, email: e.target.value })} placeholder="Email *" />
+          </div>
+
+          <button className="btn solid" style={{ width: '100%' }} onClick={async () => {
+            await window.saveDonation({
+              name: donor.name, phone: donor.phone, email: donor.email,
+              purpose, frequency: type, amount,
+            });
+            setDone(true);
+          }}>
             Continue to Razorpay
             <span className="arrow"></span>
           </button>
@@ -687,7 +714,15 @@ function VisheshaPujaModal({ open, onClose }) {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
-            <button className="btn solid" onClick={() => setDone(true)}>
+            <button className="btn solid" onClick={async () => {
+              await window.savePujaBooking({
+                name: form.name, phone: form.whatsapp, email: form.email,
+                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                pujaName: puja, pujaType: 'vishesha', date: form.date,
+                amount: VISHESHA_PUJAS.find(v => v.name === puja).price,
+              });
+              setDone(true);
+            }}>
               Pay ₹{VISHESHA_PUJAS.find(v => v.name === puja).price.toLocaleString('en-IN')} via Razorpay
               <span className="arrow"></span>
             </button>
@@ -818,7 +853,15 @@ function NaivedyamModal({ open, onClose }) {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
-            <button className="btn solid" onClick={() => setDone(true)}>
+            <button className="btn solid" onClick={async () => {
+              await window.savePujaBooking({
+                name: form.name, phone: form.whatsapp, email: form.email,
+                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                pujaName: 'Naivedyam (Daily 1kg, 1 Month)', pujaType: 'naivedyam',
+                date: form.date, amount: 10000,
+              });
+              setDone(true);
+            }}>
               Pay ₹10,000 for This Month via Razorpay
               <span className="arrow"></span>
             </button>
@@ -964,7 +1007,15 @@ function NityaPratahModal({ open, onClose }) {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
-            <button className="btn solid" onClick={() => setDone(true)}>
+            <button className="btn solid" onClick={async () => {
+              await window.savePujaBooking({
+                name: form.name, phone: form.whatsapp, email: form.email,
+                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                pujaName: puja, pujaType: 'nitya_pratah', date: form.date,
+                amount: NITYA_PRATAH_PUJAS.find(v => v.name === puja).price,
+              });
+              setDone(true);
+            }}>
               Pay ₹{NITYA_PRATAH_PUJAS.find(v => v.name === puja).price.toLocaleString('en-IN')} via Razorpay
               <span className="arrow"></span>
             </button>
@@ -1094,7 +1145,15 @@ function RudrabhishekamModal({ open, onClose }) {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
-            <button className="btn solid" onClick={() => setDone(true)}>
+            <button className="btn solid" onClick={async () => {
+              await window.savePujaBooking({
+                name: form.name, phone: form.whatsapp, email: form.email,
+                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                pujaName: 'Rudrabhishekam', pujaType: 'rudrabhishekam',
+                date: form.date, amount: 2116,
+              });
+              setDone(true);
+            }}>
               Pay ₹2,116 via Razorpay
               <span className="arrow"></span>
             </button>
