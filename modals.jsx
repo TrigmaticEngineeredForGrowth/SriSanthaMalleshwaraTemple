@@ -15,6 +15,14 @@ function addDuration(dateStr, label) {
   return `${y}-${m}-${day}`;
 }
 
+function sanitizePhone(v) { return v.replace(/[^0-9]/g, '').slice(0, 15); }
+function todayStr() {
+  const d = new Date();
+  const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+function isFutureDate(s) { return s && s >= todayStr(); }
+
 function Modal({ open, onClose, children, title, sub }) {
   useEffectM(() => {
     if (!open) return;
@@ -106,10 +114,11 @@ function SevaModal({ open, onClose }) {
           </div>
 
           <label className="field-label">Preferred Date</label>
-          <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+          <input type="date" value={date} min={todayStr()} onChange={e => setDate(e.target.value)} />
+          {date && !isFutureDate(date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
 
           <div style={{ marginTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
-            <button className="btn solid" disabled={!date} onClick={() => date && setStep(2)} style={{ opacity: date ? 1 : 0.45 }}>
+            <button className="btn solid" disabled={!date || !isFutureDate(date)} onClick={() => date && isFutureDate(date) && setStep(2)} style={{ opacity: date && isFutureDate(date) ? 1 : 0.45 }}>
               Continue
               <span className="arrow"></span>
             </button>
@@ -132,7 +141,7 @@ function SevaModal({ open, onClose }) {
           <div className="modal-grid-2">
             <div>
               <label className="field-label">Phone</label>
-              <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="+91" />
+              <input type="tel" inputMode="numeric" pattern="[0-9]*" value={phone} onChange={e => setPhone(sanitizePhone(e.target.value))} placeholder="10-digit number" />
             </div>
             <div>
               <label className="field-label">Email</label>
@@ -146,7 +155,7 @@ function SevaModal({ open, onClose }) {
 
           <div style={{ marginTop: 32, display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(1)}>← Back</button>
-            <button className="btn solid" disabled={!name || !phone} onClick={() => setStep(3)} style={{ opacity: name && phone ? 1 : 0.45 }}>
+            <button className="btn solid" disabled={!name || !phone || phone.length < 10} onClick={() => (name && phone.length >= 10) && setStep(3)} style={{ opacity: name && phone.length >= 10 ? 1 : 0.45 }}>
               Continue<span className="arrow"></span>
             </button>
           </div>
@@ -377,6 +386,7 @@ function ContactModal({ open, onClose }) {
     if (!form.name.trim()) e.name = 'Please share your name';
     if (!form.email.trim()) e.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = 'Please enter a valid email';
+    if (form.phone && form.phone.length < 10) e.phone = 'Please enter a valid phone number';
     if (!form.message.trim()) e.message = 'Please write a message';
     else if (form.message.trim().length < 6) e.message = 'A few more words, please';
     setErrs(e);
@@ -424,11 +434,16 @@ function ContactModal({ open, onClose }) {
             <div>
               <label className="field-label">Phone</label>
               <input
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 value={form.phone}
-                onChange={e => setForm({ ...form, phone: e.target.value })}
-                placeholder="+91"
+                onChange={e => setForm({ ...form, phone: sanitizePhone(e.target.value) })}
+                style={fieldStyle('phone')}
+                placeholder="10-digit number"
                 disabled={sending}
               />
+              {errs.phone && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>{errs.phone}</div>}
             </div>
           </div>
           <div style={{ marginBottom: 18 }}>
@@ -581,7 +596,7 @@ function VisheshaPujaModal({ open, onClose }) {
   const reset = () => { setStep(1); setPuja(null); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
-  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && form.date;
+  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && isFutureDate(form.date);
 
   return (
     <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Book Visesha Puja'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
@@ -630,11 +645,12 @@ function VisheshaPujaModal({ open, onClose }) {
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
-              <input value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: e.target.value })} placeholder="+91" /></div>
+              <input type="tel" inputMode="numeric" pattern="[0-9]*" value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: sanitizePhone(e.target.value) })} placeholder="10-digit number" /></div>
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Date *</label>
-            <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Address</label>
@@ -712,7 +728,7 @@ function NaivedyamModal({ open, onClose }) {
   const reset = () => { setStep(1); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
-  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && form.date;
+  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && isFutureDate(form.date);
 
   return (
     <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Nitya Naivedyam Seva'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
@@ -758,11 +774,12 @@ function NaivedyamModal({ open, onClose }) {
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
-              <input value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: e.target.value })} placeholder="+91" /></div>
+              <input type="tel" inputMode="numeric" pattern="[0-9]*" value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: sanitizePhone(e.target.value) })} placeholder="10-digit number" /></div>
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Start Date *</label>
-            <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Address</label>
@@ -853,7 +870,7 @@ function NityaPratahModal({ open, onClose }) {
   const reset = () => { setStep(1); setPuja(null); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
-  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && form.date;
+  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && isFutureDate(form.date);
 
   return (
     <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Book Nitya Pratah Puja'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
@@ -902,11 +919,12 @@ function NityaPratahModal({ open, onClose }) {
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
-              <input value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: e.target.value })} placeholder="+91" /></div>
+              <input type="tel" inputMode="numeric" pattern="[0-9]*" value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: sanitizePhone(e.target.value) })} placeholder="10-digit number" /></div>
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Start Date *</label>
-            <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Address</label>
@@ -985,7 +1003,7 @@ function RudrabhishekamModal({ open, onClose }) {
   const reset = () => { setStep(1); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
-  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && form.date;
+  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.email && isFutureDate(form.date);
 
   return (
     <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Rudrabhishekam Seva'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
@@ -1031,11 +1049,12 @@ function RudrabhishekamModal({ open, onClose }) {
             <div><label className="field-label">Nakshetra *</label>
               <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
             <div><label className="field-label">WhatsApp Phone *</label>
-              <input value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: e.target.value })} placeholder="+91" /></div>
+              <input type="tel" inputMode="numeric" pattern="[0-9]*" value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: sanitizePhone(e.target.value) })} placeholder="10-digit number" /></div>
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Date *</label>
-            <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Address</label>
