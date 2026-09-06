@@ -491,12 +491,24 @@ function Gallery({ onManageGallery }) {
           </div>
         ) : (
           <div className="grid-auto-4" style={{ gridTemplateRows: 'repeat(2, 280px)', gap: 16 }}>
-            <TempleImg keywords="gopuram sunrise temple south india" sig={21} alt="Gopuram at dawn" className="reveal" style={{ gridRow: 'span 2' }} />
-            <TempleImg keywords="abhishekam ritual shiva worship" sig={22} alt="Abhishekam ritual" className="reveal delay-1" style={{ gridColumn: 'span 2' }} />
-            <TempleImg keywords="garbha griha temple sanctum" sig={23} alt="Garbha griha" className="reveal delay-2" />
-            <TempleImg keywords="deepam oil lamps row india" sig={24} alt="Deepotsavam lamps" className="reveal delay-1" />
-            <TempleImg keywords="karthika festival lamps night" sig={25} alt="Karthika night" className="reveal delay-2" />
-            <TempleImg keywords="hindu temple corridor pillars" sig={26} alt="Temple corridor" className="reveal delay-3" />
+            <div className="reveal" style={{ gridRow: 'span 2', overflow: 'hidden', position: 'relative' }}>
+              <img src="assets/temple-real-photo.jpeg" alt="Temple entrance" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div className="reveal delay-1" style={{ gridColumn: 'span 2', overflow: 'hidden', position: 'relative' }}>
+              <img src="assets/temple-real-photo-garland.jpeg" alt="Temple with garlands" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div className="reveal delay-2" style={{ overflow: 'hidden', position: 'relative' }}>
+              <img src="assets/temple-real-photo-clean.jpeg" alt="Temple sanctum" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div className="reveal delay-1" style={{ overflow: 'hidden', position: 'relative' }}>
+              <img src="assets/temple-real-photo-nandi.jpeg" alt="Nandi at the temple" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div className="reveal delay-2" style={{ overflow: 'hidden', position: 'relative' }}>
+              <img src="assets/jyotirlinga-abhishekam.png" alt="Jyotirlinga abhishekam" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div className="reveal delay-3" style={{ overflow: 'hidden', position: 'relative' }}>
+              <img src="assets/jyotirlinga-shrine-full.png" alt="Jyotirlinga shrine" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
           </div>
         )}
       </div>
