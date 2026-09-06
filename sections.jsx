@@ -1,0 +1,729 @@
+/* global React */
+const { useEffect: useEffectS, useRef: useRefS, useState: useStateS } = React;
+
+// Scroll reveal hook
+function useReveal() {
+  useEffectS(() => {
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  });
+}
+
+/* Temple imagery — local photos from assets/. */
+function TempleImg({ src: srcProp, keywords, style, className, alt, sig }) {
+  const src = srcProp || 'assets/temple-real-photo-clean.jpeg';
+  const onError = (e) => {
+    // Hide broken image, show gradient fallback underneath
+    e.currentTarget.style.opacity = '0';
+  };
+  return (
+    <div className={className} style={{
+      position: 'relative',
+      overflow: 'hidden',
+      background: 'linear-gradient(135deg, #0d1428 0%, #1a1238 50%, #2a1410 100%)',
+      ...style
+    }}>
+      <img
+        src={src}
+        alt={alt || keywords}
+        loading="lazy"
+        onError={onError}
+        style={{
+          width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center',
+          display: 'block',
+          transition: 'transform 1.2s ease, opacity .6s',
+        }}
+      />
+      {/* Subtle dark overlay for text legibility on top */}
+      <div style={{
+        position: 'absolute', inset: 0, pointer: 'none',
+        background: 'linear-gradient(180deg, transparent 50%, rgba(5,5,5,0.35) 100%)',
+        pointerEvents: 'none',
+      }}></div>
+    </div>
+  );
+}
+
+function Divider() {
+  return (
+    <div className="divider">
+      <span className="line"></span>
+      <span className="dot"></span>
+      <span className="dot" style={{ opacity: 0.6 }}></span>
+      <span className="dot"></span>
+      <span className="line"></span>
+    </div>
+  );
+}
+
+/* ---------- Introduction ---------- */
+function Introduction() {
+  return (
+    <section style={{ background: 'linear-gradient(180deg, var(--bg-0), var(--bg-1) 60%, var(--bg-0))' }} data-screen-label="02 Introduction">
+      <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 100, alignItems: 'center' }}>
+        <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <img
+            src="assets/temple-trishul-hilltop.jpeg"
+            alt="Temple trishul overlooking the town"
+            style={{ aspectRatio: '4/5', width: '100%', objectFit: 'cover', border: '1px solid var(--line-soft)' }} />
+          <img
+            src="assets/temple-hilltop-view.jpeg"
+            alt="Temple complex on the hilltop overlooking the town"
+            style={{ aspectRatio: '16/9', width: '100%', objectFit: 'cover', border: '1px solid var(--line-soft)' }} />
+        </div>
+        <div className="reveal delay-1">
+          <span className="eyebrow">Sacred Heritage</span>
+          <h2 style={{ marginTop: 28 }}>
+            A sanctuary woven of<br/>
+            <span className="serif-display" style={{ color: 'var(--gold)' }}>silence, fire, and starlight.</span>
+          </h2>
+          <div style={{ marginTop: 32, fontSize: 20, color: 'var(--ivory-dim)', lineHeight: 1.7 }}>
+            <p>This temple dates to the 12th century AD, built during the Kakatiya period when they ruled Orugallu. It is associated with Sri Chenna Basaveshwara Swamy, one of the Panchacharya peethadhipathis. Some Shivalingas consecrated by the Kakatiyas still show arrow marks.</p>
+            <br/>
+            <p>The temple stands on Navaratna Shikhara, a hill known for its multicolored rock strata. A natural spring emerges at a corner of the hill, feeding the temple pond and flowing beneath the mandapa. Over time the pond became silted and the flow was choked, after removal of the silt, the water returned to its original course.<br/><br/></p>
+            <p>Within the complex are five sacred lingas: Sadyojata Linga in the inner shrine, Vamadeva Linga beside the pond, Aghora Linga in the southeast, another Linga in the northwest, and the principal shrine which houses the Ishan Linga called "Santhi Malleswara." These five lingas correspond to the five-faced aspects of the Supreme Lord, enhancing the sanctity of the temple.</p>
+          </div>
+          <p style={{ marginTop: 22, fontSize: 18, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.7 }}>
+          </p>
+          <div style={{ marginTop: 38, display: 'flex', gap: 60 }}>
+            <div>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 36, color: 'var(--gold)' }}>25+</div>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--ivory-faint)', textTransform: 'uppercase', marginTop: 6 }}>Years of Seva</div>
+            </div>
+            <div>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 36, color: 'var(--gold)' }}>25</div>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--ivory-faint)', textTransform: 'uppercase', marginTop: 6 }}>Annual Festivals</div>
+            </div>
+            <div>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 36, color: 'var(--gold)' }}>∞</div>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--ivory-faint)', textTransform: 'uppercase', marginTop: 6 }}>Continuous Aarti</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Pooja Timings ---------- */
+const POOJA_TIMES = [
+  { name: 'Nitya Pratah|Puja', desc: 'The awakening of the deity with sacred chants', icon: '☀' },
+  { name: 'Visesha|Pujas', desc: 'Sacred bathing with special Dravyas', icon: '❖' },
+  { name: 'RudrAbhishekam', desc: 'Abhishekam with Sri Rudram Namakam Chamakam', icon: 'ॐ' },
+  { name: 'Pradosha|Puja', desc: 'Twilight worship to Lord Shiva', icon: '◇' },
+  { name: 'Sri Chakra KumkumArchana', desc: 'Kumkuma puja', icon: '✴' },
+  { name: 'Sacred Homas', desc: 'Vedic fire rituals', icon: '🔥' },
+  { name: 'Nitya Naivedyam', desc: 'Prasadam offering (Daily 1kg)', icon: '◐' },
+  { name: 'Auspicious Maghamasa Pujas & Abhishekas (30 days)', desc: 'Maha Shivaratri Special', icon: '✶' },
+];
+
+function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, onRudrabhishekam, onSacredHomas }) {
+  return (
+    <section style={{ background: 'var(--bg-0)' }} data-screen-label="03 Pooja Timings">
+      <div className="container">
+        <div style={{ textAlign: 'center', marginBottom: 80 }} className="reveal">
+          <span className="eyebrow">Daily Rhythm</span>
+          <h2 style={{ marginTop: 24 }}>
+            The Hours of <span className="serif-display" style={{ color: 'var(--gold)' }}>Devotion</span>
+          </h2>
+          <p style={{ marginTop: 20, color: 'var(--ivory-dim)', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', fontSize: 19 }}>
+            Sacred services mark our days — each a returning to silence,
+            each an offering of light.
+          </p>
+        </div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 18 }}>
+          {POOJA_TIMES.map((p, i) => (
+            <div key={i} className={`card reveal delay-${i % 4}`} style={{ padding: '40px 24px', textAlign: 'center', flex: '1 1 calc(25% - 18px)', minWidth: 200, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: 32, color: 'var(--gold)', fontFamily: 'var(--f-script)', marginBottom: 22 }}>{p.icon}</div>
+              <h3 style={{ fontSize: 17, marginBottom: 14, letterSpacing: '0.06em' }}>{p.name.includes('|') ? p.name.split('|').map((line, li) => <React.Fragment key={li}>{line}{li === 0 && <br/>}</React.Fragment>) : p.name}</h3>
+              <p style={{ fontSize: 14, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.5, flex: 1 }}>{p.desc === 'Prasadam offering (Daily 1kg)' ? <span style={{ fontSize: 16 }}>Prasadam offering<br/>(Daily <b>1</b>kg)</span> : p.desc}</p>
+              <button className="btn" style={{ marginTop: 24, padding: '12px 20px', fontSize: 10, width: '100%', display: 'flex', justifyContent: 'center' }} onClick={() => p.name === 'Visesha|Pujas' ? onVisheshaPuja && onVisheshaPuja() : p.name === 'Nitya Naivedyam' ? onNaivedyam && onNaivedyam() : p.name === 'Nitya Pratah|Puja' ? onNityaPratah && onNityaPratah() : p.name === 'RudrAbhishekam' ? onRudrabhishekam && onRudrabhishekam() : p.name === 'Sacred Homas' ? onSacredHomas && onSacredHomas() : onBookSeva()}>Book Now</button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Upcoming Festivals ---------- */
+const FESTIVALS = [
+  {
+    date: 'Phalguna 14',
+    gregorian: 'March 8 · 2026',
+    name: 'Maha Shivaratri',
+    desc: 'The Great Night of Shiva — an all-night vigil of chants, abhishekams, and meditation.',
+    tag: 'Marquee Festival',
+  },
+  {
+    date: 'Rudra Homam',
+    gregorian: 'August 19 · 2026',
+    name: 'Rudra Homam',
+    desc: 'The most sacred Mondays — special rudrabhishekam offerings for prosperity and well-being.',
+    tag: 'Recurring',
+  },
+  {
+    date: 'Kumbha Abhishekam',
+    gregorian: 'November 24 · 2026',
+    name: 'Kumbha Abhishekam',
+    desc: 'Thousand-lamp festival — the entire temple compound glows by oil lamp light.',
+    tag: 'Festival of Light',
+  },
+  {
+    date: 'Pradosham',
+    gregorian: 'Every 13th tithi',
+    name: 'Pradosha Pooja',
+    desc: 'Twilight worship on the 13th lunar day — the most auspicious window to invoke Lord Shiva.',
+    tag: 'Bi-Monthly',
+  },
+];
+
+const MEGA_FESTIVALS = [
+  {
+    date: 'Maha Shivaratri',
+    gregorian: 'February 15 · 2026',
+    name: 'Maha Shivaratri',
+    desc: 'The Great Night of Shiva — an all-night vigil of chants, abhishekams, and meditation.',
+    tag: 'Festival',
+  },
+  {
+    date: 'Rudra Homam',
+    gregorian: 'January · 2026',
+    name: 'Rudra Homam',
+    desc: 'The most sacred Mondays — special rudrabhishekam offerings for prosperity and well-being.',
+    tag: 'Havan',
+  },
+  {
+    date: 'Kumbha Abhishekam',
+    gregorian: 'February · 2025',
+    name: 'Kumbha Abhishekam',
+    desc: 'A sacred ritual invoking divine blessings, peace, and prosperity.',
+    tag: 'Festival of Kalash',
+  },
+  {
+    date: 'Kalasha Puja',
+    gregorian: 'Every 13th tithi',
+    name: 'Pradosha Pooja',
+    desc: 'Twilight worship on the 13th lunar day — the most auspicious window to invoke Lord Shiva.',
+    tag: 'Bi-Monthly',
+  },
+];
+
+function Festivals({ bg, items, heading, hideSponsor, dateSize }) {
+  const list = items || FESTIVALS;
+  const scrollerRef = React.useRef(null);
+  const [atStart, setAtStart] = React.useState(true);
+  const [atEnd, setAtEnd] = React.useState(false);
+
+  const updateEdges = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft <= 4);
+    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+  };
+
+  React.useEffect(() => {
+    updateEdges();
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.addEventListener('scroll', updateEdges, { passive: true });
+    window.addEventListener('resize', updateEdges);
+    return () => {
+      el.removeEventListener('scroll', updateEdges);
+      window.removeEventListener('resize', updateEdges);
+    };
+  }, []);
+
+  const scrollBy = (dir) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    // One card (320) + gap (18) ≈ 338
+    el.scrollBy({ left: dir * 338, behavior: 'smooth' });
+  };
+
+  const arrowBtn = (disabled) => ({
+    width: 52, height: 52,
+    border: '1px solid var(--gold)',
+    background: disabled ? 'transparent' : 'rgba(255, 122, 46, 0.08)',
+    color: disabled ? 'var(--ivory-faint)' : 'var(--gold)',
+    borderColor: disabled ? 'var(--line-soft)' : 'var(--gold)',
+    cursor: disabled ? 'default' : 'pointer',
+    display: 'grid', placeItems: 'center',
+    fontFamily: 'var(--f-display)', fontSize: 18,
+    transition: 'all .3s ease',
+    flexShrink: 0,
+    boxShadow: disabled ? 'none' : '0 0 16px rgba(255, 122, 46, 0.25)',
+  });
+
+  return (
+    <section style={{ background: bg || 'linear-gradient(180deg, var(--bg-0), #07091a)', ...(bg ? { paddingTop: 40 } : { paddingBottom: 40 }) }} data-screen-label="04 Festivals">
+      <div className="container">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'end', gap: 60, marginBottom: 70 }} className="reveal">
+          <div>
+            <span className="eyebrow">The Sacred Calendar</span>
+            <h2 style={{ marginTop: 24 }}>
+              {heading || 'Upcoming'}<br/>
+              <span className="serif-display" style={{ color: 'var(--gold)' }}>Celebrations</span>
+            </h2>
+            <p style={{ color: 'var(--ivory-dim)', fontSize: 19, lineHeight: 1.7, marginTop: 20, maxWidth: 520 }}>
+              Each festival is a portal — a season of intensified grace.
+              All are welcome; sponsorship registration opens 30 days prior.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <button
+              aria-label="Previous festivals"
+              style={arrowBtn(atStart)}
+              onClick={() => !atStart && scrollBy(-1)}
+              disabled={atStart}
+            >←</button>
+            <button
+              aria-label="More festivals"
+              style={arrowBtn(atEnd)}
+              onClick={() => !atEnd && scrollBy(1)}
+              disabled={atEnd}
+            >→</button>
+          </div>
+        </div>
+
+        <div
+          ref={scrollerRef}
+          className="festival-scroll"
+          style={{
+            display: 'flex',
+            gap: 18,
+            overflowX: 'auto',
+            overflowY: 'hidden',
+            scrollSnapType: 'x mandatory',
+            paddingBottom: 8,
+            marginRight: -48,
+            paddingRight: 48,
+          }}
+        >
+          {list.map((f, i) => (
+            <div key={i} className={`reveal delay-${i % 4}`} style={{
+              flex: '0 0 320px',
+              scrollSnapAlign: 'start',
+              background: 'linear-gradient(180deg, rgba(20,26,44,0.55), rgba(11,17,32,0.3))',
+              border: '1px solid var(--line-soft)',
+              position: 'relative',
+              transition: 'all .4s',
+            }}>
+              {i === 0 ? (
+                <img src="assets/festival-maha-shivaratri.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
+              ) : i === 1 ? (
+                <img src="assets/festival-rudra-homam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
+              ) : i === 2 ? (
+                <img src="assets/festival-kumbha-abhishekam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
+              ) : (
+                <img src="assets/temple-real-photo-garland.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
+              )}
+              <div style={{ padding: 24 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}>
+                  <div>
+                    <div style={{ fontFamily: 'var(--f-display)', fontSize: dateSize || 11, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>
+                      {f.date}
+                    </div>
+                    <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>
+                      {f.gregorian}
+                    </div>
+                  </div>
+                  <div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid var(--line)', padding: '4px 10px' }}>
+                    {f.tag}
+                  </div>
+                </div>
+                <h3 style={{ fontSize: 22, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400, color: 'var(--ivory)', marginBottom: 14, letterSpacing: 'normal' }}>
+                  {f.name}
+                </h3>
+                <p style={{ fontSize: 14, color: 'var(--ivory-dim)', lineHeight: 1.55, marginBottom: 22 }}>
+                  {f.desc}
+                </p>
+                {!hideSponsor && (
+                  <a style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>
+                    Sponsor This Festival
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Seva Booking Preview ---------- */
+const SEVAS = [
+  { name: 'Rudrabhishekam', sanskrit: 'रुद्राभिषेकम्', price: 1100, dur: '45 min', desc: 'Sacred bathing of the Lingam with eleven chants' },
+  { name: 'Archana', sanskrit: 'अर्चना', price: 251, dur: '15 min', desc: 'Personal name-and-gotra prayer offering' },
+  { name: 'Annadanam', sanskrit: 'अन्नदानम्', price: 2500, dur: 'Full day', desc: 'Sponsor a day of meals for devotees' },
+  { name: 'Vahana Pooja', sanskrit: 'वाहन पूजा', price: 501, dur: '20 min', desc: 'Blessing for vehicles and travel' },
+];
+
+function SevaBooking({ onBookSeva }) {
+  return (
+    <section style={{ background: 'var(--bg-0)' }} data-screen-label="05 Seva Booking">
+      <div className="container">
+        <div style={{ textAlign: 'center', marginBottom: 70 }} className="reveal">
+          <span className="eyebrow">Sacred Offerings</span>
+          <h2 style={{ marginTop: 24 }}>
+            Online <span className="serif-display" style={{ color: 'var(--gold)' }}>Seva</span> Booking
+          </h2>
+          <p style={{ marginTop: 20, color: 'var(--ivory-dim)', maxWidth: 620, marginLeft: 'auto', marginRight: 'auto', fontSize: 19 }}>
+            Offer your devotion from anywhere in the world. Choose a seva, name the divine intention,
+            and our priests will perform it in your name. Prasadam delivered via post.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }}>
+          {SEVAS.map((s, i) => (
+            <div key={i} className={`card reveal delay-${i}`} style={{ padding: 32 }}>
+              <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 22, color: 'var(--gold)', marginBottom: 10 }}>{s.sanskrit}</div>
+              <h3 style={{ fontSize: 19, marginBottom: 12 }}>{s.name}</h3>
+              <p style={{ fontSize: 14, color: 'var(--ivory-faint)', lineHeight: 1.5, minHeight: 60, marginBottom: 24 }}>{s.desc}</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderTop: '1px solid var(--line-soft)', paddingTop: 22 }}>
+                <div>
+                  <div style={{ fontFamily: 'var(--f-display)', fontSize: 22, color: 'var(--gold)' }}>₹{s.price}</div>
+                  <div style={{ fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)', letterSpacing: '0.15em', marginTop: 4 }}>{s.dur}</div>
+                </div>
+                <button
+                  className="btn"
+                  style={{ padding: '12px 18px', fontSize: 10 }}
+                  onClick={onBookSeva}
+                >Book</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Donation CTA ---------- */
+const CAMPAIGNS = [
+  { name: 'Temple Renovation Fund', raised: 18.4, goal: 25, donors: 412 },
+  { name: 'Annadanam — Year of Meals', raised: 7.2, goal: 12, donors: 1842 },
+  { name: 'Gau Seva — Cow Shelter', raised: 4.6, goal: 6, donors: 287 },
+];
+
+function DonationCTA({ onDonate }) {
+  return (
+    <section style={{
+      background: 'linear-gradient(180deg, #07091a, #0d1428, #07091a)',
+      borderTop: '1px solid var(--line-soft)',
+      borderBottom: '1px solid var(--line-soft)',
+    }} data-screen-label="06 Donation">
+      <div className="container">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 80, maxWidth: 720, margin: '0 auto' }}>
+          <div className="reveal">
+            <span className="eyebrow">Daanam · The Act of Giving</span>
+            <h2 style={{ marginTop: 24 }}>
+              Every flame is kindled<br/>
+              <span className="serif-display" style={{ color: 'var(--gold)' }}>by an open hand.</span>
+            </h2>
+            <p style={{ marginTop: 28, color: 'var(--ivory-dim)', fontSize: 19, lineHeight: 1.7 }}>
+              The temple is sustained entirely by the generosity of devotees. From the oil in the lamps
+              to the meals served each day, every offering returns multifold as blessing.
+            </p>
+            <div style={{ marginTop: 38, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              <button className="btn solid" onClick={onDonate}>
+                Donate Now
+                <span className="arrow"></span>
+              </button>
+              <button className="btn ghost" onClick={onDonate}>
+                Monthly Sankalpa
+              </button>
+            </div>
+            <div style={{ marginTop: 36, display: 'flex', gap: 24, alignItems: 'center', color: 'var(--ivory-faint)' }}>
+              <span style={{ fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase' }}>Secure via</span>
+              <span style={{ fontFamily: 'var(--f-display)', fontSize: 13, letterSpacing: '0.2em', color: 'var(--ivory-dim)' }}>RAZORPAY</span>
+              <span style={{ fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.2em' }}>UPI · CARD · NET BANKING · WALLETS</span>
+            </div>
+            <div style={{ marginTop: 16, fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)', letterSpacing: '0.18em' }}>
+              80G EXEMPT · INSTANT RECEIPT · WEBHOOK-VERIFIED
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Gallery ---------- */
+const GALLERY_TILES = [
+  { label: 'GOPURAM AT DAWN', span: 'tall' },
+  { label: 'ABHISHEKAM RITUAL', span: 'wide' },
+  { label: 'GARBHA GRIHA' },
+  { label: 'DEEPOTSAVAM LAMPS' },
+  { label: 'KARTIKA NIGHT' },
+  { label: 'TEMPLE CORRIDOR' },
+];
+
+function Gallery({ onManageGallery }) {
+  const { media, loaded } = window.useGalleryMedia();
+  const hasCustom = loaded && media.length > 0;
+
+  return (
+    <section style={{ background: 'var(--bg-0)' }} data-screen-label="07 Gallery">
+      <div className="container">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginBottom: 60 }} className="reveal">
+          <div>
+            <span className="eyebrow">Through the Lens</span>
+            <h2 style={{ marginTop: 24 }}>
+              Glimpses of the <span className="serif-display" style={{ color: 'var(--gold)' }}>Sacred</span>
+            </h2>
+          </div>
+          <button
+            onClick={onManageGallery}
+            style={{
+              fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.28em', color: 'var(--gold)',
+              textTransform: 'uppercase', cursor: 'pointer', background: 'transparent',
+              border: '1px solid var(--gold)', padding: '12px 22px',
+            }}
+          >
+            + Add Photos &amp; Videos
+          </button>
+        </div>
+
+        {hasCustom ? (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridAutoRows: '280px',
+            gap: 16,
+          }}>
+            {media.map((item, i) => (
+              <window.MediaThumb
+                key={item.id}
+                item={item}
+                className="reveal"
+                style={i === 0 ? { gridRow: 'span 2' } : i === 1 ? { gridColumn: 'span 2' } : {}}
+              />
+            ))}
+          </div>
+        ) : (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateRows: 'repeat(2, 280px)',
+            gap: 16,
+          }}>
+            <TempleImg src="assets/temple-real-photo-clean.jpeg" alt="Gopuram at dawn" className="reveal" style={{ gridRow: 'span 2' }} />
+            <TempleImg src="assets/jyotirlinga-abhishekam.png" alt="Abhishekam ritual" className="reveal delay-1" style={{ gridColumn: 'span 2' }} />
+            <TempleImg src="assets/jyotirlinga-shrine-full.png" alt="Garbha griha" className="reveal delay-2" />
+            <TempleImg src="assets/temple-real-photo-garland.jpeg" alt="Deepotsavam lamps" className="reveal delay-1" />
+            <TempleImg src="assets/festival-kumbha-abhishekam.jpeg" alt="Karthika night" className="reveal delay-2" />
+            <TempleImg src="assets/temple-trishul-hilltop.jpeg" alt="Temple corridor" className="reveal delay-3" />
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Quote / Mantra band ---------- */
+function QuoteBand() {
+  return (
+    <section className="bg-grain" style={{
+      background: 'radial-gradient(ellipse at center, #0d1428, #050505)',
+      padding: '160px 0',
+      borderTop: '1px solid var(--line-soft)',
+      borderBottom: '1px solid var(--line-soft)',
+      position: 'relative',
+    }} data-screen-label="08 Mantra">
+      <div className="container-narrow" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
+        <div className="reveal">
+          <Divider />
+          <div style={{ marginTop: 50, fontFamily: 'var(--f-sanskrit)', fontSize: 38, color: 'var(--gold)', letterSpacing: '0.05em' }}>
+            कर्पूरगौरं करुणावतारं
+          </div>
+          <div style={{ marginTop: 14, fontFamily: 'var(--f-sanskrit)', fontSize: 38, color: 'var(--gold)', letterSpacing: '0.05em' }}>
+            संसारसारं भुजगेन्द्रहारम्
+          </div>
+
+          <p style={{
+            marginTop: 50,
+            fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400,
+            fontSize: 28, color: 'var(--ivory)', lineHeight: 1.5,
+            letterSpacing: '0.01em',
+          }}>
+            “White as camphor, an incarnation of compassion,<br/>
+            the very essence of existence, garlanded by the king of serpents —<br/>
+            <span style={{ color: 'var(--gold)' }}>I bow to Shiva, the auspicious one,</span><br/>
+            seated forever in the lotus of my heart.”
+          </p>
+          <div style={{ marginTop: 40, fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.4em', color: 'var(--ivory-faint)', textTransform: 'uppercase' }}>
+            — Karpura Gauram Stotra
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Testimonials ---------- */
+const TESTIMONIALS = [
+  { quote: 'I have offered the morning archana from London for eleven years. Distance has never been a barrier to grace.', name: 'Lakshmi Iyer', loc: 'London · Devotee since 2014' },
+  { quote: 'On Maha Shivaratri last year, the temple felt like a single, breathing being. I have not been the same since.', name: 'Anand Krishnan', loc: 'Bengaluru' },
+  { quote: 'The annadanam meals we sponsored for our father\'s shraddha — the priests sent us a handwritten note. It is still on our altar.', name: 'Meena & Suresh Rao', loc: 'Toronto' },
+];
+
+function Testimonials() {
+  const [idx, setIdx] = useStateS(0);
+  useEffectS(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % TESTIMONIALS.length), 7000);
+    return () => clearInterval(t);
+  }, []);
+  const t = TESTIMONIALS[idx];
+  return (
+    <section style={{ background: 'var(--bg-0)' }} data-screen-label="09 Testimonials">
+      <div className="container-narrow" style={{ textAlign: 'center' }}>
+        <div className="reveal">
+          <span className="eyebrow">Voices of Devotees</span>
+          <div style={{ position: 'relative', minHeight: 200, marginTop: 50 }}>
+            <p key={idx} style={{
+              fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400,
+              fontSize: 30, color: 'var(--ivory)', lineHeight: 1.5,
+              animation: 'fadeIn .6s ease',
+            }}>
+              “{t.quote}”
+            </p>
+            <div style={{ marginTop: 36 }}>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 13, letterSpacing: '0.2em', color: 'var(--gold)', textTransform: 'uppercase' }}>
+                {t.name}
+              </div>
+              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', letterSpacing: '0.15em', marginTop: 6 }}>
+                {t.loc}
+              </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 40 }}>
+            {TESTIMONIALS.map((_, i) => (
+              <button key={i} onClick={() => setIdx(i)} style={{
+                width: i === idx ? 28 : 8, height: 2,
+                background: i === idx ? 'var(--gold)' : 'var(--line-soft)',
+                border: 'none', cursor: 'pointer',
+                transition: 'all .4s ease',
+              }}></button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Footer ---------- */
+function Footer({ onContact }) {
+  return (
+    <footer data-screen-label="10 Footer">
+      <div className="container">
+        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 60, marginBottom: 80 }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
+              <div style={{
+                width: 48, height: 48, border: '1px solid var(--gold)', borderRadius: '50%',
+                display: 'grid', placeItems: 'center',
+                fontFamily: 'var(--f-sanskrit)',
+                color: 'var(--gold)', fontSize: 24,
+              }}>ॐ</div>
+              <div>
+                <div style={{ fontFamily: 'var(--f-display)', fontSize: 15, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+                  SRI SANTHA MALLESWARA TEMPLE
+                </div>
+                <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 13, color: 'var(--ivory-faint)' }}>
+                  Sacred Sanctuary of Cosmic Shiva
+                </div>
+              </div>
+            </div>
+            <p style={{ color: 'var(--ivory-faint)', fontSize: 15, lineHeight: 1.6, maxWidth: 360 }}>
+              17/B, Sampige Road · Malleshwaram<br/>
+              Bengaluru, Karnataka 560003<br/>
+              India
+            </p>
+            <p style={{ marginTop: 20, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', letterSpacing: '0.14em' }}>
+              +91 80 2334 9090<br/>
+              hello@shantamalleshwara.org
+            </p>
+          </div>
+
+          <div>
+            <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 22 }}>
+              Explore
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {[['About', '#about'], ['Services', '#services'], ['Events', '#events'], ['Donation', '#donation'], ['Sacred Audios', '#audio'], ['Gallery', '#gallery'], ['Contact', '#']].map(([l, href]) => (
+                <li key={l}><a href={href} style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>{l}</a></li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 22 }}>
+              Sevas
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {['Book a Pooja', 'Annadanam', 'Festival Sponsorship', 'Recurring Sankalpa', 'Gau Seva', 'Live Darshan'].map(l => (
+                <li key={l}><a style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>{l}</a></li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 22 }}>
+              Stay Connected
+            </div>
+            <p style={{ color: 'var(--ivory-faint)', fontSize: 14, lineHeight: 1.6, marginBottom: 18 }}>
+              Receive the panchanga, festival reminders, and dharmic reflections.
+            </p>
+            <form onSubmit={e => { e.preventDefault(); alert('Subscribed — Om Namah Shivaya'); }}>
+              <input type="email" placeholder="your@email.com" style={{ marginBottom: 12 }} />
+              <button type="submit" className="btn" style={{ width: '100%', padding: '14px 18px', fontSize: 10 }}>
+                Subscribe
+              </button>
+            </form>
+            <button onClick={onContact} style={{
+              marginTop: 18, background: 'transparent', border: 'none',
+              fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em',
+              color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer',
+              borderBottom: '1px solid var(--gold)', paddingBottom: 4,
+            }}>
+              Write to Us →
+            </button>
+          </div>
+        </div>
+
+        <div style={{
+          paddingTop: 36,
+          borderTop: '1px solid var(--line-soft)',
+          display: 'flex', justifyContent: 'space-between',
+          fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)',
+          letterSpacing: '0.18em', textTransform: 'uppercase',
+        }}>
+          <div>© Saka 1947 · Shanta Malleshwara Swami Temple Trust · 80G Registered</div>
+          <div style={{ display: 'flex', gap: 30 }}>
+            <a>Privacy</a><a>Terms</a><a>Refund Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+Object.assign(window, {
+  useReveal, Divider, TempleImg, Introduction, PoojaTimings, Festivals, MEGA_FESTIVALS,
+  SevaBooking, DonationCTA, Gallery, QuoteBand, Testimonials, Footer
+});
