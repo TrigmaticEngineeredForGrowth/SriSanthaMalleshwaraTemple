@@ -200,11 +200,28 @@ function SevaModal({ open, onClose }) {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
             <button className="btn solid" onClick={async () => {
-              await window.saveSevaBooking({
-                name, phone, email, gotra,
-                sevaName: seva, date, amount: current.price,
+              let bookingRef = null;
+              try {
+                const saved = await window.saveSevaBooking({
+                  name, phone, email, gotra,
+                  sevaName: seva, date, amount: current.price,
+                });
+                bookingRef = saved?.id || null;
+              } catch (e) { console.warn('booking save failed', e); }
+
+              const result = await window.startRazorpayPayment({
+                amount: current.price,
+                purpose: 'Seva: ' + seva,
+                name, email, phone,
+                referenceType: 'seva_bookings',
+                referenceId: bookingRef,
               });
-              setDone(true);
+
+              if (result.verified) {
+                setDone(true);
+              } else {
+                alert(result.error || 'Payment could not be completed. Please try again.');
+              }
             }}>
               Pay ₹{current.price} via Razorpay
               <span className="arrow"></span>
@@ -356,11 +373,28 @@ function DonationModal({ open, onClose }) {
           </div>
 
           <button className="btn solid" style={{ width: '100%' }} onClick={async () => {
-            await window.saveDonation({
-              name: donor.name, phone: donor.phone, email: donor.email,
-              purpose, frequency: type, amount,
+            let donationRef = null;
+            try {
+              const saved = await window.saveDonation({
+                name: donor.name, phone: donor.phone, email: donor.email,
+                purpose, frequency: type, amount,
+              });
+              donationRef = saved?.id || null;
+            } catch (e) { console.warn('donation save failed', e); }
+
+            const result = await window.startRazorpayPayment({
+              amount: amount,
+              purpose: 'Donation: ' + purpose,
+              name: donor.name, email: donor.email, phone: donor.phone,
+              referenceType: 'donations',
+              referenceId: donationRef,
             });
-            setDone(true);
+
+            if (result.verified) {
+              setDone(true);
+            } else {
+              alert(result.error || 'Payment could not be completed. Please try again.');
+            }
           }}>
             Continue to Razorpay
             <span className="arrow"></span>
@@ -721,13 +755,31 @@ function VisheshaPujaModal({ open, onClose }) {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
             <button className="btn solid" onClick={async () => {
-              await window.savePujaBooking({
-                name: form.name, phone: form.whatsapp, email: form.email,
-                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
-                pujaName: puja, pujaType: 'vishesha', date: form.date,
-                amount: VISHESHA_PUJAS.find(v => v.name === puja).price,
+              const pujaPrice = VISHESHA_PUJAS.find(v => v.name === puja).price;
+              let bookingRef = null;
+              try {
+                const saved = await window.savePujaBooking({
+                  name: form.name, phone: form.whatsapp, email: form.email,
+                  gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                  pujaName: puja, pujaType: 'vishesha', date: form.date,
+                  amount: pujaPrice,
+                });
+                bookingRef = saved?.id || null;
+              } catch (e) { console.warn('booking save failed', e); }
+
+              const result = await window.startRazorpayPayment({
+                amount: pujaPrice,
+                purpose: 'Puja: ' + puja,
+                name: form.name, email: form.email, phone: form.whatsapp,
+                referenceType: 'puja_bookings',
+                referenceId: bookingRef,
               });
-              setDone(true);
+
+              if (result.verified) {
+                setDone(true);
+              } else {
+                alert(result.error || 'Payment could not be completed. Please try again.');
+              }
             }}>
               Pay ₹{VISHESHA_PUJAS.find(v => v.name === puja).price.toLocaleString('en-IN')} via Razorpay
               <span className="arrow"></span>
@@ -860,13 +912,30 @@ function NaivedyamModal({ open, onClose }) {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
             <button className="btn solid" onClick={async () => {
-              await window.savePujaBooking({
-                name: form.name, phone: form.whatsapp, email: form.email,
-                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
-                pujaName: 'Naivedyam (Daily 1kg, 1 Month)', pujaType: 'naivedyam',
-                date: form.date, amount: 10000,
+              let bookingRef = null;
+              try {
+                const saved = await window.savePujaBooking({
+                  name: form.name, phone: form.whatsapp, email: form.email,
+                  gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                  pujaName: 'Naivedyam (Daily 1kg, 1 Month)', pujaType: 'naivedyam',
+                  date: form.date, amount: 10000,
+                });
+                bookingRef = saved?.id || null;
+              } catch (e) { console.warn('booking save failed', e); }
+
+              const result = await window.startRazorpayPayment({
+                amount: 10000,
+                purpose: 'Naivedyam (Daily 1kg, 1 Month)',
+                name: form.name, email: form.email, phone: form.whatsapp,
+                referenceType: 'puja_bookings',
+                referenceId: bookingRef,
               });
-              setDone(true);
+
+              if (result.verified) {
+                setDone(true);
+              } else {
+                alert(result.error || 'Payment could not be completed. Please try again.');
+              }
             }}>
               Pay ₹10,000 for This Month via Razorpay
               <span className="arrow"></span>
@@ -1014,13 +1083,31 @@ function NityaPratahModal({ open, onClose }) {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
             <button className="btn solid" onClick={async () => {
-              await window.savePujaBooking({
-                name: form.name, phone: form.whatsapp, email: form.email,
-                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
-                pujaName: puja, pujaType: 'nitya_pratah', date: form.date,
-                amount: NITYA_PRATAH_PUJAS.find(v => v.name === puja).price,
+              const pujaPrice = NITYA_PRATAH_PUJAS.find(v => v.name === puja).price;
+              let bookingRef = null;
+              try {
+                const saved = await window.savePujaBooking({
+                  name: form.name, phone: form.whatsapp, email: form.email,
+                  gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                  pujaName: puja, pujaType: 'nitya_pratah', date: form.date,
+                  amount: pujaPrice,
+                });
+                bookingRef = saved?.id || null;
+              } catch (e) { console.warn('booking save failed', e); }
+
+              const result = await window.startRazorpayPayment({
+                amount: pujaPrice,
+                purpose: 'Puja: ' + puja,
+                name: form.name, email: form.email, phone: form.whatsapp,
+                referenceType: 'puja_bookings',
+                referenceId: bookingRef,
               });
-              setDone(true);
+
+              if (result.verified) {
+                setDone(true);
+              } else {
+                alert(result.error || 'Payment could not be completed. Please try again.');
+              }
             }}>
               Pay ₹{NITYA_PRATAH_PUJAS.find(v => v.name === puja).price.toLocaleString('en-IN')} via Razorpay
               <span className="arrow"></span>
@@ -1152,13 +1239,30 @@ function RudrabhishekamModal({ open, onClose }) {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
             <button className="btn solid" onClick={async () => {
-              await window.savePujaBooking({
-                name: form.name, phone: form.whatsapp, email: form.email,
-                gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
-                pujaName: 'Rudrabhishekam', pujaType: 'rudrabhishekam',
-                date: form.date, amount: 2116,
+              let bookingRef = null;
+              try {
+                const saved = await window.savePujaBooking({
+                  name: form.name, phone: form.whatsapp, email: form.email,
+                  gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                  pujaName: 'Rudrabhishekam', pujaType: 'rudrabhishekam',
+                  date: form.date, amount: 2116,
+                });
+                bookingRef = saved?.id || null;
+              } catch (e) { console.warn('booking save failed', e); }
+
+              const result = await window.startRazorpayPayment({
+                amount: 2116,
+                purpose: 'Rudrabhishekam',
+                name: form.name, email: form.email, phone: form.whatsapp,
+                referenceType: 'puja_bookings',
+                referenceId: bookingRef,
               });
-              setDone(true);
+
+              if (result.verified) {
+                setDone(true);
+              } else {
+                alert(result.error || 'Payment could not be completed. Please try again.');
+              }
             }}>
               Pay ₹2,116 via Razorpay
               <span className="arrow"></span>
