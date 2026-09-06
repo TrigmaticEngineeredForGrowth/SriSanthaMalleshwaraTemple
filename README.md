@@ -1,1 +1,1 @@
-# SriSanthaMalleshwaraTemple
+# SriSanthaMalleswaraTemple
