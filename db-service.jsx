@@ -3,29 +3,66 @@
  * Database Service — Supabase integration
  * ----------------------------------------
  * Connects all temple forms to the Supabase database.
- * The Supabase client is loaded via CDN in index.html.
- * The client is initialized in index.html before this file loads.
+ * Uses the Supabase REST API directly via fetch so writes do not
+ * depend on the JS client library initializing correctly.
  */
 
-let supabase = null;
+const SUPABASE_URL = 'https://eybtrqwqaprfefwlgled.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5YnRycXdxYXByZmVmd2xnbGVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3MjA2NTAsImV4cCI6MjEwNDI5NjY1MH0.MFMPHC6B7le4adURWeHujyM4-EY5p1lKtn-CEsVWseE';
 
-function getSupabase() {
-  if (supabase) return supabase;
-  if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.from === 'function') {
-    supabase = window.supabase;
-    return supabase;
-  }
-  return null;
+function sbHeaders() {
+  return {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation',
+  };
 }
 
 function isReady() {
-  return !!getSupabase();
+  return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+}
+
+async function restInsert(table, row) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: sbHeaders(),
+    body: JSON.stringify(row),
+  });
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+  if (!res.ok) {
+    const msg = (data && data.message) || text || `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return Array.isArray(data) ? data[0] : data;
+}
+
+async function restUpsert(table, row, onConflict) {
+  const headers = sbHeaders();
+  headers['Prefer'] = 'return=representation,resolution=merge-duplicates';
+  const url = onConflict
+    ? `${SUPABASE_URL}/rest/v1/${table}?on_conflict=${onConflict}`
+    : `${SUPABASE_URL}/rest/v1/${table}`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(row),
+  });
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+  if (!res.ok) {
+    const msg = (data && data.message) || text || `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return Array.isArray(data) ? data[0] : data;
 }
 
 /* ---------- Devotee upsert (save or update by phone) ---------- */
 async function saveDevotee({ name, phone, email, gotra, nakshetra, address }) {
-  const sb = getSupabase();
-  if (!sb || !phone) return null;
+  if (!phone) return null;
   const row = {
     phone: phone.trim(),
     name: (name || '').trim(),
@@ -34,13 +71,7 @@ async function saveDevotee({ name, phone, email, gotra, nakshetra, address }) {
     nakshetra: (nakshetra || '').trim() || null,
     address: (address || '').trim() || null,
   };
-  const { data, error } = await sb
-    .from('devotees')
-    .upsert(row, { onConflict: 'phone' })
-    .select()
-    .maybeSingle();
-  if (error) console.warn('[db] saveDevotee:', error.message);
-  return data;
+  return await restUpsert('devotees', row, 'phone');
 }
 
 async function saveDevoteeSafe(props) {
@@ -50,58 +81,44 @@ async function saveDevoteeSafe(props) {
 
 /* ---------- Seva booking ---------- */
 async function saveSevaBooking({ name, phone, email, gotra, sevaName, date, amount }) {
-  const sb = getSupabase();
-  if (!sb) return null;
   await saveDevoteeSafe({ name, phone, email, gotra });
-  const { data, error } = await sb.from('seva_bookings').insert({
+  return await restInsert('seva_bookings', {
     phone: phone.trim(),
     seva_name: sevaName,
     seva_date: date,
     amount: amount,
     gotra: (gotra || '').trim() || null,
-  }).select().maybeSingle();
-  if (error) console.warn('[db] saveSevaBooking:', error.message);
-  return data;
+  });
 }
 
 /* ---------- Donation ---------- */
 async function saveDonation({ name, phone, email, purpose, frequency, amount }) {
-  const sb = getSupabase();
-  if (!sb) return null;
   if (phone) await saveDevoteeSafe({ name, phone, email });
-  const { data, error } = await sb.from('donations').insert({
+  return await restInsert('donations', {
     phone: (phone || '').trim() || null,
     donor_name: (name || '').trim(),
     purpose: purpose,
     frequency: frequency,
     amount: amount,
-  }).select().maybeSingle();
-  if (error) console.warn('[db] saveDonation:', error.message);
-  return data;
+  });
 }
 
 /* ---------- Contact message ---------- */
 async function saveContactMessage({ name, phone, email, message, reference }) {
-  const sb = getSupabase();
-  if (!sb) throw new Error('Database not connected');
   if (phone) await saveDevoteeSafe({ name, phone, email });
-  const { data, error } = await sb.from('contact_messages').insert({
+  return await restInsert('contact_messages', {
     phone: (phone || '').trim() || null,
     name: (name || '').trim(),
     email: (email || '').trim(),
     message: (message || '').trim(),
     reference: reference || null,
-  }).select().maybeSingle();
-  if (error) throw new Error(error.message);
-  return data;
+  });
 }
 
 /* ---------- Puja booking (Vishesha, Nitya Pratah, Naivedyam, Rudrabhishekam) ---------- */
 async function savePujaBooking({ name, phone, email, gotra, nakshetra, address, pujaName, pujaType, date, amount }) {
-  const sb = getSupabase();
-  if (!sb) return null;
   await saveDevoteeSafe({ name, phone, email, gotra, nakshetra, address });
-  const { data, error } = await sb.from('puja_bookings').insert({
+  return await restInsert('puja_bookings', {
     phone: phone.trim(),
     puja_name: pujaName,
     puja_type: pujaType,
@@ -110,9 +127,7 @@ async function savePujaBooking({ name, phone, email, gotra, nakshetra, address, 
     gotra: (gotra || '').trim() || null,
     nakshetra: (nakshetra || '').trim() || null,
     address: (address || '').trim() || null,
-  }).select().maybeSingle();
-  if (error) console.warn('[db] savePujaBooking:', error.message);
-  return data;
+  });
 }
 
 Object.assign(window, {
