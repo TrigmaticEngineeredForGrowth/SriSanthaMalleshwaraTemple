@@ -197,7 +197,7 @@ const FESTIVALS = [
   },
 ];
 
-function Festivals() {
+function FestivalCarousel({ heading, accentHeading, id }) {
   const scrollerRef = React.useRef(null);
   const [atStart, setAtStart] = React.useState(true);
   const [atEnd, setAtEnd] = React.useState(false);
@@ -221,119 +221,42 @@ function Festivals() {
     };
   }, []);
 
-  const scrollBy = (dir) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    // One card (320) + gap (18) ≈ 338
-    el.scrollBy({ left: dir * 338, behavior: 'smooth' });
-  };
-
   const arrowBtn = (disabled) => ({
-    width: 52, height: 52,
-    border: '1px solid var(--gold)',
+    width: 52, height: 52, border: '1px solid var(--gold)',
     background: disabled ? 'transparent' : 'rgba(255, 122, 46, 0.08)',
     color: disabled ? 'var(--ivory-faint)' : 'var(--gold)',
     borderColor: disabled ? 'var(--line-soft)' : 'var(--gold)',
-    cursor: disabled ? 'default' : 'pointer',
-    display: 'grid', placeItems: 'center',
-    fontFamily: 'var(--f-display)', fontSize: 18,
-    transition: 'all .3s ease',
-    flexShrink: 0,
+    cursor: disabled ? 'default' : 'pointer', display: 'grid', placeItems: 'center',
+    fontFamily: 'var(--f-display)', fontSize: 18, transition: 'all .3s ease', flexShrink: 0,
     boxShadow: disabled ? 'none' : '0 0 16px rgba(255, 122, 46, 0.25)',
   });
 
   return (
-    <section style={{ background: 'linear-gradient(180deg, var(--bg-0), #07091a)' }} data-screen-label="04 Festivals">
+    <section id={id} style={{ background: 'linear-gradient(180deg, var(--bg-0), #07091a)' }} data-screen-label="04 Festivals">
       <div className="container">
         <div className="flex-header reveal" style={{ marginBottom: 70 }}>
           <div>
             <span className="eyebrow">The Sacred Calendar</span>
-            <h2 style={{ marginTop: 24 }}>
-              Mega<br/>
-              <span className="serif-display" style={{ color: 'var(--gold)' }}>Celebrations</span>
-            </h2>
+            <h2 style={{ marginTop: 24 }}>{heading}<br/><span className="serif-display" style={{ color: 'var(--gold)' }}>{accentHeading}</span></h2>
             <p style={{ color: 'var(--ivory-dim)', fontSize: 19, lineHeight: 1.7, marginTop: 20, maxWidth: 520 }}>
               Each festival is a portal — a season of intensified grace.
               All are welcome; sponsorship registration opens 30 days prior.
             </p>
           </div>
           <div style={{ display: 'flex', gap: 12 }}>
-            <button
-              aria-label="Previous festivals"
-              style={arrowBtn(atStart)}
-              onClick={() => !atStart && scrollBy(-1)}
-              disabled={atStart}
-            >←</button>
-            <button
-              aria-label="More festivals"
-              style={arrowBtn(atEnd)}
-              onClick={() => !atEnd && scrollBy(1)}
-              disabled={atEnd}
-            >→</button>
+            <button aria-label="Previous festivals" style={arrowBtn(atStart)} onClick={() => !atStart && scrollerRef.current.scrollBy({ left: -338, behavior: 'smooth' })} disabled={atStart}>←</button>
+            <button aria-label="More festivals" style={arrowBtn(atEnd)} onClick={() => !atEnd && scrollerRef.current.scrollBy({ left: 338, behavior: 'smooth' })} disabled={atEnd}>→</button>
           </div>
         </div>
-
-        <div
-          ref={scrollerRef}
-          className="festival-scroll"
-          style={{
-            display: 'flex',
-            gap: 18,
-            overflowX: 'auto',
-            overflowY: 'hidden',
-            scrollSnapType: 'x mandatory',
-            paddingBottom: 8,
-            marginRight: -48,
-            paddingRight: 48,
-            WebkitOverflowScrolling: 'touch',
-          }}
-        >
+        <div ref={scrollerRef} className="festival-scroll" style={{ display: 'flex', gap: 18, overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', paddingBottom: 8, marginRight: -48, paddingRight: 48, WebkitOverflowScrolling: 'touch' }}>
           {FESTIVALS.map((f, i) => (
-            <div key={i} className={`reveal delay-${i % 4}`} style={{
-              flex: '0 0 320px',
-              scrollSnapAlign: 'start',
-              background: 'linear-gradient(180deg, rgba(20,26,44,0.55), rgba(11,17,32,0.3))',
-              border: '1px solid var(--line-soft)',
-              position: 'relative',
-              transition: 'all .4s',
-            }}>
-              {i === 0 ? (
-                <img src="assets/festival-maha-shivaratri.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
-              ) : i === 1 ? (
-                <img src="assets/festival-rudra-homam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
-              ) : i === 2 ? (
-                <img src="assets/festival-kumbha-abhishekam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} />
-              ) : (
-                <TempleImg
-                  keywords={['shiva lingam temple', 'fire ritual yajna homam', 'abhishekam milk ritual', 'oil lamp diya temple', 'nataraja bronze statue'][i] || 'hindu temple ritual'}
-                  alt={f.name}
-                  sig={i + 10}
-                  style={{ aspectRatio: '4/3' }}
-                />
-              )}
+            <div key={i} className={`reveal delay-${i % 4}`} style={{ flex: '0 0 320px', scrollSnapAlign: 'start', background: 'linear-gradient(180deg, rgba(20,26,44,0.55), rgba(11,17,32,0.3))', border: '1px solid var(--line-soft)', position: 'relative', transition: 'all .4s' }}>
+              {i === 0 ? <img src="assets/festival-maha-shivaratri.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 1 ? <img src="assets/festival-rudra-homam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 2 ? <img src="assets/festival-kumbha-abhishekam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : <TempleImg keywords={['shiva lingam temple', 'fire ritual yajna homam', 'abhishekam milk ritual', 'oil lamp diya temple', 'nataraja bronze statue'][i] || 'hindu temple ritual'} alt={f.name} sig={i + 10} style={{ aspectRatio: '4/3' }} />}
               <div style={{ padding: 24 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}>
-                  <div>
-                    <div style={{ fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>
-                      {f.date}
-                    </div>
-                    <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>
-                      {f.gregorian}
-                    </div>
-                  </div>
-                  <div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid var(--line)', padding: '4px 10px' }}>
-                    {f.tag}
-                  </div>
-                </div>
-                <h3 style={{ fontSize: 22, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400, color: 'var(--ivory)', marginBottom: 14, letterSpacing: 'normal' }}>
-                  {f.name}
-                </h3>
-                <p style={{ fontSize: 14, color: 'var(--ivory-dim)', lineHeight: 1.55, marginBottom: 22 }}>
-                  {f.desc}
-                </p>
-                <a style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>
-                  Sponsor This Festival
-                </a>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}><div><div style={{ fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>{f.date}</div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>{f.gregorian}</div></div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid var(--line)', padding: '4px 10px' }}>{f.tag}</div></div>
+                <h3 style={{ fontSize: 22, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400, color: 'var(--ivory)', marginBottom: 14, letterSpacing: 'normal' }}>{f.name}</h3>
+                <p style={{ fontSize: 14, color: 'var(--ivory-dim)', lineHeight: 1.55, marginBottom: 22 }}>{f.desc}</p>
+                <a style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>Sponsor This Festival</a>
               </div>
             </div>
           ))}
@@ -341,6 +264,13 @@ function Festivals() {
       </div>
     </section>
   );
+}
+
+function Festivals() {
+  return <>
+    <FestivalCarousel id="events" heading="Mega" accentHeading="Celebrations" />
+    <FestivalCarousel heading="Upcoming" accentHeading="Celebrations" />
+  </>;
 }
 
 /* ---------- Seva Booking Preview ---------- */
