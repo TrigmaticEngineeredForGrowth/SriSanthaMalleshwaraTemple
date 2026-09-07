@@ -172,32 +172,32 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
 /* ---------- Upcoming Festivals ---------- */
 const FESTIVALS = [
   {
-    date: 'Phalguna 14',
-    gregorian: 'March 8 · 2026',
+    date: 'Maha shivaratri',
+    gregorian: 'March 6 · 2027',
     name: 'Maha Shivaratri',
     desc: 'The Great Night of Shiva — an all-night vigil of chants, abhishekams, and meditation.',
-    tag: 'Marquee Festival',
+    tag: 'Festival of supreme',
   },
   {
     date: 'Rudra Homam',
-    gregorian: 'August 19 · 2026',
+    gregorian: 'MaaghaMasa · 2027',
     name: 'Rudra Homam',
-    desc: 'The most sacred Mondays — special rudrabhishekam offerings for prosperity and well-being.',
-    tag: 'Recurring',
+    desc: 'The most sacred and powerful Vedic ritual dedicated to Lord Shiva (in his fierce Rudra form)',
+    tag: 'Havan',
   },
   {
-    date: 'Kumbha Abhishekam',
-    gregorian: 'November 24 · 2026',
-    name: 'Kumbha Abhishekam',
-    desc: 'Thousand-lamp festival — the entire temple compound glows by oil lamp light.',
-    tag: 'Festival of Light',
+    date: 'Shiva Parvati kalyanam',
+    gregorian: 'March 7 · 2027',
+    name: 'Shiva Parvati Kalyanam',
+    desc: 'Divine marriage of Lord Shiva and Goddess Parvati - Symbolizing the ultimate Union of Consciousness and Primordial energy',
+    tag: 'Festival',
   },
   {
-    date: 'Pradosham',
-    gregorian: 'Every 13th tithi',
-    name: 'Kalasha Puja',
-    desc: 'Twilight worship on the 13th lunar day — the most auspicious window to invoke Lord Shiva.',
-    tag: 'Bi-Monthly',
+    date: 'Kartika Masa Deeparadhana',
+    gregorian: 'Kartika Masa . 2027',
+    name: 'Kartika Masa Deeparadhana',
+    desc: 'A sacred ritual of lighting oil lamps during the holy Hindu month of Kartika to honor Lord Shiva and Lord Vishnu',
+    tag: 'deeparadhana',
   },
   {
     date: 'Margazhi 27',
@@ -250,8 +250,7 @@ function FestivalCarousel({ heading, accentHeading, id }) {
             <span className="eyebrow">The Sacred Calendar</span>
             <h2 style={{ marginTop: 24 }}>{heading}<br/><span className="serif-display" style={{ color: 'var(--gold)' }}>{accentHeading}</span></h2>
             <p style={{ color: 'var(--ivory-dim)', fontSize: 19, lineHeight: 1.7, marginTop: 20, maxWidth: 520 }}>
-              Each festival is a portal — a season of intensified grace.
-              All are welcome; sponsorship registration opens 30 days prior.
+              Each festival a season of intensified grace. All are welcome - Sponsorship registration opens 30 days prior.
             </p>
           </div>
           <div style={{ display: 'flex', gap: 12 }}>
@@ -264,8 +263,8 @@ function FestivalCarousel({ heading, accentHeading, id }) {
             <div key={i} className={`reveal delay-${i % 4}`} style={{ flex: '0 0 320px', scrollSnapAlign: 'start', background: 'linear-gradient(180deg, rgba(20,26,44,0.55), rgba(11,17,32,0.3))', border: '1px solid var(--line-soft)', position: 'relative', transition: 'all .4s' }}>
               {i === 0 ? <img src="assets/festival-maha-shivaratri.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 1 ? <img src="assets/festival-rudra-homam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 2 ? <img src="assets/festival-kumbha-abhishekam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : <TempleImg keywords={['shiva lingam temple', 'fire ritual yajna homam', 'abhishekam milk ritual', 'oil lamp diya temple', 'nataraja bronze statue'][i] || 'hindu temple ritual'} alt={f.name} sig={i + 10} style={{ aspectRatio: '4/3' }} />}
               <div style={{ padding: 24 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}><div><div style={{ fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>{f.date}</div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>{f.gregorian}</div></div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid var(--line)', padding: '4px 10px' }}>{f.tag}</div></div>
-                <h3 style={{ fontSize: 22, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400, color: 'var(--ivory)', marginBottom: 14, letterSpacing: 'normal' }}>{f.name}</h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}><div><div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>{f.date}</div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>{f.gregorian}</div></div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid var(--line)', padding: '4px 10px' }}>{f.tag}</div></div>
+                <h3 style={{ fontSize: 21, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400, color: 'var(--ivory)', marginBottom: 14, letterSpacing: 'normal' }}>{f.name}</h3>
                 <p style={{ fontSize: 14, color: 'var(--ivory-dim)', lineHeight: 1.55, marginBottom: 22 }}>{f.desc}</p>
                 <a style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>Sponsor This Festival</a>
               </div>
@@ -279,7 +278,7 @@ function FestivalCarousel({ heading, accentHeading, id }) {
 
 function Festivals() {
   return <>
-    <FestivalCarousel id="events" heading="Mega" accentHeading="Celebrations" />
+    <FestivalCarousel id="events" heading="Upcoming" accentHeading="Celebrations" />
     <FestivalCarousel heading="Upcoming" accentHeading="Celebrations" />
   </>;
 }
