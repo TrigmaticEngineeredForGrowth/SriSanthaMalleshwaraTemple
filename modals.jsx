@@ -879,7 +879,6 @@ const SACRED_HOMAS = [
   'Pavamana Homam',
   'Vaarahi Homam',
   'Veerabhadra Homam',
-  'Varuna Homam',
 ];
 const SACRED_HOMA_PRICE = 15116;
 
@@ -1446,9 +1445,9 @@ function MahaShivaratriModal({ open, onClose }) {
   const [selectedOption, setSelectedOption] = useStateM(null);
 
   const options = [
-    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam (30 Days)', amount: 1221, tier: 'Silver' },
-    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva (30 Days)', amount: 10008, tier: 'Gold' },
-    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva + Anna Prasada Seva', amount: 15116, tier: 'Royal' },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam (30 Days)', amount: 1221 },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva (30 Days)', amount: 10008 },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva + Anna Prasada Seva', amount: 15116 },
   ];
 
   React.useEffect(() => {
@@ -1462,11 +1461,7 @@ function MahaShivaratriModal({ open, onClose }) {
 
   const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.whatsapp.length === 10 && isValidEmail(form.email) && isFutureDate(form.date);
 
-  const tierColors = {
-    Silver: { border: 'var(--line-soft)', glow: 'rgba(192,192,200,0.12)', badge: '#C0C0C8' },
-    Gold: { border: 'var(--gold)', glow: 'rgba(255,122,46,0.15)', badge: 'var(--gold)' },
-    Royal: { border: '#E8C44A', glow: 'rgba(232,196,74,0.18)', badge: '#E8C44A' },
-  };
+
 
   return (
     <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Maha Shivaratri Special'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
@@ -1487,24 +1482,19 @@ function MahaShivaratriModal({ open, onClose }) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 28 }}>
             {options.map((option, i) => {
-              const tc = tierColors[option.tier];
               const isSelected = selectedOption?.label === option.label;
               return (
                 <button key={i} onClick={() => setSelectedOption(option)} style={{
-                  border: `1px solid ${isSelected ? tc.badge : 'var(--line-soft)'}`,
-                  background: isSelected ? tc.glow : 'transparent',
+                  border: `1px solid ${isSelected ? 'var(--gold)' : 'var(--line-soft)'}`,
+                  background: isSelected ? 'rgba(255,122,46,0.08)' : 'transparent',
                   color: 'var(--ivory)', padding: '20px 22px', textAlign: 'left', cursor: 'pointer',
                   transition: 'all .3s ease', position: 'relative', overflow: 'hidden',
-                  boxShadow: isSelected ? `0 0 20px ${tc.glow}` : 'none',
+                  boxShadow: isSelected ? '0 0 20px rgba(255,122,46,0.12)' : 'none',
                 }}>
-                  {isSelected && <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: tc.badge }} />}
+                  {isSelected && <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: 'var(--gold)' }} />}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                    <span style={{
-                      fontFamily: 'var(--f-display)', fontSize: 9, letterSpacing: '0.25em',
-                      textTransform: 'uppercase', color: tc.badge,
-                      border: `1px solid ${tc.badge}`, padding: '3px 10px', borderRadius: 2,
-                    }}>{option.tier}</span>
-                    <span style={{ fontFamily: 'var(--f-display)', fontSize: 26, color: tc.badge, fontWeight: 700 }}>₹{option.amount.toLocaleString('en-IN')}</span>
+                    <span style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ivory-faint)', textTransform: 'uppercase' }}>Option {i + 1}</span>
+                    <span style={{ fontFamily: 'var(--f-display)', fontSize: 26, color: 'var(--gold)', fontWeight: 700 }}>₹{option.amount.toLocaleString('en-IN')}</span>
                   </div>
                   <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 16, color: 'var(--ivory)', lineHeight: 1.5 }}>{option.label}</div>
                 </button>

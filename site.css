@@ -719,23 +719,5 @@
     0% { opacity: 0.5; transform: scale(0.95); }
     100% { opacity: 1; transform: scale(1.05); }
   }
-  .shivaratri-ribbon {
-    position: absolute; top: 0; right: 0;
-    background: linear-gradient(135deg, #E8C44A, #C9A836);
-    color: #050505;
-    font-family: var(--f-display);
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    z-index: 2;
-    box-shadow: 0 2px 12px rgba(232,196,74,0.3);
-  }
-  .shivaratri-btn {
-    border-color: #E8C44A !important;
-    color: #E8C44A !important;
-  }
-  .shivaratri-btn::after { background: #E8C44A !important; }
-  .shivaratri-btn:hover { color: #050505 !important; }
+
 
