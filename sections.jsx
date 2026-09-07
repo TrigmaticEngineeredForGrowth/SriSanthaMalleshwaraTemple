@@ -153,8 +153,8 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
 
         <div className="grid-auto-4" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 18 }}>
           {POOJA_TIMES.map((p, i) => (
-            <div key={i} className={`card reveal delay-${i % 4}`} style={{ padding: '40px 24px', textAlign: 'center', flex: '1 1 calc(25% - 18px)', minWidth: 220, display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: 32, color: 'var(--gold)', fontFamily: 'var(--f-script)', marginBottom: 22 }}>{p.icon}</div>
+            <div key={i} className={`card pooja-card reveal delay-${i % 4}`} style={{ padding: '40px 24px', textAlign: 'center', flex: '1 1 calc(25% - 18px)', minWidth: 220, display: 'flex', flexDirection: 'column' }}>
+              <div className="pooja-card-icon" style={{ fontSize: 32, color: 'var(--gold)', fontFamily: 'var(--f-script)', marginBottom: 22 }}>{p.icon}</div>
               <h3 style={{ fontSize: 17, marginBottom: 14, letterSpacing: '0.06em' }}>{p.name.includes('|') ? p.name.split('|').map((line, li) => <React.Fragment key={li}>{line}{li === 0 && <br/>}</React.Fragment>) : p.name}</h3>
               <p style={{ fontSize: 14, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.5, flex: 1 }}>{p.desc === 'Prasadam offering (Daily 1kg)' ? <span style={{ fontSize: 16 }}>Prasadam offering<br/>(Daily <b>1</b>kg)</span> : p.desc}</p>
               <button className="btn" style={{ marginTop: 24, padding: '12px 20px', fontSize: 10, width: '100%', display: 'flex', justifyContent: 'center' }} onClick={() => p.name === 'Visesha|Pujas' ? onVisheshaPuja && onVisheshaPuja() : p.name === 'Nitya Naivedyam' ? onNaivedyam && onNaivedyam() : p.name === 'Nitya Pratah|Puja' ? onNityaPratah && onNityaPratah() : p.name === 'RudrAbhishekam' ? onRudrabhishekam && onRudrabhishekam() : p.name === 'Sacred Homas' ? onSacredHoma && onSacredHoma() : onBookSeva()}>Book Now</button>
@@ -306,7 +306,7 @@ function SevaBooking({ onBookSeva }) {
 
         <div className="grid-auto-4">
           {SEVAS.map((s, i) => (
-            <div key={i} className={`card reveal delay-${i}`} style={{ padding: 32 }}>
+            <div key={i} className={`card seva-card reveal delay-${i}`} style={{ padding: 32 }}>
               <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 22, color: 'var(--gold)', marginBottom: 10 }}>{s.sanskrit}</div>
               <h3 style={{ fontSize: 19, marginBottom: 12 }}>{s.name}</h3>
               <p style={{ fontSize: 14, color: 'var(--ivory-faint)', lineHeight: 1.5, minHeight: 60, marginBottom: 24 }}>{s.desc}</p>
