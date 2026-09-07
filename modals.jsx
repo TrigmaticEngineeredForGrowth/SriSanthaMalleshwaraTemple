@@ -1438,4 +1438,198 @@ function RudrabhishekamModal({ open, onClose, pujaName = 'Rudrabhishekam', amoun
   );
 }
 
-Object.assign(window, { Modal, SevaModal, DonationModal, ContactModal, VisheshaPujaModal, NaivedyamModal, NityaPratahModal, RudrabhishekamModal });
+/* ---------- Maha Shivaratri Special Modal (royal, 3-tier sponsorship) ---------- */
+function MahaShivaratriModal({ open, onClose }) {
+  const [step, setStep] = useStateM(1);
+  const [form, setForm] = useStateM({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' });
+  const [done, setDone] = useStateM(false);
+  const [selectedOption, setSelectedOption] = useStateM(null);
+
+  const options = [
+    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam (30 Days)', amount: 1221, tier: 'Silver' },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva (30 Days)', amount: 10008, tier: 'Gold' },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva + Anna Prasada Seva', amount: 15116, tier: 'Royal' },
+  ];
+
+  React.useEffect(() => {
+    if (open && !selectedOption) setSelectedOption(options[0]);
+  }, [open]);
+
+  const selectedAmount = selectedOption?.amount || 0;
+
+  const reset = () => { setStep(1); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); setSelectedOption(options[0]); };
+  const close = () => { onClose(); setTimeout(reset, 400); };
+
+  const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.whatsapp.length === 10 && isValidEmail(form.email) && isFutureDate(form.date);
+
+  const tierColors = {
+    Silver: { border: 'var(--line-soft)', glow: 'rgba(192,192,200,0.12)', badge: '#C0C0C8' },
+    Gold: { border: 'var(--gold)', glow: 'rgba(255,122,46,0.15)', badge: 'var(--gold)' },
+    Royal: { border: '#E8C44A', glow: 'rgba(232,196,74,0.18)', badge: '#E8C44A' },
+  };
+
+  return (
+    <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Maha Shivaratri Special'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
+      {!done && (
+        <div style={{ marginBottom: 32, display: 'flex', gap: 8 }}>
+          {[1, 2, 3].map(s => (
+            <div key={s} style={{ flex: 1, height: 2, background: s <= step ? 'var(--gold)' : 'var(--line-soft)', transition: 'background .4s' }}></div>
+          ))}
+        </div>
+      )}
+
+      {!done && step === 1 && (
+        <div>
+          <div style={{ textAlign: 'center', marginBottom: 28, padding: '16px 20px', background: 'linear-gradient(135deg, rgba(232,196,74,0.06), rgba(255,122,46,0.04))', border: '1px solid rgba(232,196,74,0.2)', borderRadius: 4 }}>
+            <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 24, color: '#E8C44A', marginBottom: 6 }}>Maha Shivaratri Special</div>
+            <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--ivory-faint)', textTransform: 'uppercase' }}>Auspicious Maghamasa Pujas &amp; Abhishekas · 30 Days</div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 28 }}>
+            {options.map((option, i) => {
+              const tc = tierColors[option.tier];
+              const isSelected = selectedOption?.label === option.label;
+              return (
+                <button key={i} onClick={() => setSelectedOption(option)} style={{
+                  border: `1px solid ${isSelected ? tc.badge : 'var(--line-soft)'}`,
+                  background: isSelected ? tc.glow : 'transparent',
+                  color: 'var(--ivory)', padding: '20px 22px', textAlign: 'left', cursor: 'pointer',
+                  transition: 'all .3s ease', position: 'relative', overflow: 'hidden',
+                  boxShadow: isSelected ? `0 0 20px ${tc.glow}` : 'none',
+                }}>
+                  {isSelected && <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: tc.badge }} />}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                    <span style={{
+                      fontFamily: 'var(--f-display)', fontSize: 9, letterSpacing: '0.25em',
+                      textTransform: 'uppercase', color: tc.badge,
+                      border: `1px solid ${tc.badge}`, padding: '3px 10px', borderRadius: 2,
+                    }}>{option.tier}</span>
+                    <span style={{ fontFamily: 'var(--f-display)', fontSize: 26, color: tc.badge, fontWeight: 700 }}>₹{option.amount.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 16, color: 'var(--ivory)', lineHeight: 1.5 }}>{option.label}</div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <button className="btn solid" onClick={() => setStep(2)}>
+              Continue<span className="arrow"></span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!done && step === 2 && (
+        <div>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
+            <div><label className="field-label">Full Name *</label>
+              <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="As to be chanted" /></div>
+            <div><label className="field-label">Gotra</label>
+              <input value={form.gotra} onChange={e => setForm({ ...form, gotra: e.target.value })} placeholder="e.g. Bharadwaja" /></div>
+          </div>
+          <div className="modal-grid-2" style={{ marginBottom: 18 }}>
+            <div><label className="field-label">Nakshetra *</label>
+              <input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
+            <div><label className="field-label">WhatsApp Phone *</label>
+              <input type="tel" inputMode="numeric" pattern="[0-9]*" value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: sanitizePhone(e.target.value) })} placeholder="10-digit number" /></div>
+          </div>
+          <div style={{ marginBottom: 18 }}>
+            <label className="field-label">Preferred Date *</label>
+            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
+          </div>
+          <div style={{ marginBottom: 18 }}>
+            <label className="field-label">Address</label>
+            <textarea rows={2} value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
+          </div>
+          <div style={{ marginBottom: 8 }}>
+            <label className="field-label">Email *</label>
+            <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" />
+            {form.email && !isValidEmail(form.email) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please enter a valid email address</div>}
+          </div>
+          <div style={{ marginTop: 24, display: 'flex', justifyContent: 'space-between' }}>
+            <button className="btn ghost" onClick={() => setStep(1)}>← Back</button>
+            <button className="btn solid" disabled={!canContinueDetails} onClick={() => canContinueDetails && setStep(3)} style={{ opacity: canContinueDetails ? 1 : 0.45 }}>
+              Continue<span className="arrow"></span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!done && step === 3 && (
+        <div>
+          <div style={{ background: 'rgba(255,122,46,0.05)', border: '1px solid var(--line)', padding: 32, marginBottom: 28 }}>
+            <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>Your Sankalpa</div>
+            <div className="modal-grid-summary" style={{ fontSize: 15 }}>
+              <div style={{ color: 'var(--ivory-faint)' }}>Seva</div><div>Maha Shivaratri Special — {selectedOption?.label}</div>
+              <div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{form.name} {form.gotra && <span style={{ color: 'var(--gold)' }}>· {form.gotra} gotra</span>}</div>
+              <div style={{ color: 'var(--ivory-faint)' }}>Nakshetra</div><div>{form.nakshetra}</div>
+              <div style={{ color: 'var(--ivory-faint)' }}>Date</div><div>{form.date}</div>
+              <div style={{ color: 'var(--ivory-faint)' }}>WhatsApp</div><div>{form.whatsapp}</div>
+              <div style={{ color: 'var(--ivory-faint)' }}>Amount</div><div style={{ color: 'var(--gold)', fontFamily: 'var(--f-display)' }}>₹{selectedAmount.toLocaleString('en-IN')}</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <button className="btn ghost" onClick={() => setStep(2)}>← Back</button>
+            <button className="btn solid" onClick={async () => {
+              let bookingRef = null;
+              try {
+                const saved = await window.savePujaBooking({
+                  name: form.name, phone: form.whatsapp, email: form.email,
+                  gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
+                  pujaName: 'Maha Shivaratri Special', pujaType: 'maha_shivaratri',
+                  date: form.date, amount: selectedAmount,
+                });
+                bookingRef = saved?.id || null;
+              } catch (e) { console.warn('booking save failed', e); }
+
+              const result = await window.startRazorpayPayment({
+                amount: selectedAmount,
+                purpose: 'Maha Shivaratri Special — ' + selectedOption.label,
+                name: form.name, email: form.email, phone: form.whatsapp,
+                referenceType: 'puja_bookings',
+                referenceId: bookingRef,
+              });
+
+              if (result.verified) {
+                setDone(true);
+              } else {
+                alert(result.error || 'Payment could not be completed. Please try again.');
+              }
+            }}>
+              Pay ₹{selectedAmount.toLocaleString('en-IN')} via Razorpay
+              <span className="arrow"></span>
+            </button>
+          </div>
+          <div style={{ marginTop: 16, fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ivory-faint)', textAlign: 'center' }}>
+            SECURED · RAZORPAY · 256-BIT ENCRYPTION
+          </div>
+        </div>
+      )}
+
+      {done && (
+        <div style={{ textAlign: 'center', padding: '20px 0' }}>
+          <div style={{
+            width: 80, height: 80, border: '1px solid var(--gold)', borderRadius: '50%',
+            margin: '0 auto 28px', display: 'grid', placeItems: 'center',
+            fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 42, color: 'var(--gold)',
+            boxShadow: '0 0 40px var(--gold-glow)'
+          }}>ॐ</div>
+          <p style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 22, color: 'var(--ivory)', marginBottom: 14 }}>
+            Your offering is received, {form.name || 'devotee'}.
+          </p>
+          <p style={{ color: 'var(--ivory-dim)', maxWidth: 460, margin: '0 auto', lineHeight: 1.6 }}>
+            The priests will perform <span style={{ color: 'var(--gold)' }}>Maha Shivaratri Special</span> in your name.
+            A confirmation receipt has been sent to your email and WhatsApp.
+          </p>
+          <div style={{ marginTop: 36 }}>
+            <button className="btn" onClick={close}>Close</button>
+          </div>
+        </div>
+      )}
+    </Modal>
+  );
+}
+
+Object.assign(window, { Modal, SevaModal, DonationModal, ContactModal, VisheshaPujaModal, NaivedyamModal, NityaPratahModal, RudrabhishekamModal, MahaShivaratriModal });

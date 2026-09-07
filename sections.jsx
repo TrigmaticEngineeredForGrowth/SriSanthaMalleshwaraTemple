@@ -136,7 +136,7 @@ const POOJA_TIMES = [
   { name: 'Maha Shivaratri Special', desc: 'Auspicious Maghamasa Pujas & Abhishekas (30 Days)', icon: '✶' },
 ];
 
-function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, onRudrabhishekam, onSacredHoma, onPradosha, onSriChakra }) {
+function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, onRudrabhishekam, onSacredHoma, onPradosha, onSriChakra, onMahaShivaratri }) {
   return (
     <section style={{ background: 'var(--bg-0)' }} data-screen-label="03 Pooja Timings">
       <div className="container">
@@ -152,14 +152,19 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
         </div>
 
         <div className="grid-auto-4" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 18 }}>
-          {POOJA_TIMES.map((p, i) => (
-            <div key={i} className={`card pooja-card reveal delay-${i % 4}`} style={{ padding: '40px 24px', textAlign: 'center', flex: '1 1 calc(25% - 18px)', minWidth: 220, display: 'flex', flexDirection: 'column' }}>
-              <div className="pooja-card-icon" style={{ fontSize: 32, color: 'var(--gold)', fontFamily: 'var(--f-script)', marginBottom: 22 }}>{p.icon}</div>
-              <h3 style={{ fontSize: 17, marginBottom: 14, letterSpacing: '0.06em' }}>{p.name.includes('|') ? p.name.split('|').map((line, li) => <React.Fragment key={li}>{line}{li === 0 && <br/>}</React.Fragment>) : p.name}</h3>
-              <p style={{ fontSize: 14, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.5, flex: 1 }}>{p.desc === 'Prasadam offering (Daily 1kg)' ? <span style={{ fontSize: 16 }}>Prasadam offering<br/>(Daily <b>1</b>kg)</span> : p.desc}</p>
-              <button className="btn" style={{ marginTop: 24, padding: '12px 20px', fontSize: 10, width: '100%', display: 'flex', justifyContent: 'center' }} onClick={() => p.name === 'Visesha|Pujas' ? onVisheshaPuja && onVisheshaPuja() : p.name === 'Nitya Naivedyam' ? onNaivedyam && onNaivedyam() : p.name === 'Nitya Pratah|Puja' ? onNityaPratah && onNityaPratah() : p.name === 'RudrAbhishekam' ? onRudrabhishekam && onRudrabhishekam() : p.name === 'Sacred Homas' ? onSacredHoma && onSacredHoma() : p.name === 'Pradosha|Puja' ? onPradosha && onPradosha() : p.name === 'Sri Chakra KumkumArchana' ? onSriChakra && onSriChakra() : onBookSeva()}>Book Now</button>
+          {POOJA_TIMES.map((p, i) => {
+            const isShivaratri = p.name === 'Maha Shivaratri Special';
+            return (
+            <div key={i} className={`card pooja-card reveal delay-${i % 4}${isShivaratri ? ' maha-shivaratri-card' : ''}`} style={{ padding: '40px 24px', textAlign: 'center', flex: '1 1 calc(25% - 18px)', minWidth: 220, display: 'flex', flexDirection: 'column', position: 'relative' }}>
+              {isShivaratri && <div className="shivaratri-ribbon">Once a Year</div>}
+              {isShivaratri && <div className="shivaratri-glow" />}
+              <div className="pooja-card-icon" style={{ fontSize: 32, color: isShivaratri ? '#E8C44A' : 'var(--gold)', fontFamily: 'var(--f-script)', marginBottom: 22, position: 'relative' }}>{p.icon}</div>
+              <h3 style={{ fontSize: 17, marginBottom: 14, letterSpacing: '0.06em', position: 'relative' }}>{p.name.includes('|') ? p.name.split('|').map((line, li) => <React.Fragment key={li}>{line}{li === 0 && <br/>}</React.Fragment>) : p.name}</h3>
+              <p style={{ fontSize: 14, color: isShivaratri ? 'var(--ivory-dim)' : 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.5, flex: 1, position: 'relative' }}>{p.desc === 'Prasadam offering (Daily 1kg)' ? <span style={{ fontSize: 16 }}>Prasadam offering<br/>(Daily <b>1</b>kg)</span> : p.desc}</p>
+              {isShivaratri && <div style={{ fontFamily: 'var(--f-display)', fontSize: 9, letterSpacing: '0.25em', color: '#E8C44A', textTransform: 'uppercase', marginTop: 8, position: 'relative' }}>3 Sponsorship Tiers</div>}
+              <button className={isShivaratri ? 'btn solid shivaratri-btn' : 'btn'} style={{ marginTop: 24, padding: '12px 20px', fontSize: 10, width: '100%', display: 'flex', justifyContent: 'center', position: 'relative' }} onClick={() => p.name === 'Visesha|Pujas' ? onVisheshaPuja && onVisheshaPuja() : p.name === 'Nitya Naivedyam' ? onNaivedyam && onNaivedyam() : p.name === 'Nitya Pratah|Puja' ? onNityaPratah && onNityaPratah() : p.name === 'RudrAbhishekam' ? onRudrabhishekam && onRudrabhishekam() : p.name === 'Sacred Homas' ? onSacredHoma && onSacredHoma() : p.name === 'Pradosha|Puja' ? onPradosha && onPradosha() : p.name === 'Sri Chakra KumkumArchana' ? onSriChakra && onSriChakra() : isShivaratri ? onMahaShivaratri && onMahaShivaratri() : onBookSeva()}>Book Now</button>
             </div>
-          ))}
+          );})}
         </div>
       </div>
     </section>

@@ -25,6 +25,7 @@ function App() {
   const [sacredHomaOpen, setSacredHomaOpen] = useState(false);
   const [pradoshaOpen, setPradoshaOpen] = useState(false);
   const [sriChakraOpen, setSriChakraOpen] = useState(false);
+  const [mahaShivaratriOpen, setMahaShivaratriOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && /[?&]log=1/.test(window.location.search)) {
@@ -92,7 +93,7 @@ function App() {
 
       <div id="services">
         <window.OmDivider />
-        <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} onSacredHoma={() => setSacredHomaOpen(true)} onPradosha={() => setPradoshaOpen(true)} onSriChakra={() => setSriChakraOpen(true)} />
+        <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} onSacredHoma={() => setSacredHomaOpen(true)} onPradosha={() => setPradoshaOpen(true)} onSriChakra={() => setSriChakraOpen(true)} onMahaShivaratri={() => setMahaShivaratriOpen(true)} />
         <window.OmDivider />
         <Festivals />
       </div>
@@ -121,6 +122,7 @@ function App() {
       <SacredHomaModal open={sacredHomaOpen} onClose={() => setSacredHomaOpen(false)} />
       <RudrabhishekamModal open={pradoshaOpen} onClose={() => setPradoshaOpen(false)} pujaName="Pradosha Puja" amount={2116} pujaType="pradosha" description="Twilight worship to Lord Shiva, performed during the auspicious Pradosha time. Abhishekam with Sri Rudram Namakam Chamakam, performed in your name." />
       <RudrabhishekamModal open={sriChakraOpen} onClose={() => setSriChakraOpen(false)} pujaName="Sri Chakra Kumkumarchana" pujaType="sri_chakra_kumkumarchana" description="Sacred Kumkuma puja to the Sri Chakra." options={[{ label: '1 Day Puja', amount: 516 }, { label: '1 Month Puja', amount: 15116 }]} />
+      <MahaShivaratriModal open={mahaShivaratriOpen} onClose={() => setMahaShivaratriOpen(false)} />
       <window.GalleryManager open={galleryOpen} onClose={() => setGalleryOpen(false)} />
       <window.ContactLogViewer open={logOpen} onClose={() => setLogOpen(false)} />
 

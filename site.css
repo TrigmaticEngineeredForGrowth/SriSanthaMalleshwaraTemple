@@ -698,3 +698,44 @@
     section[data-screen-label="05 Seva Booking"] div[style*="repeat(4, 1fr)"] { grid-template-columns: 1fr !important; }
   }
 
+  /* ---------- Maha Shivaratri Royal Card ---------- */
+  .maha-shivaratri-card {
+    background: linear-gradient(160deg, rgba(232,196,74,0.08) 0%, rgba(20,26,44,0.55) 40%, rgba(11,17,32,0.3) 100%) !important;
+    border: 1px solid rgba(232,196,74,0.25) !important;
+    box-shadow: 0 0 30px rgba(232,196,74,0.08), inset 0 0 40px rgba(232,196,74,0.03);
+    overflow: hidden;
+  }
+  .maha-shivaratri-card:hover {
+    border-color: rgba(232,196,74,0.45) !important;
+    box-shadow: 0 0 50px rgba(232,196,74,0.15), inset 0 0 50px rgba(232,196,74,0.05);
+  }
+  .shivaratri-glow {
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 40%, rgba(232,196,74,0.06) 0%, transparent 50%);
+    animation: shivaratri-pulse 4s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes shivaratri-pulse {
+    0% { opacity: 0.5; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+  .shivaratri-ribbon {
+    position: absolute; top: 0; right: 0;
+    background: linear-gradient(135deg, #E8C44A, #C9A836);
+    color: #050505;
+    font-family: var(--f-display);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    z-index: 2;
+    box-shadow: 0 2px 12px rgba(232,196,74,0.3);
+  }
+  .shivaratri-btn {
+    border-color: #E8C44A !important;
+    color: #E8C44A !important;
+  }
+  .shivaratri-btn::after { background: #E8C44A !important; }
+  .shivaratri-btn:hover { color: #050505 !important; }
+
