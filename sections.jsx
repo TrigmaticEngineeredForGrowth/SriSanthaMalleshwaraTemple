@@ -92,7 +92,7 @@ function Introduction() {
             <p>This temple dates to the 12th century AD, built during the Kakatiya period when they ruled Orugallu. It is associated with Sri Chenna Basaveshwara Swamy, one of the Panchacharya peethadhipathas. Some Shivalingas consecrated by the Kakatiyas still show arrow marks.</p>
             <br/>
             <p>The temple stands on Navaratna Shikhara, a hill known for its multicolored rock strata. A natural spring emerges at a corner of the hill, feeding the temple pond and flowing beneath the mandapa. Over time the pond became silted and the flow was choked; after removal of the silt, the water returned to its original course.<br/><br/></p>
-            <p>Within the complex are five sacred lingas: Sadyojata Linga in the inner shrine, Vamadeva Linga beside the pond, Aghora Linga in the southeast, another Linga in the northwest, and the principal shrine which houses the Ishan Linga called "Santhi Malleswara." These five lingas correspond to the five-faced aspects of the Supreme Lord, enhancing the sanctity of the temple.</p>
+            <p>Within the complex are five sacred lingas: Sadyojata Linga in the inner shrine, Vamadeva Linga beside the pond, Aghora Linga in the southeast, another Linga in the northwest, and the principal shrine which houses the Ishan Linga called "Santha Malleswara." These five lingas correspond to the five-faced aspects of the Supreme Lord, enhancing the sanctity of the temple.</p>
           </div>
           <p style={{ marginTop: 22, fontSize: 18, color: 'var(--ivory-faint)', fontStyle: 'italic', lineHeight: 1.7 }}>
           </p>
