@@ -1223,18 +1223,20 @@ function NityaPratahModal({ open, onClose }) {
 }
 
 /* ---------- Rudrabhishekam Modal (single-item seva, same format as Naivedyam) ---------- */
-function RudrabhishekamModal({ open, onClose }) {
+function RudrabhishekamModal({ open, onClose, pujaName = 'Rudrabhishekam', amount = 2116, description = 'Abhishekam with Sri Rudram Namakam Chamakam, performed in your name.', pujaType = 'rudrabhishekam', options = null }) {
   const [step, setStep] = useStateM(1);
   const [form, setForm] = useStateM({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' });
   const [done, setDone] = useStateM(false);
+  const [selectedOption, setSelectedOption] = useStateM(options?.[0] || { label: pujaName, amount });
+  const selectedAmount = selectedOption.amount;
 
-  const reset = () => { setStep(1); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
+  const reset = () => { setStep(1); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); setSelectedOption(options?.[0] || { label: pujaName, amount }); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
   const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.whatsapp.length === 10 && isValidEmail(form.email) && isFutureDate(form.date);
 
   return (
-    <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Rudrabhishekam Seva'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
+    <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : `${pujaName} Seva`} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
       {!done && (
         <div style={{ marginBottom: 32, display: 'flex', gap: 8 }}>
           {[1, 2, 3].map(s => (
@@ -1245,18 +1247,29 @@ function RudrabhishekamModal({ open, onClose }) {
 
       {!done && step === 1 && (
         <div>
-          <div style={{
-            border: '1px solid var(--gold)', background: 'rgba(255,122,46,0.06)',
-            padding: 32, textAlign: 'center', marginBottom: 28,
-          }}>
-            <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 26, color: 'var(--ivory)', marginBottom: 10 }}>Rudrabhishekam</div>
-            <div style={{ fontFamily: 'var(--f-display)', fontSize: 34, color: 'var(--gold)', fontWeight: 700 }}>
-              ₹2,116
+          {options ? (
+            <div className="modal-grid-2" style={{ gap: 14, marginBottom: 28 }}>
+              {options.map(option => (
+                <button key={option.label} onClick={() => setSelectedOption(option)} style={{
+                  border: `1px solid ${selectedOption.label === option.label ? 'var(--gold)' : 'var(--line-soft)'}`,
+                  background: selectedOption.label === option.label ? 'rgba(255,122,46,0.08)' : 'transparent',
+                  color: 'var(--ivory)', padding: 24, textAlign: 'left', cursor: 'pointer',
+                }}>
+                  <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 22 }}>{option.label}</div>
+                  <div style={{ fontFamily: 'var(--f-display)', fontSize: 27, color: 'var(--gold)', fontWeight: 700, marginTop: 10 }}>₹{option.amount.toLocaleString('en-IN')}</div>
+                </button>
+              ))}
             </div>
-            <p style={{ marginTop: 18, color: 'var(--ivory-dim)', fontSize: 15, fontStyle: 'italic', lineHeight: 1.6 }}>
-              Abhishekam with Sri Rudram Namakam Chamakam, performed in your name.
-            </p>
-          </div>
+          ) : (
+            <div style={{
+              border: '1px solid var(--gold)', background: 'rgba(255,122,46,0.06)',
+              padding: 32, textAlign: 'center', marginBottom: 28,
+            }}>
+              <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 26, color: 'var(--ivory)', marginBottom: 10 }}>{pujaName}</div>
+              <div style={{ fontFamily: 'var(--f-display)', fontSize: 34, color: 'var(--gold)', fontWeight: 700 }}>₹{amount.toLocaleString('en-IN')}</div>
+              <p style={{ marginTop: 18, color: 'var(--ivory-dim)', fontSize: 15, fontStyle: 'italic', lineHeight: 1.6 }}>{description}</p>
+            </div>
+          )}
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <button className="btn solid" onClick={() => setStep(2)}>
               Continue<span className="arrow"></span>
@@ -1307,12 +1320,12 @@ function RudrabhishekamModal({ open, onClose }) {
           <div style={{ background: 'rgba(255,122,46,0.05)', border: '1px solid var(--line)', padding: 32, marginBottom: 28 }}>
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>Your Sankalpa</div>
             <div className="modal-grid-summary" style={{ fontSize: 15 }}>
-              <div style={{ color: 'var(--ivory-faint)' }}>Seva</div><div>Rudrabhishekam</div>
+              <div style={{ color: 'var(--ivory-faint)' }}>Seva</div><div>{pujaName}{options && ` — ${selectedOption.label}`}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{form.name} {form.gotra && <span style={{ color: 'var(--gold)' }}>· {form.gotra} gotra</span>}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Nakshetra</div><div>{form.nakshetra}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>Date</div><div>{form.date}</div>
               <div style={{ color: 'var(--ivory-faint)' }}>WhatsApp</div><div>{form.whatsapp}</div>
-              <div style={{ color: 'var(--ivory-faint)' }}>Amount</div><div style={{ color: 'var(--gold)', fontFamily: 'var(--f-display)' }}>₹2,116</div>
+              <div style={{ color: 'var(--ivory-faint)' }}>Amount</div><div style={{ color: 'var(--gold)', fontFamily: 'var(--f-display)' }}>₹{selectedAmount.toLocaleString('en-IN')}</div>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -1323,15 +1336,15 @@ function RudrabhishekamModal({ open, onClose }) {
                 const saved = await window.savePujaBooking({
                   name: form.name, phone: form.whatsapp, email: form.email,
                   gotra: form.gotra, nakshetra: form.nakshetra, address: form.address,
-                  pujaName: 'Rudrabhishekam', pujaType: 'rudrabhishekam',
-                  date: form.date, amount: 2116,
+                  pujaName, pujaType,
+                  date: form.date, amount: selectedAmount,
                 });
                 bookingRef = saved?.id || null;
               } catch (e) { console.warn('booking save failed', e); }
 
               const result = await window.startRazorpayPayment({
-                amount: 2116,
-                purpose: 'Rudrabhishekam',
+                amount: selectedAmount,
+                purpose: pujaName + (options ? ' — ' + selectedOption.label : ''),
                 name: form.name, email: form.email, phone: form.whatsapp,
                 referenceType: 'puja_bookings',
                 referenceId: bookingRef,
@@ -1343,7 +1356,7 @@ function RudrabhishekamModal({ open, onClose }) {
                 alert(result.error || 'Payment could not be completed. Please try again.');
               }
             }}>
-              Pay ₹2,116 via Razorpay
+              Pay ₹{selectedAmount.toLocaleString('en-IN')} via Razorpay
               <span className="arrow"></span>
             </button>
           </div>
@@ -1365,7 +1378,7 @@ function RudrabhishekamModal({ open, onClose }) {
             Your offering is received, {form.name || 'devotee'}.
           </p>
           <p style={{ color: 'var(--ivory-dim)', maxWidth: 460, margin: '0 auto', lineHeight: 1.6 }}>
-            The priests will perform <span style={{ color: 'var(--gold)' }}>Rudrabhishekam</span> in your name.
+            The priests will perform <span style={{ color: 'var(--gold)' }}>{pujaName}</span> in your name.
             A confirmation receipt has been sent to your email and WhatsApp.
           </p>
           <div style={{ marginTop: 36 }}>
