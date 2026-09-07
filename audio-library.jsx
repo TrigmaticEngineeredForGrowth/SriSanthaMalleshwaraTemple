@@ -211,12 +211,7 @@ const PERMANENT_TRACKS = [
 ];
 
 function AudioLibrary() {
-  const { files, addFiles, removeFile } = useAudioLibrary();
-  const [dragOver, setDragOver] = React.useState(false);
-  const [showUpload, setShowUpload] = React.useState(false);
-  const inputRef = React.useRef(null);
-
-  const handleFiles = (fl) => { const arr = Array.from(fl); if (arr.length) addFiles(arr); };
+  const { files } = useAudioLibrary();
 
   return (
     <section style={{ background: 'var(--bg-0)' }} data-screen-label="Audio Library">
@@ -243,9 +238,9 @@ function AudioLibrary() {
           {files.map(f => {
             const url = URL.createObjectURL(f.blob);
             return f.type === 'audio' ? (
-              <AudioPlayer key={f.id} src={url} name={f.name} onDelete={() => removeFile(f.id)} />
+              <AudioPlayer key={f.id} src={url} name={f.name} />
             ) : (
-              <PdfRow key={f.id} src={url} name={f.name} onDelete={() => removeFile(f.id)} />
+              <PdfRow key={f.id} src={url} name={f.name} />
             );
           })}
         </div>
@@ -259,54 +254,6 @@ function AudioLibrary() {
           </div>
         )}
 
-        {/* Collapsible upload area — compact toggle */}
-        <div style={{ marginTop: 8 }}>
-          <button
-            onClick={() => setShowUpload(s => !s)}
-            style={{
-              display: 'block', margin: '0 auto', padding: '10px 28px',
-              border: '1px solid var(--line)', borderRadius: 24, background: 'transparent',
-              color: 'var(--ivory-dim)', cursor: 'pointer', fontSize: 12,
-              fontFamily: 'var(--f-mono)', letterSpacing: '0.12em', textTransform: 'uppercase',
-              transition: 'all .25s ease',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold)'; e.currentTarget.style.color = 'var(--gold)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--line)'; e.currentTarget.style.color = 'var(--ivory-dim)'; }}
-          >
-            {showUpload ? '−  Close Upload' : '+  Add Your Own'}
-          </button>
-
-          {showUpload && (
-            <div
-              onDragOver={e => { e.preventDefault(); setDragOver(true); }}
-              onDragLeave={() => setDragOver(false)}
-              onDrop={e => { e.preventDefault(); setDragOver(false); handleFiles(e.dataTransfer.files); }}
-              onClick={() => inputRef.current && inputRef.current.click()}
-              style={{
-                border: `2px dashed ${dragOver ? 'var(--gold)' : 'var(--line)'}`,
-                background: dragOver ? 'rgba(255,122,46,0.06)' : 'transparent',
-                padding: '28px 24px', textAlign: 'center', cursor: 'pointer',
-                transition: 'all .25s ease', marginTop: 14, borderRadius: 10,
-              }}
-            >
-              <div style={{ fontFamily: 'var(--f-display)', fontSize: 12, letterSpacing: '0.2em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 8 }}>
-                Drop Audio or PDF Files Here
-              </div>
-              <div style={{ color: 'var(--ivory-faint)', fontSize: 13, fontStyle: 'italic' }}>
-                or click to browse · MP3, WAV, PDF supported
-              </div>
-              <input ref={inputRef} type="file" accept="audio/*,application/pdf" multiple style={{ display: 'none' }} onChange={e => handleFiles(e.target.files)} />
-            </div>
-          )}
-        </div>
-
-        <div style={{
-          marginTop: 14, padding: '10px 16px', border: '1px solid var(--line-soft)',
-          fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)',
-          letterSpacing: '0.06em', lineHeight: 1.6, borderRadius: 6,
-        }}>
-          Files you add are stored in this browser only. To make them permanent for all visitors, attach them in chat.
-        </div>
       </div>
     </section>
   );
