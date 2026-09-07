@@ -973,14 +973,14 @@ function NaivedyamModal({ open, onClose }) {
 
 /* ---------- Nitya Pratah Puja Modal (8-variety flow) ---------- */
 const NITYA_PRATAH_PUJAS = [
-  { name: 'Nitya Archana Seva (1 Month)', price: 5116 },
   { name: 'Nitya Deeparadhana Seva (1 Month)', price: 516 },
+  { name: 'Visesa Dravya Abhishekam (1 Day)', price: 516 },
   { name: 'Somavara Visesha Puja (1 Month)', price: 2500 },
+  { name: 'Nitya Archana Seva (1 Month)', price: 5116 },
   { name: 'Pournima Visesha Puja (1 Year)', price: 6000 },
   { name: 'Amavasya Visesha Puja (1 Year)', price: 6000 },
   { name: 'Masa Shivaratri Puja (1 Year)', price: 6000 },
   { name: 'Arudra Nakshatra Puja (1 Year)', price: 6000 },
-  { name: 'Visesa Dravya Abhishekam (1 Day)', price: 516 },
 ];
 
 function NityaPratahModal({ open, onClose }) {
