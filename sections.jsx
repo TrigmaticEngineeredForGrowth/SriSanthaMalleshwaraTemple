@@ -172,6 +172,7 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
 /* ---------- Upcoming Festivals ---------- */
 const FESTIVALS = [
   {
+    image: 'assets/Maha_Shivaratri_upcome_2027.jpeg',
     date: 'Maha shivaratri',
     gregorian: 'March 6 · 2027',
     name: 'Maha Shivaratri',
@@ -179,6 +180,7 @@ const FESTIVALS = [
     tag: 'Festival of supreme',
   },
   {
+    image: 'assets/rudra_homam_upcome.jpeg',
     date: 'Rudra Homam',
     gregorian: 'MaaghaMasa · 2027',
     name: 'Rudra Homam',
@@ -186,6 +188,7 @@ const FESTIVALS = [
     tag: 'Havan',
   },
   {
+    image: 'assets/upcome_shiva_parvati_kalyanam.jpeg',
     date: 'Shiva Parvati kalyanam',
     gregorian: 'March 7 · 2027',
     name: 'Shiva Parvati Kalyanam',
@@ -193,6 +196,7 @@ const FESTIVALS = [
     tag: 'Festival',
   },
   {
+    image: 'assets/kartika_deepam_upcome.jpeg',
     date: 'Kartika Masa Deeparadhana',
     gregorian: 'Kartika Masa . 2027',
     name: 'Kartika Masa Deeparadhana',
@@ -200,6 +204,7 @@ const FESTIVALS = [
     tag: 'deeparadhana',
   },
   {
+    image: 'assets/Sopana_deepa_upcome.jpeg',
     date: 'Kartika Sopana Deepotsavam',
     gregorian: 'Kartika Masa · 2027',
     name: 'Kartika Sopana Deepotsavam',
@@ -299,7 +304,7 @@ function FestivalCarousel({ heading, accentHeading, id, festivals, description, 
         <div ref={scrollerRef} className="festival-scroll" style={{ display: 'flex', gap: 18, overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', paddingBottom: 8, marginRight: -48, paddingRight: 48, WebkitOverflowScrolling: 'touch' }}>
           {festivals.map((f, i) => (
             <div key={i} className={`reveal delay-${i % 4}`} style={{ flex: '0 0 320px', scrollSnapAlign: 'start', background: 'linear-gradient(180deg, rgba(20,26,44,0.55), rgba(11,17,32,0.3))', border: '1px solid var(--line-soft)', position: 'relative', transition: 'all .4s' }}>
-              {i === 0 ? <img src="assets/festival-maha-shivaratri.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 1 ? <img src="assets/festival-rudra-homam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 2 ? <img src="assets/festival-kumbha-abhishekam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : <TempleImg keywords={['shiva lingam temple', 'fire ritual yajna homam', 'abhishekam milk ritual', 'oil lamp diya temple', 'nataraja bronze statue'][i] || 'hindu temple ritual'} alt={f.name} sig={i + 10} style={{ aspectRatio: '4/3' }} />}
+              {f.image ? <img src={f.image} alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 0 ? <img src="assets/festival-maha-shivaratri.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 1 ? <img src="assets/festival-rudra-homam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : i === 2 ? <img src="assets/festival-kumbha-abhishekam.jpeg" alt={f.name} style={{ aspectRatio: '4/3', width: '100%', objectFit: 'cover', display: 'block' }} /> : <TempleImg keywords={['shiva lingam temple', 'fire ritual yajna homam', 'abhishekam milk ritual', 'oil lamp diya temple', 'nataraja bronze statue'][i] || 'hindu temple ritual'} alt={f.name} sig={i + 10} style={{ aspectRatio: '4/3' }} />}
               <div style={{ padding: 24 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}><div><div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>{f.date}</div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>{f.gregorian}</div></div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid var(--line)', padding: '4px 10px' }}>{f.tag}</div></div>
                 <h3 style={{ fontSize: 21, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400, color: 'var(--ivory)', marginBottom: 14, letterSpacing: 'normal' }}>{f.name}</h3>
