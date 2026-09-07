@@ -215,6 +215,7 @@ const FESTIVALS = [
 
 const PAST_FESTIVALS = [
   {
+    image: 'assets/festival-maha-shivaratri.jpeg?v=3',
     date: 'Maha Shivaratri',
     gregorian: 'March 8 · 2024',
     name: 'Maha Shivaratri',
@@ -222,6 +223,7 @@ const PAST_FESTIVALS = [
     tag: 'Festival of Supreme',
   },
   {
+    image: 'assets/festival-rudra-homam.jpeg?v=3',
     date: 'Nakshatra Homam',
     gregorian: 'February · 2025',
     name: 'Nakshatra Homam',
@@ -229,6 +231,7 @@ const PAST_FESTIVALS = [
     tag: 'Havan',
   },
   {
+    image: 'assets/festival-kumbha-abhishekam.jpeg?v=3',
     date: 'Kumbha Abhishekam',
     gregorian: 'February · 2025',
     name: 'Kumbha Abhishekam',
@@ -236,6 +239,7 @@ const PAST_FESTIVALS = [
     tag: 'Festival',
   },
   {
+    image: 'assets/Kalasha_puja_mega.jpeg?v=3',
     date: 'kalasha puja',
     gregorian: 'February . 2025',
     name: 'Kalasha Puja',
@@ -243,6 +247,7 @@ const PAST_FESTIVALS = [
     tag: 'Kalasha Puja',
   },
   {
+    image: 'assets/rajat_mahotsav_past.jpeg?v=3',
     date: 'Rajata mahotsav',
     gregorian: 'February · 2026',
     name: 'Chinmaya Rajata Mahotsav',
