@@ -119,7 +119,7 @@ function App() {
       <NityaPratahModal open={nityaPratahOpen} onClose={() => setNityaPratahOpen(false)} />
       <RudrabhishekamModal open={rudrabhishekamOpen} onClose={() => setRudrabhishekamOpen(false)} />
       <SacredHomaModal open={sacredHomaOpen} onClose={() => setSacredHomaOpen(false)} />
-      <RudrabhishekamModal open={pradoshaOpen} onClose={() => setPradoshaOpen(false)} pujaName="Pradosha Puja" amount={516} pujaType="pradosha" description="Twilight worship to Lord Shiva, performed during the auspicious Pradosha window." />
+      <RudrabhishekamModal open={pradoshaOpen} onClose={() => setPradoshaOpen(false)} pujaName="Pradosha Puja" amount={2116} pujaType="pradosha" description="Twilight worship to Lord Shiva, performed during the auspicious Pradosha time. Abhishekam with Sri Rudram Namakam Chamakam, performed in your name." />
       <RudrabhishekamModal open={sriChakraOpen} onClose={() => setSriChakraOpen(false)} pujaName="Sri Chakra Kumkumarchana" pujaType="sri_chakra_kumkumarchana" description="Sacred Kumkuma puja to the Sri Chakra." options={[{ label: '1 Day Puja', amount: 516 }, { label: '1 Month Puja', amount: 15116 }]} />
       <window.GalleryManager open={galleryOpen} onClose={() => setGalleryOpen(false)} />
       <window.ContactLogViewer open={logOpen} onClose={() => setLogOpen(false)} />
