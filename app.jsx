@@ -26,6 +26,7 @@ function App() {
   const [pradoshaOpen, setPradoshaOpen] = useState(false);
   const [sriChakraOpen, setSriChakraOpen] = useState(false);
   const [mahaShivaratriOpen, setMahaShivaratriOpen] = useState(false);
+  const [liveDarshanOpen, setLiveDarshanOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && /[?&]log=1/.test(window.location.search)) {
@@ -79,7 +80,8 @@ function App() {
         active="home"
         onBookSeva={() => setSevaOpen(true)}
         onDonate={() => setDonateOpen(true)}
-        onContact={() => setContactOpen(true)} />
+        onContact={() => setContactOpen(true)}
+        onLiveDarshan={() => setLiveDarshanOpen(true)} />
 
       <Hero
         onBookSeva={() => setSevaOpen(true)}
@@ -124,6 +126,26 @@ function App() {
       <RudrabhishekamModal open={sriChakraOpen} onClose={() => setSriChakraOpen(false)} pujaName="Sri Chakra Kumkumarchana" pujaType="sri_chakra_kumkumarchana" description="Sacred Kumkuma puja to the Sri Chakra." options={[{ label: '1 Day Puja', amount: 516 }, { label: '1 Month Puja', amount: 15116 }]} />
       <MahaShivaratriModal open={mahaShivaratriOpen} onClose={() => setMahaShivaratriOpen(false)} />
       <window.GalleryManager open={galleryOpen} onClose={() => setGalleryOpen(false)} />
+
+      <window.Modal open={liveDarshanOpen} onClose={() => setLiveDarshanOpen(false)} title="Live Darshan" sub="Sacred Stream">
+        <div style={{ textAlign: 'center', padding: '20px 0' }}>
+          <div style={{
+            width: 80, height: 80, border: '1px solid var(--gold)', borderRadius: '50%',
+            margin: '0 auto 28px', display: 'grid', placeItems: 'center',
+            fontFamily: 'var(--f-sanskrit)', fontSize: 42, color: 'var(--gold)',
+            boxShadow: '0 0 40px var(--gold-glow)'
+          }}>ॐ</div>
+          <p style={{
+            fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 22,
+            color: 'var(--ivory)', marginBottom: 14, lineHeight: 1.5,
+          }}>
+            The Live Darshan is currently paused.<br/>Please check back soon for divine blessings 🙏
+          </p>
+          <div style={{ marginTop: 32 }}>
+            <button className="btn" onClick={() => setLiveDarshanOpen(false)}>Close</button>
+          </div>
+        </div>
+      </window.Modal>
       <window.ContactLogViewer open={logOpen} onClose={() => setLogOpen(false)} />
 
       <window.TweaksPanel title="Tweaks">

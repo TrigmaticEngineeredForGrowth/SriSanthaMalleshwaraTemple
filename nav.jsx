@@ -1,5 +1,5 @@
 /* global React */
-function Nav({ active, onBookSeva, onDonate, onContact }) {
+function Nav({ active, onBookSeva, onDonate, onContact, onLiveDarshan }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   React.useEffect(() => {
@@ -33,7 +33,7 @@ function Nav({ active, onBookSeva, onDonate, onContact }) {
         <a onClick={() => { setMobileOpen(false); onContact(); }} style={{ cursor: 'pointer' }}>Contact</a>
       </div>
       <div className="nav-cta">
-        <button className="ico" title="Live Darshan">
+        <button className="ico" title="Live Darshan" onClick={onLiveDarshan}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="12" cy="12" r="3" />
             <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
