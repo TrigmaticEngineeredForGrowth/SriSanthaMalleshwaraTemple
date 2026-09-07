@@ -69,7 +69,7 @@ function LiveDarshanBand() {
 function OmDivider() {
   return (
     <div style={{
-      height: 2, position: 'relative', marginTop: 24,
+      height: 2, position: 'relative', marginTop: 0,
       background: 'linear-gradient(90deg, transparent, var(--gold) 15%, var(--gold) 85%, transparent)',
       opacity: 0.9,
     }}>
