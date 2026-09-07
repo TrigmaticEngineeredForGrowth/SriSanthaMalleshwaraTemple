@@ -646,13 +646,13 @@ const VISHESHA_PUJAS = [
   { name: 'Veerabhadra Puja', price: 1111 },
   { name: 'Kaala Bhairava Puja', price: 1111 },
   { name: 'Ganesha Puja', price: 1111 },
-  { name: 'Sahasra Bilvarchana Puja', price: 1116 },
+  { name: 'Sahasra Bilvarchana Puja', price: 10008 },
   { name: 'Graha Dosha Parihara Puja', price: 2116 },
   { name: 'Shani Tailabhishekam', price: 2116 },
   { name: 'Vastra Samarpana Seva (Shiva-Shakti)', price: 2499 },
   { name: 'Shiva-Shakti Aaradhana Puja', price: 5116 },
-  { name: 'Birth Anniversary Seva with Rudrabhishekam', price: 5116 },
-  { name: 'Vivaha Anniversary Seva with Rudrabhishekam', price: 5116 },
+  { name: 'Birth Anniversary Seva with Rudrabhishekam-panchalingas', price: 5116 },
+  { name: 'Vivaha Anniversary Seva with Rudrabhishekam-Panchalingas', price: 5116 },
   { name: 'Navagrha Puja', price: 5116 },
 ];
 
