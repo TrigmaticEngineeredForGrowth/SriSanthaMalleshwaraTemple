@@ -172,7 +172,7 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
 /* ---------- Upcoming Festivals ---------- */
 const FESTIVALS = [
   {
-    image: 'assets/Maha_Shivaratri_upcome_2027.jpeg',
+    image: 'assets/Maha_Shivaratri_upcome_2027.jpeg?v=2',
     date: 'Maha shivaratri',
     gregorian: 'March 6 · 2027',
     name: 'Maha Shivaratri',
@@ -180,7 +180,7 @@ const FESTIVALS = [
     tag: 'Festival of supreme',
   },
   {
-    image: 'assets/rudra_homam_upcome.jpeg',
+    image: 'assets/rudra_homam_upcome.jpeg?v=2',
     date: 'Rudra Homam',
     gregorian: 'MaaghaMasa · 2027',
     name: 'Rudra Homam',
@@ -188,7 +188,7 @@ const FESTIVALS = [
     tag: 'Havan',
   },
   {
-    image: 'assets/upcome_shiva_parvati_kalyanam.jpeg',
+    image: 'assets/upcome_shiva_parvati_kalyanam.jpeg?v=2',
     date: 'Shiva Parvati kalyanam',
     gregorian: 'March 7 · 2027',
     name: 'Shiva Parvati Kalyanam',
@@ -196,7 +196,7 @@ const FESTIVALS = [
     tag: 'Festival',
   },
   {
-    image: 'assets/kartika_deepam_upcome.jpeg',
+    image: 'assets/kartika_deepam_upcome.jpeg?v=2',
     date: 'Kartika Masa Deeparadhana',
     gregorian: 'Kartika Masa . 2027',
     name: 'Kartika Masa Deeparadhana',
@@ -204,7 +204,7 @@ const FESTIVALS = [
     tag: 'deeparadhana',
   },
   {
-    image: 'assets/Sopana_deepa_upcome.jpeg',
+    image: 'assets/Sopana_deepa_upcome.jpeg?v=2',
     date: 'Kartika Sopana Deepotsavam',
     gregorian: 'Kartika Masa · 2027',
     name: 'Kartika Sopana Deepotsavam',
