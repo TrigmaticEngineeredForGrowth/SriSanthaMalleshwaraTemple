@@ -640,6 +640,7 @@ function ContactModal({ open, onClose }) {
 
 /* ---------- Vishesha Puja Modal (14-variety flow) ---------- */
 const VISHESHA_PUJAS = [
+  { name: 'Kartika Deeparadhana', price: 516 },
   { name: 'Pushalankara Seva', price: 999 },
   { name: 'Visesha Bhasmarchana Puja', price: 1001 },
   { name: 'Saravana Puja', price: 1111 },
@@ -653,16 +654,20 @@ const VISHESHA_PUJAS = [
   { name: 'Birth Anniversary Seva with Rudrabhishekam-panchalingas', price: 5116 },
   { name: 'Vivaha Anniversary Seva with Rudrabhishekam-Panchalingas', price: 5116 },
   { name: 'Navagrha Puja', price: 5116 },
+  { name: 'Kartika Sopana Deepotsavam (Kartika Pournami)', price: 5116 },
   { name: 'Sahasra Bilvarchana Puja', price: 10008 },
+  { name: 'Varuna Homam', price: 50001 },
+  { name: 'Pancha Boota Shiva Puja', price: 50116 },
 ];
 
 function VisheshaPujaModal({ open, onClose }) {
   const [step, setStep] = useStateM(1);
   const [puja, setPuja] = useStateM(null);
+  const [showSignificance, setShowSignificance] = useStateM(false);
   const [form, setForm] = useStateM({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' });
   const [done, setDone] = useStateM(false);
 
-  const reset = () => { setStep(1); setPuja(null); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
+  const reset = () => { setStep(1); setPuja(null); setShowSignificance(false); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
   const canContinueDetails = form.name && form.nakshetra && form.whatsapp && form.whatsapp.length === 10 && isValidEmail(form.email) && isFutureDate(form.date);
@@ -695,7 +700,47 @@ function VisheshaPujaModal({ open, onClose }) {
             ))}
           </div>
           <div style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-end' }}>
-            <button className="btn solid" disabled={!puja} onClick={() => puja && setStep(2)} style={{ opacity: puja ? 1 : 0.45 }}>
+            <button className="btn solid" disabled={!puja} onClick={() => puja && (puja === 'Pancha Boota Shiva Puja' ? setShowSignificance(true) : setStep(2))} style={{ opacity: puja ? 1 : 0.45 }}>
+              Continue<span className="arrow"></span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!done && showSignificance && puja === 'Pancha Boota Shiva Puja' && (
+        <div>
+          <div style={{ border: '1px solid var(--gold)', background: 'rgba(255,122,46,0.06)', padding: 32, marginBottom: 28 }}>
+            <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 24, color: 'var(--ivory)', marginBottom: 20, textAlign: 'center' }}>Pancha Boota Shiva Puja</div>
+            <p style={{ color: 'var(--ivory-dim)', fontSize: 15, fontStyle: 'italic', lineHeight: 1.6, marginBottom: 24, textAlign: 'center' }}>
+              Puja performed to Lord Shiva with five elements
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', border: '1px solid var(--line-soft)', background: 'rgba(255,255,255,0.02)' }}>
+                <span style={{ fontFamily: 'var(--f-display)', fontSize: 13, color: 'var(--ivory)' }}>1. Bhumi (Earth)</span>
+                <span style={{ color: 'var(--gold)', fontSize: 14 }}>Bhasmam / Ghandam</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', border: '1px solid var(--line-soft)', background: 'rgba(255,255,255,0.02)' }}>
+                <span style={{ fontFamily: 'var(--f-display)', fontSize: 13, color: 'var(--ivory)' }}>2. Neru (Water)</span>
+                <span style={{ color: 'var(--gold)', fontSize: 14 }}>Jalaabhishekam</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', border: '1px solid var(--line-soft)', background: 'rgba(255,255,255,0.02)' }}>
+                <span style={{ fontFamily: 'var(--f-display)', fontSize: 13, color: 'var(--ivory)' }}>3. Agni (Fire)</span>
+                <span style={{ color: 'var(--gold)', fontSize: 14 }}>Homam / Deepam</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', border: '1px solid var(--line-soft)', background: 'rgba(255,255,255,0.02)' }}>
+                <span style={{ fontFamily: 'var(--f-display)', fontSize: 13, color: 'var(--ivory)' }}>4. Vayu (Air)</span>
+                <span style={{ color: 'var(--gold)', fontSize: 14 }}>Dhoopam</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', border: '1px solid var(--line-soft)', background: 'rgba(255,255,255,0.02)' }}>
+                <span style={{ fontFamily: 'var(--f-display)', fontSize: 13, color: 'var(--ivory)' }}>5. Aakasham (Sky)</span>
+                <span style={{ color: 'var(--gold)', fontSize: 14 }}>Mantram / Japam</span>
+              </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <button className="btn ghost" onClick={() => setShowSignificance(false)}>← Back
+            </button>
+            <button className="btn solid" onClick={() => { setShowSignificance(false); setStep(2); }}>
               Continue<span className="arrow"></span>
             </button>
           </div>
