@@ -46,6 +46,29 @@ function App() {
     document.documentElement.style.setProperty('--gold-glow', a + '59');
   }, [t.accent]);
 
+  useEffect(() => {
+    const audio = new Audio('audio/om_namaste_astu_bagwan.mp3');
+    audio.volume = 0.6;
+    let played = false;
+    const tryPlay = () => {
+      if (played) return;
+      audio.play().then(() => { played = true; cleanup(); }).catch(() => {});
+    };
+    const cleanup = () => {
+      document.removeEventListener('click', tryPlay);
+      document.removeEventListener('scroll', tryPlay);
+      document.removeEventListener('keydown', tryPlay);
+      document.removeEventListener('touchstart', tryPlay);
+    };
+    audio.play().then(() => { played = true; cleanup(); }).catch(() => {
+      document.addEventListener('click', tryPlay, { once: false });
+      document.addEventListener('scroll', tryPlay, { once: false });
+      document.addEventListener('keydown', tryPlay, { once: false });
+      document.addEventListener('touchstart', tryPlay, { once: false });
+    });
+    return cleanup;
+  }, []);
+
   return (
     <>
       <window.Nav
