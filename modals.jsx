@@ -815,6 +815,85 @@ function VisheshaPujaModal({ open, onClose }) {
   );
 }
 
+/* ---------- Sacred Homa Modal ---------- */
+const SACRED_HOMAS = [
+  'Rudra Homam',
+  'Maha Mrutyunjaya Homam',
+  'Kala Bhairava Homam',
+  'Sri Dakshina Murthy Homam',
+  'Durga Homam',
+  'Dhanvantari Homam',
+  'Nakshatra Homam',
+  'Navagraha Homam',
+  'Ganapathi Homam',
+  'Lalitha Homam',
+  'Pratyangira Homam',
+  'Chandi Homam',
+  'Pavamana Homam',
+  'Vaarahi Homam',
+  'Veerabhadra Homam',
+  'Varuna Homam',
+];
+const SACRED_HOMA_PRICE = 15116;
+
+function SacredHomaModal({ open, onClose }) {
+  const [step, setStep] = useStateM(1);
+  const [homa, setHoma] = useStateM(null);
+  const [form, setForm] = useStateM({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' });
+  const [done, setDone] = useStateM(false);
+  const reset = () => { setStep(1); setHoma(null); setForm({ name: '', gotra: '', nakshetra: '', address: '', whatsapp: '', email: '', date: '' }); setDone(false); };
+  const close = () => { onClose(); setTimeout(reset, 400); };
+  const canContinueDetails = form.name.trim() && form.nakshetra.trim() && form.whatsapp.length === 10 && isValidEmail(form.email) && isFutureDate(form.date);
+
+  return (
+    <Modal open={open} onClose={close} title={done ? 'Sankalpa Received' : 'Book Sacred Homa'} sub={done ? 'Confirmation' : `Step ${step} of 3`}>
+      {!done && <div style={{ marginBottom: 32, display: 'flex', gap: 8 }}>
+        {[1, 2, 3].map(s => <div key={s} style={{ flex: 1, height: 2, background: s <= step ? 'var(--gold)' : 'var(--line-soft)', transition: 'background .4s' }} />)}
+      </div>}
+
+      {!done && step === 1 && <div>
+        <div style={{ border: '1px solid var(--line)', background: 'rgba(255,122,46,0.05)', padding: '24px 26px', marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+          <span style={{ fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.28em', color: 'var(--ivory-faint)', textTransform: 'uppercase' }}>All Sacred Homas</span>
+          <span style={{ fontFamily: 'var(--f-display)', fontSize: 25, color: 'var(--gold)', whiteSpace: 'nowrap' }}>₹15,116 each</span>
+        </div>
+        <label className="field-label">Choose a Homa</label>
+        <div className="homa-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, marginBottom: 28 }}>
+          {SACRED_HOMAS.map(name => <button key={name} onClick={() => setHoma(name)} style={{ minHeight: 56, padding: '14px 16px', textAlign: 'left', background: homa === name ? 'rgba(255,122,46,0.08)' : 'transparent', border: `1px solid ${homa === name ? 'var(--gold)' : 'var(--line-soft)'}`, color: 'var(--ivory)', cursor: 'pointer', fontFamily: 'var(--f-display)', fontSize: 12, letterSpacing: '0.03em', transition: 'all .25s ease' }}>{name}</button>)}
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button className="btn solid" disabled={!homa} onClick={() => homa && setStep(2)} style={{ opacity: homa ? 1 : 0.45 }}>Continue<span className="arrow"></span></button>
+        </div>
+      </div>}
+
+      {!done && step === 2 && <div>
+        <div className="modal-grid-2" style={{ marginBottom: 18 }}>
+          <div><label className="field-label">Full Name *</label><input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="As to be chanted" /></div>
+          <div><label className="field-label">Gotra</label><input value={form.gotra} onChange={e => setForm({ ...form, gotra: e.target.value })} placeholder="e.g. Bharadwaja" /></div>
+        </div>
+        <div className="modal-grid-2" style={{ marginBottom: 18 }}>
+          <div><label className="field-label">Nakshetra *</label><input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
+          <div><label className="field-label">WhatsApp Phone *</label><input type="tel" inputMode="numeric" value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: sanitizePhone(e.target.value) })} placeholder="10-digit number" /></div>
+        </div>
+        <div style={{ marginBottom: 18 }}><label className="field-label">Preferred Date *</label><input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} /></div>
+        <div style={{ marginBottom: 18 }}><label className="field-label">Address</label><textarea rows={2} value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} /></div>
+        <div style={{ marginBottom: 8 }}><label className="field-label">Email *</label><input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" /></div>
+        <div style={{ marginTop: 24, display: 'flex', justifyContent: 'space-between' }}><button className="btn ghost" onClick={() => setStep(1)}>← Back</button><button className="btn solid" disabled={!canContinueDetails} onClick={() => canContinueDetails && setStep(3)} style={{ opacity: canContinueDetails ? 1 : 0.45 }}>Continue<span className="arrow"></span></button></div>
+      </div>}
+
+      {!done && step === 3 && <div>
+        <div style={{ background: 'rgba(255,122,46,0.05)', border: '1px solid var(--line)', padding: 32, marginBottom: 28 }}>
+          <div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: 16 }}>Your Sankalpa</div>
+          <div className="modal-grid-summary" style={{ fontSize: 15 }}><div style={{ color: 'var(--ivory-faint)' }}>Homa</div><div>{homa}</div><div style={{ color: 'var(--ivory-faint)' }}>Date</div><div>{form.date}</div><div style={{ color: 'var(--ivory-faint)' }}>Devotee</div><div>{form.name} {form.gotra && <span style={{ color: 'var(--gold)' }}>· {form.gotra} gotra</span>}</div><div style={{ color: 'var(--ivory-faint)' }}>WhatsApp</div><div>{form.whatsapp}</div><div style={{ color: 'var(--ivory-faint)' }}>Amount</div><div style={{ color: 'var(--gold)', fontFamily: 'var(--f-display)' }}>₹15,116</div></div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}><button className="btn ghost" onClick={() => setStep(2)}>← Back</button><button className="btn solid" onClick={async () => { let bookingRef = null; try { const saved = await window.savePujaBooking({ name: form.name, phone: form.whatsapp, email: form.email, gotra: form.gotra, nakshetra: form.nakshetra, address: form.address, pujaName: homa, pujaType: 'sacred_homa', date: form.date, amount: SACRED_HOMA_PRICE }); bookingRef = saved?.id || null; } catch (e) { console.warn('booking save failed', e); } const result = await window.startRazorpayPayment({ amount: SACRED_HOMA_PRICE, purpose: 'Homa: ' + homa, name: form.name, email: form.email, phone: form.whatsapp, referenceType: 'puja_bookings', referenceId: bookingRef }); if (result.verified) setDone(true); else alert(result.error || 'Payment could not be completed. Please try again.'); }}>Pay ₹15,116 via Razorpay<span className="arrow"></span></button></div>
+        <div style={{ marginTop: 16, fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ivory-faint)', textAlign: 'center' }}>SECURED · RAZORPAY · 256-BIT ENCRYPTION</div>
+      </div>}
+
+      {done && <div style={{ textAlign: 'center', padding: '20px 0' }}><div style={{ width: 80, height: 80, border: '1px solid var(--gold)', borderRadius: '50%', margin: '0 auto 28px', display: 'grid', placeItems: 'center', fontFamily: 'var(--f-sanskrit)', fontSize: 42, color: 'var(--gold)', boxShadow: '0 0 40px var(--gold-glow)' }}>ॐ</div><p style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 22, color: 'var(--ivory)', marginBottom: 14 }}>Your offering is received, {form.name || 'devotee'}.</p><p style={{ color: 'var(--ivory-dim)', maxWidth: 460, margin: '0 auto', lineHeight: 1.6 }}>The priests will perform <span style={{ color: 'var(--gold)' }}>{homa}</span> in your name. A confirmation receipt has been sent to your email and WhatsApp.</p><div style={{ marginTop: 36 }}><button className="btn" onClick={close}>Close</button></div></div>}
+    </Modal>
+  );
+}
+
 /* ---------- Nitya Naivedyam Modal (monthly seva, single item) ---------- */
 function NaivedyamModal({ open, onClose }) {
   const [step, setStep] = useStateM(1);

@@ -623,6 +623,7 @@
     .modal div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
     .modal div[style*="repeat(4, 1fr)"] { grid-template-columns: 1fr 1fr !important; }
     .modal div[style*="repeat(6, 1fr)"] { grid-template-columns: 1fr 1fr 1fr !important; }
+    .homa-grid { grid-template-columns: 1fr 1fr !important; }
     .modal div[style*="120px 1fr"] { grid-template-columns: 90px 1fr !important; font-size: 13px !important; }
 
     /* Sticky orb smaller */

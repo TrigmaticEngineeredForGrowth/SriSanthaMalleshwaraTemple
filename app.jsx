@@ -22,6 +22,7 @@ function App() {
   const [naivedyamOpen, setNaivedyamOpen] = useState(false);
   const [nityaPratahOpen, setNityaPratahOpen] = useState(false);
   const [rudrabhishekamOpen, setRudrabhishekamOpen] = useState(false);
+  const [sacredHomaOpen, setSacredHomaOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && /[?&]log=1/.test(window.location.search)) {
@@ -65,7 +66,7 @@ function App() {
 
       <div id="services">
         <window.OmDivider />
-        <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} />
+        <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} onSacredHoma={() => setSacredHomaOpen(true)} />
         <Festivals />
       </div>
 
@@ -92,6 +93,7 @@ function App() {
       <NaivedyamModal open={naivedyamOpen} onClose={() => setNaivedyamOpen(false)} />
       <NityaPratahModal open={nityaPratahOpen} onClose={() => setNityaPratahOpen(false)} />
       <RudrabhishekamModal open={rudrabhishekamOpen} onClose={() => setRudrabhishekamOpen(false)} />
+      <SacredHomaModal open={sacredHomaOpen} onClose={() => setSacredHomaOpen(false)} />
       <window.GalleryManager open={galleryOpen} onClose={() => setGalleryOpen(false)} />
       <window.ContactLogViewer open={logOpen} onClose={() => setLogOpen(false)} />
 
