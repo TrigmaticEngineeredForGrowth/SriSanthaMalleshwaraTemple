@@ -135,11 +135,11 @@ function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, 
         <div style={{ textAlign: 'center', marginBottom: 80 }} className="reveal">
           <span className="eyebrow">Daily Rhythm</span>
           <h2 style={{ marginTop: 24 }}>
-            The Hours of <span className="serif-display" style={{ color: 'var(--gold)' }}>Devotion</span>
+            The Hours of <span className="serif-display" style={{ color: 'var(--gold)' }}>Devotion & Seva</span>
           </h2>
           <p style={{ marginTop: 20, color: 'var(--ivory-dim)', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', fontSize: 19 }}>
-            Sacred services mark our days — each a returning to silence,
-            each an offering of light.
+            Sacred services mark our days — each a returning to silence, each an offering of light.
+            Choose a seva, name the divine intention, and our priests will perform it in your name.
           </p>
         </div>
 
