@@ -69,12 +69,6 @@ function App() {
         <Festivals />
       </div>
 
-      <div id="donation">
-        <window.OmDivider />
-        <SevaBooking onBookSeva={() => setSevaOpen(true)} />
-        <DonationCTA onDonate={() => setDonateOpen(true)} />
-      </div>
-
       <div id="gallery">
         <window.OmDivider />
         <Gallery onManageGallery={() => setGalleryOpen(true)} />
