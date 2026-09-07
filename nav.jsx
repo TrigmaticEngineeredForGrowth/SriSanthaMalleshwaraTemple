@@ -27,7 +27,7 @@ function Nav({ active, onBookSeva, onDonate, onContact }) {
         {link('Home', '#home', 'home')}
         {link('About', '#about', 'about')}
         {link('Services', '#services', 'services')}
-        {link('Donation', '#donation', 'donation')}
+        {link('Events', '#donation', 'donation')}
         {link('Gallery', '#gallery', 'gallery')}
         {link('Audio', '#audio', 'audio')}
         <a onClick={() => { setMobileOpen(false); onContact(); }} style={{ cursor: 'pointer' }}>Contact</a>

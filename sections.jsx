@@ -125,7 +125,7 @@ const POOJA_TIMES = [
   { name: 'Sri Chakra KumkumArchana', desc: 'Kumkuma puja', icon: '✴' },
   { name: 'Sacred Homas', desc: 'Vedic fire rituals', icon: '🔥' },
   { name: 'Nitya Naivedyam', desc: 'Prasadam offering (Daily 1kg)', icon: '◐' },
-  { name: 'Auspicious Maghamasa Pujas & Abhishekas (30 days)', desc: 'Maha Shivaratri Special', icon: '✶' },
+  { name: 'Maha Shivaratri Special', desc: 'Auspicious Maghamasa Pujas & Abhishekas (30 Days)', icon: '✶' },
 ];
 
 function PoojaTimings({ onBookSeva, onVisheshaPuja, onNaivedyam, onNityaPratah, onRudrabhishekam }) {
@@ -184,7 +184,7 @@ const FESTIVALS = [
   {
     date: 'Pradosham',
     gregorian: 'Every 13th tithi',
-    name: 'Pradosha Pooja',
+    name: 'Kalasha Puja',
     desc: 'Twilight worship on the 13th lunar day — the most auspicious window to invoke Lord Shiva.',
     tag: 'Bi-Monthly',
   },
@@ -249,7 +249,7 @@ function Festivals() {
           <div>
             <span className="eyebrow">The Sacred Calendar</span>
             <h2 style={{ marginTop: 24 }}>
-              Upcoming<br/>
+              Mega<br/>
               <span className="serif-display" style={{ color: 'var(--gold)' }}>Celebrations</span>
             </h2>
             <p style={{ color: 'var(--ivory-dim)', fontSize: 19, lineHeight: 1.7, marginTop: 20, maxWidth: 520 }}>
