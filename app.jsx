@@ -67,6 +67,7 @@ function App() {
       <div id="services">
         <window.OmDivider />
         <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} onSacredHoma={() => setSacredHomaOpen(true)} />
+        <window.OmDivider />
         <Festivals />
       </div>
 

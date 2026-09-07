@@ -232,7 +232,7 @@ function FestivalCarousel({ heading, accentHeading, id }) {
   });
 
   return (
-    <section id={id} style={{ background: 'linear-gradient(180deg, var(--bg-0), #07091a)' }} data-screen-label="04 Festivals">
+    <section id={id} style={{ background: 'var(--bg-0)' }} data-screen-label="04 Festivals">
       <div className="container">
         <div className="flex-header reveal" style={{ marginBottom: 70 }}>
           <div>
