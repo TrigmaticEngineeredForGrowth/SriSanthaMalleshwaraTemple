@@ -98,8 +98,6 @@ function App() {
       <div id="gallery">
         <window.OmDivider />
         <Gallery onManageGallery={() => setGalleryOpen(true)} />
-        <QuoteBand />
-        <Testimonials />
       </div>
 
       <div id="audio">

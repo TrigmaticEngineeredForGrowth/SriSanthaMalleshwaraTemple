@@ -446,98 +446,6 @@ function Gallery({ onManageGallery }) {
   );
 }
 
-/* ---------- Quote / Mantra band ---------- */
-function QuoteBand() {
-  return (
-    <section className="bg-grain" style={{
-      background: 'radial-gradient(ellipse at center, #0d1428, #050505)',
-      padding: '160px 0',
-      borderTop: '1px solid var(--line-soft)',
-      borderBottom: '1px solid var(--line-soft)',
-      position: 'relative',
-    }} data-screen-label="08 Mantra">
-      <div className="container-narrow" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-        <div className="reveal">
-          <Divider />
-          <div style={{ marginTop: 50, fontFamily: 'var(--f-sanskrit)', fontSize: 38, color: 'var(--gold)', letterSpacing: '0.05em' }}>
-            कर्पूरगौरं करुणावतारं
-          </div>
-          <div style={{ marginTop: 14, fontFamily: 'var(--f-sanskrit)', fontSize: 38, color: 'var(--gold)', letterSpacing: '0.05em' }}>
-            संसारसारं भुजगेन्द्रहारम्
-          </div>
-
-          <p style={{
-            marginTop: 50,
-            fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400,
-            fontSize: 28, color: 'var(--ivory)', lineHeight: 1.5,
-            letterSpacing: '0.01em',
-          }}>
-            “White as camphor, an incarnation of compassion,<br/>
-            the very essence of existence, garlanded by the king of serpents —<br/>
-            <span style={{ color: 'var(--gold)' }}>I bow to Shiva, the auspicious one,</span><br/>
-            seated forever in the lotus of my heart.”
-          </p>
-          <div style={{ marginTop: 40, fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.4em', color: 'var(--ivory-faint)', textTransform: 'uppercase' }}>
-            — Karpura Gauram Stotra
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- Testimonials ---------- */
-const TESTIMONIALS = [
-  { quote: 'I have offered the morning archana from London for eleven years. Distance has never been a barrier to grace.', name: 'Lakshmi Iyer', loc: 'London · Devotee since 2014' },
-  { quote: 'On Maha Shivaratri last year, the temple felt like a single, breathing being. I have not been the same since.', name: 'Anand Krishnan', loc: 'Bengaluru' },
-  { quote: 'The annadanam meals we sponsored for our father\'s shraddha — the priests sent us a handwritten note. It is still on our altar.', name: 'Meena & Suresh Rao', loc: 'Toronto' },
-];
-
-function Testimonials() {
-  const [idx, setIdx] = useStateS(0);
-  useEffectS(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % TESTIMONIALS.length), 7000);
-    return () => clearInterval(t);
-  }, []);
-  const t = TESTIMONIALS[idx];
-  return (
-    <section style={{ background: 'var(--bg-0)' }} data-screen-label="09 Testimonials">
-      <div className="container-narrow" style={{ textAlign: 'center' }}>
-        <div className="reveal">
-          <span className="eyebrow">Voices of Devotees</span>
-          <div style={{ position: 'relative', minHeight: 200, marginTop: 50 }}>
-            <p key={idx} style={{
-              fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400,
-              fontSize: 30, color: 'var(--ivory)', lineHeight: 1.5,
-              animation: 'fadeIn .6s ease',
-            }}>
-              “{t.quote}”
-            </p>
-            <div style={{ marginTop: 36 }}>
-              <div style={{ fontFamily: 'var(--f-display)', fontSize: 13, letterSpacing: '0.2em', color: 'var(--gold)', textTransform: 'uppercase' }}>
-                {t.name}
-              </div>
-              <div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', letterSpacing: '0.15em', marginTop: 6 }}>
-                {t.loc}
-              </div>
-            </div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 40 }}>
-            {TESTIMONIALS.map((_, i) => (
-              <button key={i} onClick={() => setIdx(i)} style={{
-                width: i === idx ? 28 : 8, height: 2,
-                background: i === idx ? 'var(--gold)' : 'var(--line-soft)',
-                border: 'none', cursor: 'pointer',
-                transition: 'all .4s ease',
-              }}></button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ---------- Footer ---------- */
 function Footer({ onContact }) {
   return (
@@ -637,5 +545,5 @@ function Footer({ onContact }) {
 
 Object.assign(window, {
   useReveal, Divider, TempleImg, Introduction, PoojaTimings, Festivals,
-  SevaBooking, DonationCTA, Gallery, QuoteBand, Testimonials, Footer
+  SevaBooking, DonationCTA, Gallery, Footer
 });
