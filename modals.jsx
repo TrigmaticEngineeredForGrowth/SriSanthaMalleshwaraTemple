@@ -640,20 +640,20 @@ function ContactModal({ open, onClose }) {
 
 /* ---------- Vishesha Puja Modal (14-variety flow) ---------- */
 const VISHESHA_PUJAS = [
-  { name: 'Shiva-Shakti Aaradhana Puja', price: 5116 },
-  { name: 'Birth Anniversary Seva with Rudrabhishekam', price: 5116 },
-  { name: 'Vivaha Anniversary Seva with Rudrabhishekam', price: 5116 },
-  { name: 'Navagrha Puja', price: 5116 },
-  { name: 'Graha Dosha Parihara Puja', price: 2116 },
+  { name: 'Pushalankara Seva', price: 999 },
+  { name: 'Visesha Bhasmarchana Puja', price: 1001 },
   { name: 'Saravana Puja', price: 1111 },
   { name: 'Veerabhadra Puja', price: 1111 },
   { name: 'Kaala Bhairava Puja', price: 1111 },
   { name: 'Ganesha Puja', price: 1111 },
+  { name: 'Sahasra Bilvarchana Puja', price: 1116 },
+  { name: 'Graha Dosha Parihara Puja', price: 2116 },
   { name: 'Shani Tailabhishekam', price: 2116 },
   { name: 'Vastra Samarpana Seva (Shiva-Shakti)', price: 2499 },
-  { name: 'Pushalankara Seva', price: 999 },
-  { name: 'Visesha Bhasmarchana Puja', price: 1001 },
-  { name: 'Sahasra Bilvarchana Puja', price: 1116 },
+  { name: 'Shiva-Shakti Aaradhana Puja', price: 5116 },
+  { name: 'Birth Anniversary Seva with Rudrabhishekam', price: 5116 },
+  { name: 'Vivaha Anniversary Seva with Rudrabhishekam', price: 5116 },
+  { name: 'Navagrha Puja', price: 5116 },
 ];
 
 function VisheshaPujaModal({ open, onClose }) {
