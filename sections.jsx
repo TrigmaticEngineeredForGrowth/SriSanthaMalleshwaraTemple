@@ -247,7 +247,7 @@ const PAST_FESTIVALS = [
     tag: 'Kalasha Puja',
   },
   {
-    image: 'assets/rajat_mahotsav_past.jpeg?v=3',
+    image: 'assets/Chinmaya_Amrit_Mahotsav.jpeg',
     date: 'Rajata mahotsav',
     gregorian: 'February · 2026',
     name: 'Chinmaya Rajata Mahotsav',
