@@ -1445,9 +1445,9 @@ function MahaShivaratriModal({ open, onClose }) {
   const [selectedOption, setSelectedOption] = useStateM(null);
 
   const options = [
-    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam (30 Days)', amount: 1221 },
-    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva (30 Days)', amount: 10008 },
-    { label: 'Daily Sankalpa Rudrabhisheka Puja with Prasadam + Shiva Parvati Kalyana Seva + Anna Prasada Seva', amount: 15116 },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja (30 Days) with Prasadam', labelNode: <>Daily Sankalpa Rudrabhisheka Puja&nbsp;<span style={{ backgroundColor: 'rgba(0, 0, 0, 0.78)' }}>(30 Days)</span>with Prasadam</>, amount: 1221 },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja (30 Days)+ Shiva Parvati Kalyana Seva', amount: 10008 },
+    { label: 'Daily Sankalpa Rudrabhisheka Puja (30 Days)\u00a0+ Shiva Parvati Kalyana Seva + Anna Prasada Seva', amount: 15116 },
   ];
 
   React.useEffect(() => {
@@ -1496,7 +1496,7 @@ function MahaShivaratriModal({ open, onClose }) {
                     <span style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--ivory-faint)', textTransform: 'uppercase' }}>Option {i + 1}</span>
                     <span style={{ fontFamily: 'var(--f-display)', fontSize: 26, color: 'var(--gold)', fontWeight: 700 }}>₹{option.amount.toLocaleString('en-IN')}</span>
                   </div>
-                  <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 16, color: 'var(--ivory)', lineHeight: 1.5 }}>{option.label}</div>
+                  <div style={{ fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 16, color: 'var(--ivory)', lineHeight: 1.5 }}>{option.labelNode || option.label}</div>
                 </button>
               );
             })}
