@@ -478,25 +478,8 @@ function Gallery({ onManageGallery }) {
             ))}
           </div>
         ) : (
-          <div className="grid-auto-4" style={{ gridTemplateRows: 'repeat(2, 280px)', gap: 16 }}>
-            <div className="reveal" style={{ gridRow: 'span 2', overflow: 'hidden', position: 'relative' }}>
-              <img src="assets/temple-real-photo.jpeg" alt="Temple entrance" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-            <div className="reveal delay-1" style={{ gridColumn: 'span 2', overflow: 'hidden', position: 'relative' }}>
-              <img src="assets/temple-real-photo-garland.jpeg" alt="Temple with garlands" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-            <div className="reveal delay-2" style={{ overflow: 'hidden', position: 'relative' }}>
-              <img src="assets/temple-real-photo-clean.jpeg" alt="Temple sanctum" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-            <div className="reveal delay-1" style={{ overflow: 'hidden', position: 'relative' }}>
-              <img src="assets/temple-real-photo-nandi.jpeg" alt="Nandi at the temple" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-            <div className="reveal delay-2" style={{ overflow: 'hidden', position: 'relative' }}>
-              <img src="assets/jyotirlinga-abhishekam.png" alt="Jyotirlinga abhishekam" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-            <div className="reveal delay-3" style={{ overflow: 'hidden', position: 'relative' }}>
-              <img src="assets/jyotirlinga-shrine-full.png" alt="Jyotirlinga shrine" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
+          <div className="gallery-empty reveal">
+            <p>No gallery images have been added yet.</p>
           </div>
         )}
       </div>
