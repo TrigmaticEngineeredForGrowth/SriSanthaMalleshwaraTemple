@@ -623,9 +623,7 @@ function Footer({ onContact, onLiveDarshan }) {
           letterSpacing: '0.18em', textTransform: 'uppercase',
         }}>
           <div>Copyright · Chinmaya Mission Adoni . Sri SantHa Malleswara Swami Temple . 1996</div>
-          <div style={{ display: 'flex', gap: 30 }}>
-            <a>Privacy</a><a>Terms</a><a>Refund Policy</a>
-          </div>
+
         </div>
       </div>
     </footer>
