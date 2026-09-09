@@ -533,9 +533,10 @@ function Footer({ onContact }) {
               Explore
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {[['About', '#about'], ['Services', '#services'], ['Donation', '#donation'], ['Sacred Audios', '#audio'], ['Gallery', '#gallery'], ['Contact', '#']].map(([l, href]) => (
+              {[['About', '#about'], ['Services', '#services'], ['Donation', '#donation'], ['Sacred Audios', '#audio'], ['Gallery', '#gallery']].map(([l, href]) => (
                 <li key={l}><a href={href} style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>{l}</a></li>
               ))}
+              <li><a onClick={onContact} style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15, cursor: 'pointer' }}>Contact</a></li>
             </ul>
           </div>
 
@@ -544,9 +545,9 @@ function Footer({ onContact }) {
               Sevas
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {['Book a Pooja', 'Annadanam', 'Festival Sponsorship', 'Recurring Sankalpa', 'Gau Seva', 'Live Darshan'].map(l => (
-                <li key={l}><a style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>{l}</a></li>
-              ))}
+              <li><a href="#services" style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>Book a Pooja</a></li>
+              <li><a href="#donation" style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>Festival Sponsorship</a></li>
+              <li><a href="#audio" style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>Live Darshan</a></li>
             </ul>
           </div>
 

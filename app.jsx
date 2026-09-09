@@ -17,7 +17,6 @@ function App() {
   const [donateOpen, setDonateOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
-  const [galleryOpen, setGalleryOpen] = useState(false);
   const [visheshaOpen, setVisheshaOpen] = useState(false);
   const [naivedyamOpen, setNaivedyamOpen] = useState(false);
   const [nityaPratahOpen, setNityaPratahOpen] = useState(false);
@@ -100,6 +99,11 @@ function App() {
         <Festivals />
       </div>
 
+      <div id="donation">
+        <window.OmDivider />
+        <window.DonationCTA onDonate={() => setDonateOpen(true)} />
+      </div>
+
       <div id="gallery">
         <window.OmDivider />
         <Gallery />
@@ -126,8 +130,6 @@ function App() {
       <RudrabhishekamModal open={pradoshaOpen} onClose={() => setPradoshaOpen(false)} pujaName="Pradosha Puja" amount={2116} pujaType="pradosha" description="Twilight worship to Lord Shiva, performed during the auspicious Pradosha time. Abhishekam with Sri Rudram Namakam Chamakam, performed in your name." />
       <RudrabhishekamModal open={sriChakraOpen} onClose={() => setSriChakraOpen(false)} pujaName="Sri Chakra Kumkumarchana" pujaType="sri_chakra_kumkumarchana" description="Sacred Kumkuma puja to the Sri Chakra." options={[{ label: '1 Day Puja', amount: 516 }, { label: '1 Month Puja', amount: 15116 }]} />
       <MahaShivaratriModal open={mahaShivaratriOpen} onClose={() => setMahaShivaratriOpen(false)} />
-      <window.GalleryManager open={galleryOpen} onClose={() => setGalleryOpen(false)} />
-
       <window.Modal open={liveDarshanOpen} onClose={() => setLiveDarshanOpen(false)} title="Live Darshan" sub="Sacred Stream">
         <div style={{ textAlign: 'center', padding: '20px 0' }}>
           <div style={{
