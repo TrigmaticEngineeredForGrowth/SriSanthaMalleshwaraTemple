@@ -757,7 +757,7 @@ function VisheshaPujaModal({ open, onClose }) {
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Date *</label>
-            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input className="date-input" type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} onClick={e => e.currentTarget.showPicker?.()} />
             {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
@@ -912,7 +912,7 @@ function SacredHomaModal({ open, onClose }) {
           <div><label className="field-label">Nakshetra *</label><input value={form.nakshetra} onChange={e => setForm({ ...form, nakshetra: e.target.value })} placeholder="Birth star" /></div>
           <div><label className="field-label">WhatsApp Phone *</label><input type="tel" inputMode="numeric" value={form.whatsapp} onChange={e => setForm({ ...form, whatsapp: sanitizePhone(e.target.value) })} placeholder="10-digit number" /></div>
         </div>
-        <div style={{ marginBottom: 18 }}><label className="field-label">Preferred Date *</label><input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} /></div>
+        <div style={{ marginBottom: 18 }}><label className="field-label">Preferred Date *</label><input className="date-input" type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} onClick={e => e.currentTarget.showPicker?.()} /></div>
         <div style={{ marginBottom: 18 }}><label className="field-label">Address</label><textarea rows={2} value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} /></div>
         <div style={{ marginBottom: 8 }}><label className="field-label">Email *</label><input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" /></div>
         <div style={{ marginTop: 24, display: 'flex', justifyContent: 'space-between' }}><button className="btn ghost" onClick={() => setStep(1)}>← Back</button><button className="btn solid" disabled={!canContinueDetails} onClick={() => canContinueDetails && setStep(3)} style={{ opacity: canContinueDetails ? 1 : 0.45 }}>Continue<span className="arrow"></span></button></div>
@@ -991,7 +991,7 @@ function NaivedyamModal({ open, onClose }) {
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Start Date *</label>
-            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input className="date-input" type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} onClick={e => e.currentTarget.showPicker?.()} />
             {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
@@ -1163,7 +1163,7 @@ function NityaPratahModal({ open, onClose }) {
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Start Date *</label>
-            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input className="date-input" type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} onClick={e => e.currentTarget.showPicker?.()} />
             {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
@@ -1333,7 +1333,7 @@ function RudrabhishekamModal({ open, onClose, pujaName = 'Rudrabhishekam', amoun
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Date *</label>
-            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input className="date-input" type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} onClick={e => e.currentTarget.showPicker?.()} />
             {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
@@ -1518,7 +1518,7 @@ function MahaShivaratriModal({ open, onClose }) {
           </div>
           <div style={{ marginBottom: 18 }}>
             <label className="field-label">Preferred Date *</label>
-            <input type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} />
+            <input className="date-input" type="date" value={form.date} min={todayStr()} onChange={e => setForm({ ...form, date: e.target.value })} onClick={e => e.currentTarget.showPicker?.()} />
             {form.date && !isFutureDate(form.date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
           </div>
           <div style={{ marginBottom: 18 }}>
