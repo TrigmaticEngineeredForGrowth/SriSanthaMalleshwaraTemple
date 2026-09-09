@@ -512,7 +512,7 @@ function Footer({ onContact }) {
             </div>
             <p style={{ color: 'var(--ivory-faint)', fontSize: 15, lineHeight: 1.6, maxWidth: 360 }}>
               Arts College Road, Near Maheshwara Kalyana Mantapam<br/>
-              Sri Santha Malleswara Temple Hill - ADONI - 518301
+              Sri Santha Malleswara Temple Hill - ADONI - 518302
             </p>
             <p style={{ marginTop: 20, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', letterSpacing: '0.14em' }}>
               +91 9848798873<br/>
