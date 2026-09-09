@@ -466,6 +466,20 @@ function Gallery() {
                 border: '1px solid var(--line-soft)',
                 gridColumn: 'span 1',
                 gridRow: 'span 1',
+                transition: 'transform .4s ease, box-shadow .4s ease, border-color .4s ease',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'translateY(-8px) scale(1.03)';
+                e.currentTarget.style.boxShadow = '0 18px 40px rgba(0,0,0,0.5)';
+                e.currentTarget.style.borderColor = 'var(--gold)';
+                e.currentTarget.style.zIndex = '2';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.borderColor = 'var(--line-soft)';
+                e.currentTarget.style.zIndex = '1';
               }}
             >
               <img
