@@ -188,7 +188,7 @@ const FESTIVALS = [
     tag: 'Havan',
   },
   {
-    image: 'assets/Shiva_parvati_kalyanam_new_upcome.jpeg?v=1',
+    image: 'assets/Shiva_Parvati.jpeg',
     date: 'Shiva Parvati kalyanam',
     gregorian: 'March 7 · 2027',
     name: 'Shiva Parvati Kalyanam',
