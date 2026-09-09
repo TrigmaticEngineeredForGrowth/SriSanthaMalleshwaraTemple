@@ -261,16 +261,16 @@ function SevaModal({ open, onClose }) {
 /* ---------- Donation Modal ---------- */
 function DonationModal({ open, onClose }) {
   const [type, setType] = useStateM('onetime');
-  const [purpose, setPurpose] = useStateM('Temple Renovation Fund');
+  const [purpose, setPurpose] = useStateM('Temple Development Fund');
   const [amount, setAmount] = useStateM(1100);
   const [custom, setCustom] = useStateM(false);
   const [done, setDone] = useStateM(false);
   const [donor, setDonor] = useStateM({ name: '', phone: '', email: '' });
 
-  const purposes = ['Temple Renovation Fund', 'Annadanam', 'Festival Sponsorship', 'Gau Seva', 'General Daanam'];
+  const purposes = ['Temple Development Fund', '', 'Festival Sponsorship', 'Gau Seva', 'General Donation'];
   const presets = [251, 501, 1100, 2500, 5100, 11000];
 
-  const reset = () => { setType('onetime'); setPurpose('Temple Renovation Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
+  const reset = () => { setType('onetime'); setPurpose('Temple Development Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
   return (
@@ -296,13 +296,13 @@ function DonationModal({ open, onClose }) {
           <label className="field-label">Purpose</label>
           <div className="modal-grid-2" style={{ gap: 8, marginBottom: 28 }}>
             {purposes.map(p => (
-              <button key={p} onClick={() => setPurpose(p)} style={{
+              <button key={p || 'empty'} onClick={() => setPurpose(p)} style={{
                 padding: '14px 18px', textAlign: 'left',
                 background: purpose === p ? 'rgba(255, 122, 46,0.08)' : 'transparent',
                 border: `1px solid ${purpose === p ? 'var(--gold)' : 'var(--line-soft)'}`,
                 color: 'var(--ivory)', cursor: 'pointer',
                 fontFamily: 'var(--f-serif)', fontSize: 16,
-              }}>{p}</button>
+              }}>{p ? p : <br/>}</button>
             ))}
           </div>
 
