@@ -516,7 +516,7 @@ function Footer({ onContact }) {
             </p>
             <p style={{ marginTop: 20, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', letterSpacing: '0.14em' }}>
               +91 9848798873<br/>
-              hello@shantamalleshwara.org
+              shantamalleswara@gmail.com
             </p>
           </div>
 
@@ -547,7 +547,7 @@ function Footer({ onContact }) {
               Stay Connected
             </div>
             <p style={{ color: 'var(--ivory-faint)', fontSize: 14, lineHeight: 1.6, marginBottom: 18 }}>
-              Receive the panchanga, festival reminders, and dharmic reflections.
+              Receive the festival reminders, and dharmic reflections.
             </p>
             <form onSubmit={e => { e.preventDefault(); alert('Subscribed — Om Namah Shivaya'); }}>
               <input type="email" placeholder="your@email.com" style={{ marginBottom: 12 }} />
