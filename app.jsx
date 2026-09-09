@@ -110,6 +110,7 @@ function App() {
         <window.AudioLibrary />
       </div>
 
+      <div aria-hidden="true" style={{ height: 1, background: 'var(--line-soft)' }} />
       <Footer onContact={() => setContactOpen(true)} />
 
       <button className="sticky-orb" onClick={() => setDonateOpen(true)}>DONATE</button>
