@@ -267,7 +267,7 @@ function DonationModal({ open, onClose }) {
   const [done, setDone] = useStateM(false);
   const [donor, setDonor] = useStateM({ name: '', phone: '', email: '' });
 
-  const purposes = ['Temple Development Fund', '', 'Festival Sponsorship', 'Gau Seva', 'General Donation'];
+  const purposes = ['Temple Development Fund', 'Festival Sponsorship', 'General Donation'];
   const presets = [251, 501, 1100, 2500, 5100, 11000];
 
   const reset = () => { setType('onetime'); setPurpose('Temple Development Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
@@ -296,13 +296,13 @@ function DonationModal({ open, onClose }) {
           <label className="field-label">Purpose</label>
           <div className="modal-grid-2" style={{ gap: 8, marginBottom: 28 }}>
             {purposes.map(p => (
-              <button key={p || 'empty'} onClick={() => setPurpose(p)} style={{
+              <button key={p} onClick={() => setPurpose(p)} style={{
                 padding: '14px 18px', textAlign: 'left',
                 background: purpose === p ? 'rgba(255, 122, 46,0.08)' : 'transparent',
                 border: `1px solid ${purpose === p ? 'var(--gold)' : 'var(--line-soft)'}`,
                 color: 'var(--ivory)', cursor: 'pointer',
                 fontFamily: 'var(--f-serif)', fontSize: 16,
-              }}>{p ? p : <br/>}</button>
+              }}>{p}</button>
             ))}
           </div>
 
