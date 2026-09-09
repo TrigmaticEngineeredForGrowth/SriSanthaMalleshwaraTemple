@@ -15,6 +15,7 @@ function App() {
 
   const [sevaOpen, setSevaOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
+  const [donatePurpose, setDonatePurpose] = useState(null);
   const [contactOpen, setContactOpen] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
   const [visheshaOpen, setVisheshaOpen] = useState(false);
@@ -96,7 +97,7 @@ function App() {
         <window.OmDivider />
         <PoojaTimings onBookSeva={() => setSevaOpen(true)} onVisheshaPuja={() => setVisheshaOpen(true)} onNaivedyam={() => setNaivedyamOpen(true)} onNityaPratah={() => setNityaPratahOpen(true)} onRudrabhishekam={() => setRudrabhishekamOpen(true)} onSacredHoma={() => setSacredHomaOpen(true)} onPradosha={() => setPradoshaOpen(true)} onSriChakra={() => setSriChakraOpen(true)} onMahaShivaratri={() => setMahaShivaratriOpen(true)} />
         <window.OmDivider />
-        <Festivals />
+        <Festivals onSponsor={() => { setDonatePurpose('Festival Sponsorship'); setDonateOpen(true); }} />
       </div>
 
       <div id="donation">
@@ -123,7 +124,7 @@ function App() {
       <button className="sticky-orb" onClick={() => setDonateOpen(true)}>DONATE</button>
 
       <SevaModal open={sevaOpen} onClose={() => setSevaOpen(false)} />
-      <DonationModal open={donateOpen} onClose={() => setDonateOpen(false)} />
+      <DonationModal open={donateOpen} onClose={() => { setDonateOpen(false); setTimeout(() => setDonatePurpose(null), 400); }} initialPurpose={donatePurpose} />
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
       <VisheshaPujaModal open={visheshaOpen} onClose={() => setVisheshaOpen(false)} />
       <NaivedyamModal open={naivedyamOpen} onClose={() => setNaivedyamOpen(false)} />

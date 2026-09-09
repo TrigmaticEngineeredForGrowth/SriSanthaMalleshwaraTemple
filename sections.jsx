@@ -256,7 +256,7 @@ const PAST_FESTIVALS = [
   },
 ];
 
-function FestivalCarousel({ heading, accentHeading, id, festivals, description, showSponsor }) {
+function FestivalCarousel({ heading, accentHeading, id, festivals, description, showSponsor, onSponsor }) {
   const scrollerRef = React.useRef(null);
   const [atStart, setAtStart] = React.useState(true);
   const [atEnd, setAtEnd] = React.useState(false);
@@ -314,7 +314,7 @@ function FestivalCarousel({ heading, accentHeading, id, festivals, description, 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}><div><div style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>{f.date}</div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', marginTop: 6, letterSpacing: '0.1em' }}>{f.gregorian}</div></div><div style={{ fontFamily: 'var(--f-mono)', fontSize: 9, color: 'var(--ivory-faint)', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid var(--line)', padding: '4px 10px' }}>{f.tag}</div></div>
                 <h3 style={{ fontSize: 21, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontWeight: 400, color: 'var(--ivory)', marginBottom: 14, letterSpacing: 'normal' }}>{f.name}</h3>
                 <p style={{ fontSize: 14, color: 'var(--ivory-dim)', lineHeight: 1.55, marginBottom: 22 }}>{f.desc}</p>
-                {showSponsor && <a style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>Sponsor This Festival</a>}
+                {showSponsor && <a onClick={onSponsor} style={{ fontFamily: 'var(--f-display)', fontSize: 10, letterSpacing: '0.28em', color: 'var(--gold)', textTransform: 'uppercase', cursor: 'pointer', borderBottom: '1px solid var(--gold)', paddingBottom: 4 }}>Sponsor This Festival</a>}
               </div>
             </div>
           ))}
@@ -324,9 +324,9 @@ function FestivalCarousel({ heading, accentHeading, id, festivals, description, 
   );
 }
 
-function Festivals() {
+function Festivals({ onSponsor }) {
   return <>
-    <FestivalCarousel id="events" heading="Upcoming" accentHeading="Celebrations" festivals={FESTIVALS} description="Mark your calendars for days filled with divine blessings and spiritual joy. Sponsorships open" showSponsor />
+    <FestivalCarousel id="events" heading="Upcoming" accentHeading="Celebrations" festivals={FESTIVALS} description="Mark your calendars for days filled with divine blessings and spiritual joy. Sponsorships open" showSponsor onSponsor={onSponsor} />
     <FestivalCarousel heading="Mega" accentHeading="Celebrations" festivals={PAST_FESTIVALS} description="A look back at the grand celebrations and divine blessings that have shaped our temple's journey" showSponsor={false} />
   </>;
 }

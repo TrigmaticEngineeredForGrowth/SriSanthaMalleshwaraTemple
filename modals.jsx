@@ -266,8 +266,8 @@ function SevaModal({ open, onClose }) {
 }
 
 /* ---------- Donation Modal ---------- */
-function DonationModal({ open, onClose }) {
-  const [purpose, setPurpose] = useStateM('Temple Development Fund');
+function DonationModal({ open, onClose, initialPurpose }) {
+  const [purpose, setPurpose] = useStateM(initialPurpose || 'Temple Development Fund');
   const [amount, setAmount] = useStateM(1100);
   const [custom, setCustom] = useStateM(false);
   const [done, setDone] = useStateM(false);
@@ -276,7 +276,7 @@ function DonationModal({ open, onClose }) {
   const purposes = ['Temple Development Fund', 'Festival Sponsorship', 'General Donation'];
   const presets = [251, 501, 1100, 2500, 5100, 11000];
 
-  const reset = () => { setPurpose('Temple Development Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
+  const reset = () => { setPurpose(initialPurpose || 'Temple Development Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
   return (
