@@ -511,12 +511,11 @@ function Footer({ onContact }) {
               </div>
             </div>
             <p style={{ color: 'var(--ivory-faint)', fontSize: 15, lineHeight: 1.6, maxWidth: 360 }}>
-              17/B, Sampige Road · Malleshwaram<br/>
-              Bengaluru, Karnataka 560003<br/>
-              India
+              Arts College Road, Near Maheshwara Kalyana Mantapam<br/>
+              Sri Santha Malleswara Temple Hill - ADONI - 518301
             </p>
             <p style={{ marginTop: 20, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', letterSpacing: '0.14em' }}>
-              +91 80 2334 9090<br/>
+              +91 9848798873<br/>
               hello@shantamalleshwara.org
             </p>
           </div>
