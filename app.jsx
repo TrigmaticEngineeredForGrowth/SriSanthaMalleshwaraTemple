@@ -115,7 +115,10 @@ function App() {
       </div>
 
       <window.OmDivider />
-      <Footer onContact={() => setContactOpen(true)} />
+      <Footer
+        onContact={() => setContactOpen(true)}
+        onLiveDarshan={() => setLiveDarshanOpen(true)}
+      />
 
       <button className="sticky-orb" onClick={() => setDonateOpen(true)}>DONATE</button>
 

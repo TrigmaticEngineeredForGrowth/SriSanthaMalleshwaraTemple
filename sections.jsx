@@ -490,7 +490,7 @@ function Gallery() {
 }
 
 /* ---------- Footer ---------- */
-function Footer({ onContact }) {
+function Footer({ onContact, onLiveDarshan }) {
   return (
     <footer data-screen-label="10 Footer">
       <div className="container">
@@ -547,7 +547,7 @@ function Footer({ onContact }) {
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
               <li><a href="#services" style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>Book a Pooja</a></li>
               <li><a href="#donation" style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>Festival Sponsorship</a></li>
-              <li><a href="#audio" style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15 }}>Live Darshan</a></li>
+              <li><a onClick={onLiveDarshan} style={{ color: 'var(--ivory-dim)', textDecoration: 'none', fontSize: 15, cursor: 'pointer' }}>Live Darshan</a></li>
             </ul>
           </div>
 
