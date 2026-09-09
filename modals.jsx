@@ -624,6 +624,7 @@ function ContactModal({ open, onClose }) {
 
 /* ---------- Vishesha Puja Modal (14-variety flow) ---------- */
 const VISHESHA_PUJAS = [
+  { name: 'Nandishwara Puja', price: 1111 },
   { name: 'Kartika Deeparadhana (1 Month)', price: 516 },
   { name: 'Pushalankara Seva', price: 999 },
   { name: 'Visesha Bhasmarchana Puja', price: 1001 },
