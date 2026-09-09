@@ -391,7 +391,7 @@ function DonationModal({ open, onClose, initialPurpose }) {
             <span className="arrow"></span>
           </button>
           <div style={{ marginTop: 14, textAlign: 'center', fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)', letterSpacing: '0.2em' }}>
-            80G EXEMPT · INSTANT RECEIPT · UPI · CARD · NETBANKING
+            INSTANT RECEIPT · UPI · CARD · NETBANKING
           </div>
         </div>
       )}
