@@ -482,6 +482,15 @@
     transition: border-color .25s ease, background .25s ease;
   }
   input:focus, select:focus, textarea:focus { border-color: var(--gold); background: rgba(255, 122, 46,0.04); }
+  input.date-input {
+    color-scheme: dark;
+    cursor: pointer;
+  }
+  input.date-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 1;
+    cursor: pointer;
+  }
   label.field-label {
     display: block;
     font-family: var(--f-display); font-size: 10px; letter-spacing: 0.28em;

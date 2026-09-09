@@ -115,7 +115,14 @@ function SevaModal({ open, onClose }) {
           </div>
 
           <label className="field-label">Preferred Date</label>
-          <input type="date" value={date} min={todayStr()} onChange={e => setDate(e.target.value)} />
+          <input
+            className="date-input"
+            type="date"
+            value={date}
+            min={todayStr()}
+            onChange={e => setDate(e.target.value)}
+            onClick={e => e.currentTarget.showPicker?.()}
+          />
           {date && !isFutureDate(date) && <div style={{ marginTop: 6, fontSize: 12, color: '#ff8a8a' }}>Please select today or a future date</div>}
 
           <div style={{ marginTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
