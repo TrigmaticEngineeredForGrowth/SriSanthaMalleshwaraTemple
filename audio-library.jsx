@@ -212,6 +212,16 @@ const PERMANENT_TRACKS = [
 
 function AudioLibrary() {
   const { files } = useAudioLibrary();
+  const [showAll, setShowAll] = React.useState(false);
+
+  const allItems = [
+    ...PERMANENT_TRACKS.map((t, i) => ({ kind: 'audio', src: t.src, name: t.name, key: `perm-${i}` })),
+    ...files.map(f => ({ kind: f.type, src: URL.createObjectURL(f.blob), name: f.name, key: f.id })),
+  ];
+
+  const VISIBLE_COUNT = 6;
+  const visibleItems = showAll ? allItems : allItems.slice(0, VISIBLE_COUNT);
+  const hasMore = allItems.length > VISIBLE_COUNT;
 
   return (
     <section style={{ background: 'var(--bg-0)' }} data-screen-label="Audio Library">
@@ -232,20 +242,32 @@ function AudioLibrary() {
           gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
           gap: 12, marginBottom: 16,
         }}>
-          {PERMANENT_TRACKS.map((t, i) => (
-            <AudioPlayer key={`perm-${i}`} src={t.src} name={t.name} />
-          ))}
-          {files.map(f => {
-            const url = URL.createObjectURL(f.blob);
-            return f.type === 'audio' ? (
-              <AudioPlayer key={f.id} src={url} name={f.name} />
-            ) : (
-              <PdfRow key={f.id} src={url} name={f.name} />
-            );
-          })}
+          {visibleItems.map(item =>
+            item.kind === 'audio'
+              ? <AudioPlayer key={item.key} src={item.src} name={item.name} />
+              : <PdfRow key={item.key} src={item.src} name={item.name} />
+          )}
         </div>
 
-        {files.length === 0 && PERMANENT_TRACKS.length === 0 && (
+        {hasMore && (
+          <div style={{ textAlign: 'center', marginTop: 24 }}>
+            <button
+              onClick={() => setShowAll(s => !s)}
+              style={{
+                background: 'transparent', border: '1px solid var(--gold)', color: 'var(--gold)',
+                padding: '14px 32px', cursor: 'pointer', borderRadius: 8,
+                fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.28em',
+                textTransform: 'uppercase', transition: 'all .3s ease',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,122,46,0.08)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+            >
+              {showAll ? 'Show Less' : `See More (${allItems.length - VISIBLE_COUNT} more)`}
+            </button>
+          </div>
+        )}
+
+        {allItems.length === 0 && (
           <div style={{
             padding: 32, textAlign: 'center', border: '1px dashed var(--line-soft)',
             color: 'var(--ivory-faint)', fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 17,
