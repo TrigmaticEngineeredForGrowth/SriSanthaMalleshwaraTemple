@@ -509,8 +509,13 @@
     cursor: pointer;
   }
   input.date-input::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    opacity: 1;
+    filter: invert(1) brightness(2) !important;
+    opacity: 1 !important;
+    cursor: pointer;
+  }
+  input.date-input::-moz-calendar-picker-indicator {
+    filter: invert(1) brightness(2) !important;
+    opacity: 1 !important;
     cursor: pointer;
   }
   label.field-label {
