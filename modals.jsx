@@ -334,7 +334,7 @@ function DonationModal({ open, onClose }) {
                 Your Offering
               </div>
               <div style={{ marginTop: 8, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 18, color: 'var(--ivory-dim)' }}>
-                {purpose} · <span style={{ color: 'var(--gold)' }}>one-time</span>
+                {purpose}&nbsp;<span style={{ color: 'var(--gold)' }}></span>
               </div>
             </div>
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 30, color: 'var(--gold)' }}>
