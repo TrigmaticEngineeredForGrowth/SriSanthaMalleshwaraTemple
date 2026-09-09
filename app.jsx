@@ -84,7 +84,7 @@ function App() {
         onLiveDarshan={() => setLiveDarshanOpen(true)} />
 
       <Hero
-        onBookSeva={() => setSevaOpen(true)}
+        onBookSeva={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
         onDonate={() => setDonateOpen(true)}
         lingamStyle={t.lingamStyle} />
 
