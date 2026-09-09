@@ -251,7 +251,7 @@ const PAST_FESTIVALS = [
     date: 'Rajata mahotsav',
     gregorian: 'February · 2026',
     name: 'Chinmaya Rajata Mahotsav',
-    desc: 'Completing 25 Years Silver Jubilee of service to the temple with Maha Rudra Parayanam = 2x',
+    desc: 'Completing 25 Years Silver Jubilee of service to the temple with Nakshatra Sukta Sri Rudra Parayanam Puja - 2x',
     tag: 'Chinmaya Amrit mahotsav - 75 Years',
   },
 ];
