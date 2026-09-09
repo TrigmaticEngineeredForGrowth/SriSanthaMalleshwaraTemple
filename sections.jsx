@@ -516,7 +516,7 @@ function Footer({ onContact }) {
             </p>
             <p style={{ marginTop: 20, fontFamily: 'var(--f-mono)', fontSize: 11, color: 'var(--ivory-faint)', letterSpacing: '0.14em' }}>
               +91 9848798873<br/>
-              shantamalleswara@gmail.com
+              santhamalleswara@gmail.com
             </p>
           </div>
 
@@ -599,7 +599,7 @@ function Footer({ onContact }) {
           fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)',
           letterSpacing: '0.18em', textTransform: 'uppercase',
         }}>
-          <div>© Saka 1947 · Shanta Malleshwara Swami Temple Trust · 80G Registered</div>
+          <div>Copyright · Chinmaya Mission Adoni . Sri SantHa Malleswara Swami Temple . 1996</div>
           <div style={{ display: 'flex', gap: 30 }}>
             <a>Privacy</a><a>Terms</a><a>Refund Policy</a>
           </div>
