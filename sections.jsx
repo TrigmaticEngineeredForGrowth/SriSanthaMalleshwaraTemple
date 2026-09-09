@@ -396,14 +396,13 @@ function DonationCTA({ onDonate }) {
       <div className="container">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 80, maxWidth: 720, margin: '0 auto' }}>
           <div className="reveal">
-            <span className="eyebrow">Daanam · The Act of Giving</span>
+            <span className="eyebrow">Donation · The Act of Giving</span>
             <h2 style={{ marginTop: 24 }}>
               Every flame is kindled<br/>
               <span className="serif-display" style={{ color: 'var(--gold)' }}>by an open hand.</span>
             </h2>
             <p style={{ marginTop: 28, color: 'var(--ivory-dim)', fontSize: 19, lineHeight: 1.7 }}>
-              The temple is sustained entirely by the generosity of devotees. From the oil in the lamps
-              to the meals served each day, every offering returns multifold as blessing.
+              The temple is sustained entirely by the generosity of devotees. Every offering returns multifold as blessing.
             </p>
             <div style={{ marginTop: 38, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
               <button className="btn solid" onClick={onDonate}>
@@ -420,7 +419,7 @@ function DonationCTA({ onDonate }) {
               <span style={{ fontFamily: 'var(--f-mono)', fontSize: 10, letterSpacing: '0.2em' }}>UPI · CARD · NET BANKING · WALLETS</span>
             </div>
             <div style={{ marginTop: 16, fontFamily: 'var(--f-mono)', fontSize: 10, color: 'var(--ivory-faint)', letterSpacing: '0.18em' }}>
-              80G EXEMPT · INSTANT RECEIPT · WEBHOOK-VERIFIED
+              <br />
             </div>
           </div>
 
