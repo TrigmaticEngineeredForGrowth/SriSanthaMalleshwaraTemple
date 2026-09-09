@@ -260,7 +260,6 @@ function SevaModal({ open, onClose }) {
 
 /* ---------- Donation Modal ---------- */
 function DonationModal({ open, onClose }) {
-  const [type, setType] = useStateM('onetime');
   const [purpose, setPurpose] = useStateM('Temple Development Fund');
   const [amount, setAmount] = useStateM(1100);
   const [custom, setCustom] = useStateM(false);
@@ -270,28 +269,13 @@ function DonationModal({ open, onClose }) {
   const purposes = ['Temple Development Fund', 'Festival Sponsorship', 'General Donation'];
   const presets = [251, 501, 1100, 2500, 5100, 11000];
 
-  const reset = () => { setType('onetime'); setPurpose('Temple Development Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
+  const reset = () => { setPurpose('Temple Development Fund'); setAmount(1100); setCustom(false); setDone(false); setDonor({ name: '', phone: '', email: '' }); };
   const close = () => { onClose(); setTimeout(reset, 400); };
 
   return (
     <Modal open={open} onClose={close} title={done ? 'Blessings Received' : 'Offer Daanam'} sub={done ? 'Thank You' : 'Sacred Giving'}>
       {!done && (
         <div>
-          {/* Frequency */}
-          <label className="field-label">Frequency</label>
-          <div style={{ display: 'flex', gap: 8, marginBottom: 28 }}>
-            {[{k:'onetime',l:'One-Time'},{k:'monthly',l:'Monthly Sankalpa'},{k:'yearly',l:'Annual'}].map(o => (
-              <button key={o.k} onClick={() => setType(o.k)} style={{
-                flex: 1, padding: '18px',
-                background: type === o.k ? 'rgba(255, 122, 46,0.08)' : 'transparent',
-                border: `1px solid ${type === o.k ? 'var(--gold)' : 'var(--line-soft)'}`,
-                color: type === o.k ? 'var(--gold)' : 'var(--ivory)',
-                fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.2em',
-                cursor: 'pointer', textTransform: 'uppercase'
-              }}>{o.l}</button>
-            ))}
-          </div>
-
           {/* Purpose */}
           <label className="field-label">Purpose</label>
           <div className="modal-grid-2" style={{ gap: 8, marginBottom: 28 }}>
@@ -307,7 +291,7 @@ function DonationModal({ open, onClose }) {
           </div>
 
           {/* Amount */}
-          <label className="field-label">Amount {type === 'monthly' && '(per month)'}</label>
+          <label className="field-label">Amount</label>
           <div className="modal-grid-6" style={{ marginBottom: 14 }}>
             {presets.map(p => (
               <button key={p} onClick={() => { setAmount(p); setCustom(false); }} style={{
@@ -350,7 +334,7 @@ function DonationModal({ open, onClose }) {
                 Your Offering
               </div>
               <div style={{ marginTop: 8, fontFamily: 'var(--f-script)', fontStyle: 'italic', fontSize: 18, color: 'var(--ivory-dim)' }}>
-                {purpose} · <span style={{ color: 'var(--gold)' }}>{type === 'onetime' ? 'one-time' : type === 'monthly' ? 'monthly' : 'annual'}</span>
+                {purpose} · <span style={{ color: 'var(--gold)' }}>one-time</span>
               </div>
             </div>
             <div style={{ fontFamily: 'var(--f-display)', fontSize: 30, color: 'var(--gold)' }}>
@@ -377,7 +361,7 @@ function DonationModal({ open, onClose }) {
             try {
               const saved = await window.saveDonation({
                 name: donor.name, phone: donor.phone, email: donor.email,
-                purpose, frequency: type, amount,
+                purpose, frequency: 'onetime', amount,
               });
               donationRef = saved?.id || null;
             } catch (e) { console.warn('donation save failed', e); }
