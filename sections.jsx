@@ -431,19 +431,18 @@ function DonationCTA({ onDonate }) {
 }
 
 /* ---------- Gallery ---------- */
-const GALLERY_TILES = [
-  { label: 'GOPURAM AT DAWN', span: 'tall' },
-  { label: 'ABHISHEKAM RITUAL', span: 'wide' },
-  { label: 'GARBHA GRIHA' },
-  { label: 'DEEPOTSAVAM LAMPS' },
-  { label: 'KARTIKA NIGHT' },
-  { label: 'TEMPLE CORRIDOR' },
+const GALLERY_IMAGES = [
+  { src: 'gallery/Bhogalingeswara_Shiva.jpeg', alt: 'Bhogalingeswara Shiva' },
+  { src: 'gallery/Havan.jpeg', alt: 'Havan' },
+  { src: 'gallery/Kalasha.jpeg', alt: 'Kalasha' },
+  { src: 'gallery/Maha_Shivaratri_upcome_2027.jpeg', alt: 'Maha Shivaratri' },
+  { src: 'gallery/Parvati_Ammavaru.jpeg', alt: 'Parvati Ammavaru' },
+  { src: 'gallery/Sevak_Team.jpeg', alt: 'Sevak Team' },
+  { src: 'gallery/Shivaya.jpeg', alt: 'Shivaya' },
+  { src: 'gallery/Tyagarajeswara_Shiva.jpeg', alt: 'Tyagarajeswara Shiva' },
 ];
 
 function Gallery() {
-  const { media, loaded } = window.useGalleryMedia();
-  const hasCustom = loaded && media.length > 0;
-
   return (
     <section style={{ background: 'var(--bg-0)' }} data-screen-label="07 Gallery">
       <div className="container">
@@ -456,21 +455,35 @@ function Gallery() {
           </div>
         </div>
 
-        {hasCustom ? (
-          <div className="grid-auto-4" style={{ gridAutoRows: '280px', gap: 16 }}>
-            {media.map((item) => (
-              <window.MediaThumb
-                key={item.id}
-                item={item}
-                className="reveal"
+        <div className="grid-auto-4" style={{ gridAutoRows: '280px', gap: 16 }}>
+          {GALLERY_IMAGES.map((img, i) => (
+            <div
+              key={img.src}
+              className="reveal"
+              style={{
+                position: 'relative',
+                overflow: 'hidden',
+                border: '1px solid var(--line-soft)',
+                gridColumn: 'span 1',
+                gridRow: 'span 1',
+              }}
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  display: 'block',
+                  transition: 'transform 1.2s ease',
+                }}
               />
-            ))}
-          </div>
-        ) : (
-          <div className="gallery-empty reveal">
-            <p>No gallery images have been added yet.</p>
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
