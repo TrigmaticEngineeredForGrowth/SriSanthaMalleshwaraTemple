@@ -440,7 +440,7 @@ const GALLERY_TILES = [
   { label: 'TEMPLE CORRIDOR' },
 ];
 
-function Gallery({ onManageGallery }) {
+function Gallery() {
   const { media, loaded } = window.useGalleryMedia();
   const hasCustom = loaded && media.length > 0;
 
@@ -454,26 +454,15 @@ function Gallery({ onManageGallery }) {
               Glimpses of the <span className="serif-display" style={{ color: 'var(--gold)' }}>Sacred</span>
             </h2>
           </div>
-          <button
-            onClick={onManageGallery}
-            style={{
-              fontFamily: 'var(--f-display)', fontSize: 11, letterSpacing: '0.28em', color: 'var(--gold)',
-              textTransform: 'uppercase', cursor: 'pointer', background: 'transparent',
-              border: '1px solid var(--gold)', padding: '12px 22px',
-            }}
-          >
-            + Add Photos &amp; Videos
-          </button>
         </div>
 
         {hasCustom ? (
           <div className="grid-auto-4" style={{ gridAutoRows: '280px', gap: 16 }}>
-            {media.map((item, i) => (
+            {media.map((item) => (
               <window.MediaThumb
                 key={item.id}
                 item={item}
                 className="reveal"
-                style={i === 0 ? { gridRow: 'span 2' } : i === 1 ? { gridColumn: 'span 2' } : {}}
               />
             ))}
           </div>
